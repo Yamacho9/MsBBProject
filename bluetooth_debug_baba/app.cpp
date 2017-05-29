@@ -78,6 +78,7 @@ void main_task(intptr_t unused)
 	
     /* Open Bluetooth file */
 	/*接続状態を確認*/
+	Message("waitting bluetooth connect");
 	while(!ev3_bluetooth_is_connected()){
 		tslp_tsk(100);
 	}
@@ -86,7 +87,7 @@ void main_task(intptr_t unused)
 	bt = ev3_serial_open_file(EV3_SERIAL_BT);
 	assert(bt != NULL);
 	Message("bluetooth serial port open");
-	display();
+	//display();
     
     /* Bluetooth通信タスクの起動 */
 	act_tsk(BT_TASK);
@@ -132,12 +133,19 @@ void bt_task(intptr_t unused)
 	/*通信処理*/
 	while(1){
 		
-		char str[8];
+		char str[4];
+		char* color = "c";
+		char* nn = "|";
+		
 		sprintf(str, "%d", colorSensor_data);
+
+		fwrite(color,1,3,bt);
+		fwrite(str,1,5,bt);
+		fwrite(nn,1,3,bt);
 		
-		fwrite(str,1,8,bt);
+		clock->sleep(500);
 		
-		display();
+		//display();
 	}
 	
 }
