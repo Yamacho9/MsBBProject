@@ -1,3 +1,5 @@
+all:各モジュールを組み合わせたもの
+
 bluetooth_debug_baba：bluetooth_debugコード（担当：馬場）
 ev3way-distance_murai：走行距離計測（担当：村井）
 linetorace_murai：PIDライントレース（担当：村井）
