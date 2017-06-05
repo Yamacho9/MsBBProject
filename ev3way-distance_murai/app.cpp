@@ -52,7 +52,7 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 #define DELTA_T				0.004 //処理周期（s）
 #define INT_NUM				250	//積分する偏差数(1s分)
 #define PI					3.14	//円周率
-#define DIAMETER			800	//車輪の直径(800mm)
+#define DIAMETER			80	//車輪の直径(80mm)
 
 /* LCDフォントサイズ */
 #define CALIB_FONT (EV3_FONT_SMALL)
@@ -92,7 +92,6 @@ void main_task(intptr_t unused)
 	for (i = 0; i < INT_NUM; i++) {
 		errorList[i] = 0;
 	}
-	int32_t distance=0;	// 走行距離
 	
     /* 各オブジェクトを生成・初期化する */
     touchSensor = new TouchSensor(PORT_1);
@@ -268,7 +267,7 @@ void main_task(intptr_t unused)
 				turn = -100;
 			}
 
-			fprintf(bt, "cur_brightness = %d, turn = %f\n", cur_brightness, turn);
+			//fprintf(bt, "cur_brightness = %d, turn = %f\n", cur_brightness, turn);
 			//fprintf(bt, "color_id = %d\n", color);
 		}
 
@@ -294,14 +293,13 @@ void main_task(intptr_t unused)
         leftMotor->setPWM(pwm_L);
         rightMotor->setPWM(pwm_R);
 		//fprintf(bt, "left = %d, right = %d\n", pwm_L, pwm_R);
-    	
-    	// 走行距離計測
-    	int32_t angle;	// 検出角度
-    	angle = (motor_ang_l + motor_ang_r) / 2;	// 検出角度は両輪の平均とする
-    	distance += angle * PI * DIAMETER / 360;	// 角度から距離を算出して、これまでの走行距離に加算
-    	ev3_lcd_draw_string((char *)&distance,0,0);	// 本体LCDに表示
-    	fprintf(bt, "distance = %d\n", (int8_t)distance);	// Bluetooth経由でTeratermに表示
-
+    	int32_t angle;
+    	int32_t distance;
+    	int32_t direction;
+    	angle = (motor_ang_l + motor_ang_r) / 2;	// モーターの検出角度（累積値）
+    	distance = angle * PI * DIAMETER / 360;		// 距離
+    	direction = (motor_ang_l % (360 * 4) - motor_ang_r % (360 * 4)) / 4; // 向き（スタート時の向きを0度として、時計回りの角度）
+    	fprintf(bt, "angle = %ld, distance = %ld, direction = %ld\n", angle, distance, direction);
         clock->sleep(4); /* 4msec周期起動 */
     }
     leftMotor->reset();
