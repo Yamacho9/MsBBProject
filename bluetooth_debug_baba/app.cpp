@@ -29,11 +29,11 @@ using namespace ev3api;
 #endif
 
 /* Bluetooth */
-//static int32_t   bt_cmd = 0;      /* Bluetoothコマンド 1:リモートスタート */
+static int32_t   bt_cmd = 0;      /* Bluetoothコマンド 1:リモートスタート */
 static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 
-#define DEVICE_NAME     "RisoRanger2016-mk2"  /* Bluetooth名 hrp2/target/ev3.h BLUETOOTH_LOCAL_NAMEで設定 */
-#define PASS_KEY        "1111" /* パスキー    hrp2/target/ev3.h BLUETOOTH_PIN_CODEで設定 */
+//#define DEVICE_NAME     "RisoRanger2016-mk2"  /* Bluetooth名 hrp2/target/ev3.h BLUETOOTH_LOCAL_NAMEで設定 */
+//#define PASS_KEY        "1111" /* パスキー    hrp2/target/ev3.h BLUETOOTH_PIN_CODEで設定 */
 #define CMD_START         '1'    /* リモートスタートコマンド */
 
 /* LCDフォントサイズ */
@@ -77,6 +77,8 @@ void main_task(intptr_t unused)
 	Init();
 	
     /* Open Bluetooth file */
+	/* iniファイルからbluetooth情報を取得する */
+	
 	/*接続状態を確認*/
 	Message("waitting bluetooth connect");
 	while(!ev3_bluetooth_is_connected()){
@@ -87,7 +89,6 @@ void main_task(intptr_t unused)
 	bt = ev3_serial_open_file(EV3_SERIAL_BT);
 	assert(bt != NULL);
 	Message("bluetooth serial port open");
-	//display();
     
     /* Bluetooth通信タスクの起動 */
 	act_tsk(BT_TASK);
@@ -96,6 +97,14 @@ void main_task(intptr_t unused)
     ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
 	Message("Init finished.");
 	
+	//bluetooth start
+	while(1){
+		Message("bluetooth start waiting...");
+		 if (bt_cmd == 1){//bluetooth start
+		 	fprintf(bt,"bluetooth start start");
+    		break;
+    	}
+	}
     /**
     * メインループ
     */
@@ -109,6 +118,8 @@ void main_task(intptr_t unused)
     	
     	/*カラーセンサから値をとってくる*/
     	colorSensor_data = colorSensor->getBrightness();
+    	fprintf(bt,"color:%d",colorSensor_data);
+    	
     	
         clock->sleep(10); /* 10msec周期起動 */
     }
@@ -132,20 +143,32 @@ void bt_task(intptr_t unused)
 	//colorSensor_dataを送信したい
 	/*通信処理*/
 	while(1){
-		
+		/*
 		char str[4];
 		char* color = "c";
 		char* nn = "|";
 		
 		sprintf(str, "%d", colorSensor_data);
 
+		//現在の情報を送信
 		fwrite(color,1,3,bt);
 		fwrite(str,1,5,bt);
 		fwrite(nn,1,3,bt);
+		*/
 		
-		clock->sleep(500);
+		//受信
+		uint8_t c = fgetc(bt);
+		switch(c){
+		case 1:
+			bt_cmd = 1;
+			break;
+		default:
+			break;
 		
-		//display();
+		}
+		
+		clock->sleep(5);
+		
 	}
 	
 }
@@ -196,9 +219,3 @@ void Init(){
 }
 
 
-//*******************************************************************
-// 関数名 : 
-// 引数 : なし
-// 返り値 : なし
-// 概要 : 
-//*******************************************************************
