@@ -17,6 +17,7 @@
 #include "GyroSensor.h"
 #include "Motor.h"
 #include "Clock.h"
+#include "CalcDistanceAndDirection.h"
 
 using namespace ev3api;
 
@@ -34,8 +35,6 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 
 /* 下記のマクロは個体/環境に合わせて変更する必要があります */
 #define GYRO_OFFSET           0  /* ジャイロセンサオフセット値(角速度0[deg/sec]時) */
-//#define LIGHT_WHITE          40  /* 白色の光センサ値 */
-//#define LIGHT_BLACK           0  /* 黒色の光センサ値 */
 #define SONAR_ALERT_DISTANCE 30  /* 超音波センサによる障害物検知距離[cm] */
 #define TAIL_ANGLE_STAND_UP  93  /* 完全停止時の角度[度] */
 #define TAIL_ANGLE_DRIVE      3  /* バランス走行時の角度[度] */
@@ -51,8 +50,6 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 #define TARGET				35	 //ライントレース制御 光量ターゲット値
 #define DELTA_T				0.004 //処理周期（s）
 #define INT_NUM				250	//積分する偏差数(1s分)
-#define PI					3.14	//円周率
-#define DIAMETER			80	//車輪の直径(80mm)
 
 /* LCDフォントサイズ */
 #define CALIB_FONT (EV3_FONT_SMALL)
@@ -77,15 +74,11 @@ Clock*          clock;
 void main_task(intptr_t unused)
 {
     int8_t forward;      /* 前後進命令 */
-//  int8_t turn;         /* 旋回命令 */
 	float turn;         /* 旋回命令 */
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
 	int8_t white;		/* 白色の光センサ値 */
 	int8_t black;		/* 黒色の光センサ値 */
 	int8_t cur_brightness;	/* 検出した光センサ値 */
-//	int8_t monochrome;	/* 線色判断値 */
-//	colorid_t color;	/* 色番号 */
-//	int8_t history;		/* 直近の旋回　0:無、1:右、2:左 */
 	float error=0, lasterror=0, integral=0;
 	float errorList[INT_NUM];	// 偏差履歴
 	int i = 0, j = 0;
@@ -119,47 +112,7 @@ void main_task(intptr_t unused)
     act_tsk(BT_TASK);
 
     ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
-#if 0
-   /* カラーセンサーキャリブレーション */
-   /**
-   * Calibrate for light intensity of WHITE
-   */
-	ev3_speaker_play_tone(NOTE_C4, 100);
-	// TODO: Calibrate using maximum mode => 100
-	fprintf(bt, "Press the touch sensor to measure light intensity of WHITE.\n");
-	while (!touchSensor->isPressed());
-	while (touchSensor->isPressed());
-	white = colorSensor->getBrightness();
-	//color = colorSensor->getColorNumber();
-	fprintf(bt, "brightness: %d\n", white);
 
-	/**
-	* Calibrate for light intensity of BLACK
-	*/
-	ev3_speaker_play_tone(NOTE_C4, 100);
-	// TODO: Calibrate using maximum mode => 100
-	// TODO: Calibrate using minimum mode => 0
-	fprintf(bt, "Press the touch sensor to measure light intensity of BLACK.\n");
-	while (!touchSensor->isPressed());
-	while (touchSensor->isPressed());
-	black = colorSensor->getBrightness();
-	//color = colorSensor->getColorNumber();
-	fprintf(bt, "brightness: %d\n", black);
-#endif
-#if 0
-	/**
-	* Calibrate for light intensity of GRAY
-	*/
-	ev3_speaker_play_tone(NOTE_C4, 100);
-	// TODO: Calibrate using maximum mode => 100
-	// TODO: Calibrate using minimum mode => 0
-	fprintf(bt, "Press the touch sensor to measure light intensity of GRAY.\n");
-	while (!touchSensor->isPressed());
-	while (touchSensor->isPressed());
-	black = colorSensor->getBrightness();
-	//color = colorSensor->getColorNumber();
-	fprintf(bt, "brightness: %d , color: %d\n", black);
-#endif
 	/* スタート待機 */
     while(1)
     {
@@ -186,9 +139,6 @@ void main_task(intptr_t unused)
     gyroSensor->reset();
     balance_init(); /* 倒立振子API初期化 */
 
-	//count = 0; /* 連続旋回回数初期化*/
-	//history = 0; //直近の旋回初期化
-	
     ev3_led_set_color(LED_GREEN); /* スタート通知 */
 
     /**
@@ -198,6 +148,7 @@ void main_task(intptr_t unused)
     {
         int32_t motor_ang_l, motor_ang_r;
         int32_t gyro, volt;
+		int32_t distance, direction; //走行距離、向き
 
         if (ev3_button_is_pressed(BACK_BUTTON)) break;
 
@@ -205,46 +156,14 @@ void main_task(intptr_t unused)
 
         if (sonar_alert() == 1) /* 障害物検知 */
         {
-			//fprintf(bt, "Detect things\n");
 			forward = turn = 0; /* 障害物を検知したら停止 */
 		}
         else
         {
             forward = 45; /* 前進命令 */
 			cur_brightness = colorSensor->getBrightness();
-			//monochrome = (cur_brightness - white) / (black - white) * 100;
-			//color = colorSensor->getColorNumber();
-#if 0
-            if (color != 1)
-            {
-				switch (history) {
-				case 0: //初回
-				case 1: //直近の旋回：右
-					turn = 20; /* 左旋回命令 */
-					history = 2;
-					break;
-				case 2: //直近の旋回：左
-					turn = -20; // 右旋回命令
-					history = 1;
-					break;
-				default:
-					turn = 0;
-					history = 0;
-				}
-				//count++;
-				fprintf(bt, "judge white, ");
-            }
-            else
-            {
-                //turn = -20 * count; /* 右旋回命令 */
-				//count = 0;
-				turn = 0; /* 直進命令 */
-				fprintf(bt, "judge black, ");
-			}
-#endif
+
 			// P制御
-			//error = cur_brightness - (white + black) / 2;
-			//error = TARGET - cur_brightness;	// 黒線の右側をトレース
 			error = cur_brightness - TARGET;	// 黒線の左側をトレース
 
 			// I制御
@@ -254,12 +173,11 @@ void main_task(intptr_t unused)
 				integral += errorList[i] * DELTA_T;
 			}
 			j + 1 < INT_NUM ? j++ : j = 0;
-        	//integral += (lasterror + error) / 2 * DELTA_T;
 
 			// D制御
 			turn = KP * error + KI * integral + KD * (error - lasterror) / DELTA_T;
 			lasterror = error;
-			//turn = KP * error;
+
 			if (turn > 100) {
 				turn = 100;
 			}
@@ -267,8 +185,7 @@ void main_task(intptr_t unused)
 				turn = -100;
 			}
 
-			//fprintf(bt, "cur_brightness = %d, turn = %f\n", cur_brightness, turn);
-			//fprintf(bt, "color_id = %d\n", color);
+			fprintf(bt, "cur_brightness = %d, turn = %f\n", cur_brightness, turn);
 		}
 
         /* 倒立振子制御API に渡すパラメータを取得する */
@@ -292,14 +209,16 @@ void main_task(intptr_t unused)
 
         leftMotor->setPWM(pwm_L);
         rightMotor->setPWM(pwm_R);
-		//fprintf(bt, "left = %d, right = %d\n", pwm_L, pwm_R);
-    	int32_t angle;
+#if 0
+		int32_t angle;
     	int32_t distance;
     	int32_t direction;
     	angle = (motor_ang_l + motor_ang_r) / 2;	// モーターの検出角度（累積値）
     	distance = angle * PI * DIAMETER / 360;		// 距離
     	direction = (motor_ang_l % (360 * 4) - motor_ang_r % (360 * 4)) / 4; // 向き（スタート時の向きを0度として、時計回りの角度）
-    	fprintf(bt, "angle = %ld, distance = %ld, direction = %ld\n", angle, distance, direction);
+#endif
+		CalcDistanceAndDirection(motor_ang_l, motor_ang_r, distance, direction);
+    	fprintf(bt, "distance = %ld, direction = %ld\n", distance, direction);
         clock->sleep(4); /* 4msec周期起動 */
     }
     leftMotor->reset();
