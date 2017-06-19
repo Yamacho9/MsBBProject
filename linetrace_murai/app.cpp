@@ -17,6 +17,7 @@
 #include "GyroSensor.h"
 #include "Motor.h"
 #include "Clock.h"
+#include "LineTrace.h"
 
 using namespace ev3api;
 
@@ -45,9 +46,9 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 //#define DEVICE_NAME     "ET0"  /* Bluetooth名 hrp2/target/ev3.h BLUETOOTH_LOCAL_NAMEで設定 */
 //#define PASS_KEY        "1234" /* パスキー    hrp2/target/ev3.h BLUETOOTH_PIN_CODEで設定 */
 #define CMD_START         '1'    /* リモートスタートコマンド */
-#define KP					0.74/*0.74*/ //ライントレース制御 比例係数
-#define KI					0.01/*0.01*/ //ライントレース制御 積分係数
-#define KD					0.03/*0.20*/ //ライントレース制御 微分係数
+//#define KP					0.74/*0.74*/ //ライントレース制御 比例係数
+//#define KI					0.01/*0.01*/ //ライントレース制御 積分係数
+//#define KD					0.03/*0.20*/ //ライントレース制御 微分係数
 #define TARGET				35	 //ライントレース制御 光量ターゲット値
 #define DELTA_T				0.004 //処理周期（s）
 #define INT_NUM				250	//積分する偏差数(1s分)
@@ -84,12 +85,13 @@ void main_task(intptr_t unused)
 //	int8_t monochrome;	/* 線色判断値 */
 //	colorid_t color;	/* 色番号 */
 //	int8_t history;		/* 直近の旋回　0:無、1:右、2:左 */
-	float error=0, lasterror=0, integral=0;
-	float errorList[INT_NUM];	// 偏差履歴
-	int i = 0, j = 0;
+//	float error=0, lasterror=0, integral=0;
+	int errorList[INT_NUM];	// 偏差履歴
+	int i;
 	for (i = 0; i < INT_NUM; i++) {
 		errorList[i] = 0;
 	}
+	int nextErrorIndex = 0;
     /* 各オブジェクトを生成・初期化する */
     touchSensor = new TouchSensor(PORT_1);
     colorSensor = new ColorSensor(PORT_3);
@@ -239,6 +241,7 @@ void main_task(intptr_t unused)
 				fprintf(bt, "judge black, ");
 			}
 #endif
+#if 0
 			// P制御
 			//error = cur_brightness - (white + black) / 2;
 			//error = TARGET - cur_brightness;	// 黒線の右側をトレース
@@ -263,7 +266,8 @@ void main_task(intptr_t unused)
 			else if (turn < -100) {
 				turn = -100;
 			}
-
+#endif
+			turn = LineTrace(TARGET, cur_brightness, DELTA_T, errorList, nextErrorIndex);
 			fprintf(bt, "cur_brightness = %d, turn = %f\n", cur_brightness, turn);
 			//fprintf(bt, "color_id = %d\n", color);
 		}

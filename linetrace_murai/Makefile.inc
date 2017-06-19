@@ -1,4 +1,4 @@
-APPL_COBJS += balancer.o balancer_param.o
+APPL_COBJS += balancer.o balancer_param.o LineTrace.o
 
 APPL_CXXOBJS += 
 
