@@ -207,15 +207,17 @@ void main_task(intptr_t unused)
 
         leftMotor->setPWM(pwm_L);
         rightMotor->setPWM(pwm_R);
-#if 0
+#if 1
 		int32_t angle;
     	angle = (motor_ang_l + motor_ang_r) / 2;	// モーターの検出角度（累積値）
     	distance = angle * PI * DIAMETER / 360;		// 距離
     	direction = (motor_ang_l % (360 * 4) - motor_ang_r % (360 * 4)) / 4; // 向き（スタート時の向きを0度として、時計回りの角度）
 #endif
+#if 0
     	distance = 0;
     	direction = 0;
 		CalcDistanceAndDirection(motor_ang_l, motor_ang_r, distance, direction);
+#endif
     	fprintf(bt, "distance = %ld, direction = %ld\n", distance, direction);
         clock->sleep(4); /* 4msec周期起動 */
     }
