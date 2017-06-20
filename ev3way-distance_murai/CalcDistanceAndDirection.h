@@ -14,7 +14,7 @@ extern "C" {
 #define PI					3.14	//‰~Žü—¦
 #define DIAMETER			80	//ŽÔ—Ö‚Ì’¼Œa(80mm)
 
-extern void CalcDistanceAndDirection(int32_t leftCnt, int32_t rightCnt, int32_t distance, int32_t direction);
+extern void CalcDistanceAndDirection(int leftCnt, int rightCnt, int distance, int direction);
 
 #ifdef __cplusplus
 }

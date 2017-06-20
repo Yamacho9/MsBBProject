@@ -76,8 +76,6 @@ void main_task(intptr_t unused)
     int8_t forward;      /* 前後進命令 */
 	float turn;         /* 旋回命令 */
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
-	int8_t white;		/* 白色の光センサ値 */
-	int8_t black;		/* 黒色の光センサ値 */
 	int8_t cur_brightness;	/* 検出した光センサ値 */
 	float error=0, lasterror=0, integral=0;
 	float errorList[INT_NUM];	// 偏差履歴
@@ -211,12 +209,12 @@ void main_task(intptr_t unused)
         rightMotor->setPWM(pwm_R);
 #if 0
 		int32_t angle;
-    	int32_t distance;
-    	int32_t direction;
     	angle = (motor_ang_l + motor_ang_r) / 2;	// モーターの検出角度（累積値）
     	distance = angle * PI * DIAMETER / 360;		// 距離
     	direction = (motor_ang_l % (360 * 4) - motor_ang_r % (360 * 4)) / 4; // 向き（スタート時の向きを0度として、時計回りの角度）
 #endif
+    	distance = 0;
+    	direction = 0;
 		CalcDistanceAndDirection(motor_ang_l, motor_ang_r, distance, direction);
     	fprintf(bt, "distance = %ld, direction = %ld\n", distance, direction);
         clock->sleep(4); /* 4msec周期起動 */
