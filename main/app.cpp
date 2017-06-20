@@ -107,12 +107,6 @@ void main_task(intptr_t unused)
     /* Open Bluetooth file */
 	/* iniファイルからbluetooth情報を取得する */
 	
-	/*接続状態を確認*/
-	Message("waitting bluetooth connect");
-	while(!ev3_bluetooth_is_connected()){
-		tslp_tsk(100);
-	}
-	
 	/*シリアルポートを開く*/
 	bt = ev3_serial_open_file(EV3_SERIAL_BT);
 	assert(bt != NULL);
@@ -126,15 +120,15 @@ void main_task(intptr_t unused)
 	Message("Init finished.");
 	
 	//bluetooth start
+	Message("bluetooth start waiting...");
 	while(1){
-		Message("bluetooth start waiting...");
-		 if (bt_cmd == 1){//bluetooth start
-		 	fprintf(bt,"bluetooth start");
+		if (bt_cmd == 1){//bluetooth start
+			fprintf(bt,"bluetooth start");
     		break;
     	}
 		if (touchSensor->isPressed())
         {
-		 	fprintf(bt,"touch sensor start");
+		 	Message("touch sensor start");
             break; /* タッチセンサが押された */
         }
 		clock->sleep(10);
@@ -277,26 +271,12 @@ static void tail_control(int32_t angle)
 //*****************************************************************************
 void bt_task(intptr_t unused)
 {
-	//colorSensor_dataを送信したい
 	/*通信処理*/
 	while(1){
-		/*
-		char str[4];
-		char* color = "c";
-		char* nn = "|";
-		
-		sprintf(str, "%d", colorSensor_data);
-
-		//現在の情報を送信
-		fwrite(color,1,3,bt);
-		fwrite(str,1,5,bt);
-		fwrite(nn,1,3,bt);
-		*/
-		
 		//受信
-		uint8_t c = fgetc(bt);
+		char c = fgetc(bt);
 		switch(c){
-		case 1:
+		case '1':
 			bt_cmd = 1;
 			break;
 		default:
