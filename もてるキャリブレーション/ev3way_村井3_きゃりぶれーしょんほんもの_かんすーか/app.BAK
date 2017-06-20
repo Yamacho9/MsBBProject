@@ -36,16 +36,12 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 
 /* 下記のマクロは個体/環境に合わせて変更する必要があります */
 #define GYRO_OFFSET           0  /* ジャイロセンサオフセット値(角速度0[deg/sec]時) */
-//#define LIGHT_WHITE          40  /* 白色の光センサ値 */
-//#define LIGHT_BLACK           0  /* 黒色の光センサ値 */
 #define SONAR_ALERT_DISTANCE 30  /* 超音波センサによる障害物検知距離[cm] */
 #define TAIL_ANGLE_STAND_UP  87  /* 完全停止時の角度[度] */
 #define TAIL_ANGLE_DRIVE      3  /* バランス走行時の角度[度] */
 #define TAIL_ANGLE_INIT       0  /* 0度 */
 #define P_GAIN             2.5F  /* 完全停止用モータ制御比例係数 */
 #define PWM_ABS_MAX          60  /* 完全停止用モータ制御PWM絶対最大値 */
-//#define DEVICE_NAME     "ET0"  /* Bluetooth名 hrp2/target/ev3.h BLUETOOTH_LOCAL_NAMEで設定 */
-//#define PASS_KEY        "1234" /* パスキー    hrp2/target/ev3.h BLUETOOTH_PIN_CODEで設定 */
 #define CMD_START         '1'    /* リモートスタートコマンド */
 #define KP					0.74/*0.74*/ //ライントレース制御 比例係数
 #define KI					0.01/*0.01*/ //ライントレース制御 積分係数
@@ -61,6 +57,7 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 /* 関数プロトタイプ宣言 */
 static int32_t sonar_alert(void);
 static void tail_control(int32_t angle);
+static void carib(void);
 
 /* オブジェクトへのポインタ定義 */
 TouchSensor*    touchSensor;
@@ -72,6 +69,8 @@ Motor*          rightMotor;
 Motor*          tailMotor;
 Clock*          clock;
 
+int min=255, max=-255;
+
 /* メインタスク */
 void main_task(intptr_t unused)
 {
@@ -82,9 +81,6 @@ void main_task(intptr_t unused)
 	int8_t white;		/* 白色の光センサ値 */
 	int8_t black;		/* 黒色の光センサ値 */
 	int8_t cur_brightness;	/* 検出した光センサ値 */
-//	int8_t monochrome;	/* 線色判断値 */
-//	colorid_t color;	/* 色番号 */
-//	int8_t history;		/* 直近の旋回　0:無、1:右、2:左 */
 	float error=0, lasterror=0, integral=0;
 
     /* 各オブジェクトを生成・初期化する */
@@ -113,161 +109,8 @@ void main_task(intptr_t unused)
     act_tsk(BT_TASK);
 
     ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
-#if 0
-   /* カラーセンサーキャリブレーション */
-   /**
-   * Calibrate for light intensity of WHITE
-   */
-	ev3_speaker_play_tone(NOTE_C4, 100);
-	// TODO: Calibrate using maximum mode => 100
-	fprintf(bt, "Press the touch sensor to measure light intensity of WHITE.\n");
-	while (!touchSensor->isPressed());
-	while (touchSensor->isPressed());
-	white = colorSensor->getBrightness();
-	//color = colorSensor->getColorNumber();
-	fprintf(bt, "brightness: %d\n", white);
 
-	/**
-	* Calibrate for light intensity of BLACK
-	*/
-	ev3_speaker_play_tone(NOTE_C4, 100);
-	// TODO: Calibrate using maximum mode => 100
-	// TODO: Calibrate using minimum mode => 0
-	fprintf(bt, "Press the touch sensor to measure light intensity of BLACK.\n");
-	while (!touchSensor->isPressed());
-	while (touchSensor->isPressed());
-	black = colorSensor->getBrightness();
-	//color = colorSensor->getColorNumber();
-	fprintf(bt, "brightness: %d\n", black);
-#endif
-#if 0
-	/**
-	* Calibrate for light intensity of GRAY
-	*/
-	ev3_speaker_play_tone(NOTE_C4, 100);
-	// TODO: Calibrate using maximum mode => 100
-	// TODO: Calibrate using minimum mode => 0
-	fprintf(bt, "Press the touch sensor to measure light intensity of GRAY.\n");
-	while (!touchSensor->isPressed());
-	while (touchSensor->isPressed());
-	black = colorSensor->getBrightness();
-	//color = colorSensor->getColorNumber();
-	fprintf(bt, "brightness: %d , color: %d\n", black);
-#endif
-	/* スタート待機 */
-    while(1)
-    {
-        tail_control(TAIL_ANGLE_STAND_UP); /* 完全停止用角度に制御 */
-
-        if (bt_cmd == 1)
-        {
-            break; /* リモートスタート */
-        }
-
-        if (touchSensor->isPressed())
-        {
-            break; /* タッチセンサが押された */
-        }
-
-        clock->sleep(10);
-    }
-
-    /* 走行モーターエンコーダーリセット */
-    leftMotor->reset();
-    rightMotor->reset();
-    
-    /* ジャイロセンサーリセット */
-    gyroSensor->reset();
-    balance_init(); /* 倒立振子API初期化 */
-
-	//count = 0; /* 連続旋回回数初期化*/
-	//history = 0; //直近の旋回初期化
-	
-    ev3_led_set_color(LED_GREEN); /* スタート通知 */
-
-    /**
-    * Main loop for the self-balance control algorithm
-    */
-	//clock_t start = clock();    // スタート時間
-	turn = 0;
-	forward = 23; /* 前進命令 */
-	int count=0, count2=0;
-	int min=255, max=-255;
-    while(1)
-    {
-        int32_t motor_ang_l, motor_ang_r;
-        int32_t gyro, volt;
-
-        if (ev3_button_is_pressed(BACK_BUTTON)) break;
-
-        tail_control(TAIL_ANGLE_DRIVE); /* バランス走行用角度に制御 */
-
-        if (sonar_alert() == 1) /* 障害物検知 */
-        {
-			//fprintf(bt, "Detect things\n");
-			forward = turn = 0; /* 障害物を検知したら停止 */
-		}
-        else
-        {
-			cur_brightness = colorSensor->getBrightness();
-			
-			if(cur_brightness>=max){
-				max = cur_brightness;
-			}
-			if(cur_brightness<=min){
-				min = cur_brightness;
-			}
-			//forward = 0; /* 前進命令 */
-			fprintf(bt, "max = %d, min = %d\n", max, min);
-			//fprintf(bt, "color_id = %d\n", color);
-		}
-
-        /* 倒立振子制御API に渡すパラメータを取得する */
-        motor_ang_l = leftMotor->getCount();
-        motor_ang_r = rightMotor->getCount();
-        gyro = gyroSensor->getAnglerVelocity();
-        volt = ev3_battery_voltage_mV();
-
-
-        /* 倒立振子制御APIを呼び出し、倒立走行するための */
-        /* 左右モータ出力値を得る */
-        balance_control(
-            (float)forward,
-            (float)turn,
-            (float)gyro,
-            (float)GYRO_OFFSET,
-            (float)motor_ang_l,
-            (float)motor_ang_r,
-            (float)volt,
-            (int8_t *)&pwm_L,
-            (int8_t *)&pwm_R);
-
-        leftMotor->setPWM(pwm_L);
-        rightMotor->setPWM(pwm_R);
-		//fprintf(bt, "left = %d, right = %d\n", pwm_L, pwm_R);
-
-	//	clock_t end = clock();     // 終了時間
-	//	if (((double)(end - start) / CLOCKS_PER_SEC)>=2) {
-	//		forward = forward*(-1);
-	//		start = clock();
-	//	}
-		//std::cout << "duration = " << (double)(end - start) / CLOCKS_PER_SEC << "sec.\n";
-        clock->sleep(4); /* 4msec周期起動 */
-        if(count>=250){
-			forward=forward*(-1);
-			count2++;
-			if(count2>=4){
-					break;
-			}
-			count=0;
-		}
-        count++;
-    }
-    leftMotor->reset();
-    rightMotor->reset();
-
-    ter_tsk(BT_TASK);
-    fclose(bt);
+	carib();
 
     ext_tsk();
 }
@@ -350,5 +193,118 @@ void bt_task(intptr_t unused)
             break;
         }
         fputc(c, bt); /* エコーバック */
+    }
+}
+
+//******
+// Cariblation
+//******
+void carib(){
+	int8_t cur_brightness;	/* 検出した光センサ値 */
+	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
+	
+		/* キャリブレーション待機 */
+    while(1)
+    {
+        tail_control(TAIL_ANGLE_STAND_UP); /* 完全停止用角度に制御 */
+        if (touchSensor->isPressed())
+        {
+            break; /* タッチセンサが押された */
+        }
+        clock->sleep(10);
+        
+    }
+    
+        /* 走行モーターエンコーダーリセット */
+    leftMotor->reset();
+    rightMotor->reset();
+    
+    /* ジャイロセンサーリセット */
+    gyroSensor->reset();
+    balance_init(); /* 倒立振子API初期化 */
+	
+    ev3_led_set_color(LED_GREEN); /* スタート通知 */
+
+    /**
+    * Main loop for the self-balance control algorithm
+    */
+	//clock_t start = clock();    // スタート時間
+	int forward = 23; /* 前進命令 */
+	int turn = 0;
+	int count=0, count2=0;
+	int min=255, max=-255;
+    while(1)
+    {
+        int32_t motor_ang_l, motor_ang_r;
+        int32_t gyro, volt;
+
+        if (ev3_button_is_pressed(BACK_BUTTON)) break;
+
+        tail_control(TAIL_ANGLE_DRIVE); /* バランス走行用角度に制御 */
+
+        if (sonar_alert() == 1) /* 障害物検知 */
+        {
+			forward = turn = 0; /* 障害物を検知したら停止 */
+		}
+        else
+        {
+			cur_brightness = colorSensor->getBrightness();
+			
+			if(cur_brightness>=max){
+				max = cur_brightness;
+			}
+			if(cur_brightness<=min){
+				min = cur_brightness;
+			}
+			fprintf(bt, "max = %d, min = %d\n", max, min);
+		}
+
+        /* 倒立振子制御API に渡すパラメータを取得する */
+        motor_ang_l = leftMotor->getCount();
+        motor_ang_r = rightMotor->getCount();
+        gyro = gyroSensor->getAnglerVelocity();
+        volt = ev3_battery_voltage_mV();
+
+
+        /* 倒立振子制御APIを呼び出し、倒立走行するための */
+        /* 左右モータ出力値を得る */
+        balance_control(
+            (float)forward,
+            (float)turn,
+            (float)gyro,
+            (float)GYRO_OFFSET,
+            (float)motor_ang_l,
+            (float)motor_ang_r,
+            (float)volt,
+            (int8_t *)&pwm_L,
+            (int8_t *)&pwm_R);
+
+        leftMotor->setPWM(pwm_L);
+        rightMotor->setPWM(pwm_R);
+
+        clock->sleep(4); /* 4msec周期起動 */
+        if(count>=250){
+			forward=forward*(-1);
+			count2++;
+			if(count2>=4){
+					break;
+			}
+			count=0;
+		}
+        count++;
+    }
+    leftMotor->reset();
+    rightMotor->reset();
+    
+    /* スタート待機 */
+    while(1)
+    {
+        tail_control(TAIL_ANGLE_STAND_UP); /* 完全停止用角度に制御 */
+        if (touchSensor->isPressed())
+        {
+            break; /* タッチセンサが押された */
+        }
+        clock->sleep(10);
+        
     }
 }
