@@ -157,9 +157,9 @@ void bt_task(intptr_t unused)
 		*/
 		
 		//óM
-		uint8_t c = fgetc(bt);
+		char c = fgetc(bt);
 		switch(c){
-		case 1:
+		case '1':
 			bt_cmd = 1;
 			break;
 		default:
