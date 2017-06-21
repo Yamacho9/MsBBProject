@@ -45,12 +45,11 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 //#define DEVICE_NAME     "ET0"  /* Bluetooth名 hrp2/target/ev3.h BLUETOOTH_LOCAL_NAMEで設定 */
 //#define PASS_KEY        "1234" /* パスキー    hrp2/target/ev3.h BLUETOOTH_PIN_CODEで設定 */
 #define CMD_START         '1'    /* リモートスタートコマンド */
-#define KP					0.74 //ライントレース制御 比例係数
+#define KP					0.74/*0.74*/ //ライントレース制御 比例係数
 #define KI					0.01/*0.01*/ //ライントレース制御 積分係数
-#define KD					0.01/*7.5*/ //ライントレース制御 微分係数
+#define KD					0.03/*0.20*/ //ライントレース制御 微分係数
 #define TARGET				35	 //ライントレース制御 光量ターゲット値
-//#define INT_TIME			0.004 //タイムステップ値
-#define INT_NUM				50	//積分する偏差数
+#define DELTA_T				0.004 //処理周期（s）
 
 /* LCDフォントサイズ */
 #define CALIB_FONT (EV3_FONT_SMALL)
@@ -78,18 +77,13 @@ void main_task(intptr_t unused)
 //  int8_t turn;         /* 旋回命令 */
 	float turn;         /* 旋回命令 */
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
-	int8_t white;		/* 白色の光センサ値 */
-	int8_t black;		/* 黒色の光センサ値 */
+	int8_t white=-128;		/* 白色の光センサ値 */
+	int8_t black=127;		/* 黒色の光センサ値 */
 	int8_t cur_brightness;	/* 検出した光センサ値 */
 //	int8_t monochrome;	/* 線色判断値 */
 //	colorid_t color;	/* 色番号 */
 //	int8_t history;		/* 直近の旋回　0:無、1:右、2:左 */
-	float error=0, lasterror=0, integral=0;	//現在の偏差、直前の偏差、積分値
-	float errorList[INT_NUM];	// 偏差履歴
-	int i = 0, j = 0;
-	for (i = 0; i < INT_NUM; i++) {
-		errorList[i] = 0;
-	}
+	float error=0, lasterror=0, integral=0;
 
     /* 各オブジェクトを生成・初期化する */
     touchSensor = new TouchSensor(PORT_1);
@@ -144,6 +138,7 @@ void main_task(intptr_t unused)
 	//color = colorSensor->getColorNumber();
 	fprintf(bt, "brightness: %d\n", black);
 #endif
+
 #if 0
 	/**
 	* Calibrate for light intensity of GRAY
@@ -158,24 +153,6 @@ void main_task(intptr_t unused)
 	//color = colorSensor->getColorNumber();
 	fprintf(bt, "brightness: %d , color: %d\n", black);
 #endif
-	/* スタート待機 */
-    while(1)
-    {
-        tail_control(TAIL_ANGLE_STAND_UP); /* 完全停止用角度に制御 */
-
-        if (bt_cmd == 1)
-        {
-            break; /* リモートスタート */
-        }
-
-        if (touchSensor->isPressed())
-        {
-            break; /* タッチセンサが押された */
-        }
-
-        clock->sleep(10);
-    }
-
     /* 走行モーターエンコーダーリセット */
     leftMotor->reset();
     rightMotor->reset();
@@ -186,12 +163,10 @@ void main_task(intptr_t unused)
 
 	//count = 0; /* 連続旋回回数初期化*/
 	//history = 0; //直近の旋回初期化
-	
-    ev3_led_set_color(LED_GREEN); /* スタート通知 */
 
-    /**
-    * Main loop for the self-balance control algorithm
-    */
+	/* スタート待機 */
+	int32_t flagg=0;
+	int32_t count = 0;
     while(1)
     {
         int32_t motor_ang_l, motor_ang_r;
@@ -208,63 +183,84 @@ void main_task(intptr_t unused)
 		}
         else
         {
+			if(count>32){
+				break;
+			}	          
+			cur_brightness = colorSensor->getBrightness();
+			if(count==0){
+			    forward = 45; /* 前進命令 */
+				white = cur_brightness;
+				black = cur_brightness;
+				flagg = -1;
+			}else{
+				if(cur_brightness>white){
+					white = cur_brightness;
+					flagg=0;
+				}else if(cur_brightness<black){
+					black = cur_brightness;
+					flagg=1;
+				}
+			}
+			
+			turn=0;
+
+			fprintf(bt, "cur_brightness = %d, turn = %f\n", cur_brightness, turn);
+			//fprintf(bt, "color_id = %d\n", color);
+			count++;
+		}
+
+        /* 倒立振子制御API に渡すパラメータを取得する */
+        motor_ang_l = leftMotor->getCount();
+        motor_ang_r = rightMotor->getCount();
+        gyro = gyroSensor->getAnglerVelocity();
+        volt = ev3_battery_voltage_mV();
+
+        /* 倒立振子制御APIを呼び出し、倒立走行するための */
+        /* 左右モータ出力値を得る */
+        balance_control(
+            (float)forward,
+            (float)turn,
+            (float)gyro,
+            (float)GYRO_OFFSET,
+            (float)motor_ang_l,
+            (float)motor_ang_r,
+            (float)volt,
+            (int8_t *)&pwm_L,
+            (int8_t *)&pwm_R);
+
+        leftMotor->setPWM(pwm_L);
+        rightMotor->setPWM(pwm_R);
+		//fprintf(bt, "left = %d, right = %d\n", pwm_L, pwm_R);
+
+        clock->sleep(4); /* 4msec周期起動 */
+    }
+
+    
+    
+    ev3_led_set_color(LED_GREEN); /* スタート通知 */    
+
+    /**
+    * Main loop for the self-balance control algorithm
+    */
+    int32_t count = 0;
+    while(1)
+    {
+        int32_t motor_ang_l, motor_ang_r;
+        int32_t gyro, volt;
+        turn = 0;
+
+        if (ev3_button_is_pressed(BACK_BUTTON)) break;
+
+        tail_control(TAIL_ANGLE_DRIVE); /* バランス走行用角度に制御 */
+
+        if (sonar_alert() == 1) /* 障害物検知 */
+        {
+			//fprintf(bt, "Detect things\n");
+			forward = turn = 0; /* 障害物を検知したら停止 */
+		}else{
             forward = 45; /* 前進命令 */
 			cur_brightness = colorSensor->getBrightness();
-			//monochrome = (cur_brightness - white) / (black - white) * 100;
-			//color = colorSensor->getColorNumber();
-#if 0
-            if (color != 1)
-            {
-				switch (history) {
-				case 0: //初回
-				case 1: //直近の旋回：右
-					turn = 20; /* 左旋回命令 */
-					history = 2;
-					break;
-				case 2: //直近の旋回：左
-					turn = -20; // 右旋回命令
-					history = 1;
-					break;
-				default:
-					turn = 0;
-					history = 0;
-				}
-				//count++;
-				fprintf(bt, "judge white, ");
-            }
-            else
-            {
-                //turn = -20 * count; /* 右旋回命令 */
-				//count = 0;
-				turn = 0; /* 直進命令 */
-				fprintf(bt, "judge black, ");
-			}
-#endif
-			//error = cur_brightness - (white + black) / 2;
-			//error = TARGET - cur_brightness;	// 黒線の右側をトレース
-			//error = cur_brightness - TARGET;	// 黒線の左側をトレース
-			//integral = error*INT_TIME + integral;
-			errorList[j] = cur_brightness - TARGET;	// 黒線の左側をトレース
-#if 1
-        	integral = 0;
-			for (i = 0; i < INT_NUM; i++) {
-				integral += errorList[i];
-			}
-        	if (j == 0) {
-				turn = KP * errorList[j] + KI * integral + KD * (errorList[j] - errorList[INT_NUM-1]);
-			}
-			else {
-				turn = KP * errorList[j] + KI * integral + KD * (errorList[j] - errorList[j-1]);
-			}
-#endif
-			//lasterror = error;
-			(j + 1 < INT_NUM) ? j++ : j = 0;
-			if (turn > 100) {
-				turn = 100;
-			}
-			else if (turn < -100) {
-				turn = -100;
-			}
+			if(count==0)white=cur_brightness;
 
 			fprintf(bt, "cur_brightness = %d, turn = %f\n", cur_brightness, turn);
 			//fprintf(bt, "color_id = %d\n", color);

@@ -17,7 +17,8 @@
 #include "GyroSensor.h"
 #include "Motor.h"
 #include "Clock.h"
-#include "LineTrace.h"
+
+//#include <time.h>
 
 using namespace ev3api;
 
@@ -35,8 +36,10 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 
 /* 下記のマクロは個体/環境に合わせて変更する必要があります */
 #define GYRO_OFFSET           0  /* ジャイロセンサオフセット値(角速度0[deg/sec]時) */
+//#define LIGHT_WHITE          40  /* 白色の光センサ値 */
+//#define LIGHT_BLACK           0  /* 黒色の光センサ値 */
 #define SONAR_ALERT_DISTANCE 30  /* 超音波センサによる障害物検知距離[cm] */
-#define TAIL_ANGLE_STAND_UP  93  /* 完全停止時の角度[度] */
+#define TAIL_ANGLE_STAND_UP  87  /* 完全停止時の角度[度] */
 #define TAIL_ANGLE_DRIVE      3  /* バランス走行時の角度[度] */
 #define TAIL_ANGLE_INIT       0  /* 0度 */
 #define P_GAIN             2.5F  /* 完全停止用モータ制御比例係数 */
@@ -44,9 +47,11 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 //#define DEVICE_NAME     "ET0"  /* Bluetooth名 hrp2/target/ev3.h BLUETOOTH_LOCAL_NAMEで設定 */
 //#define PASS_KEY        "1234" /* パスキー    hrp2/target/ev3.h BLUETOOTH_PIN_CODEで設定 */
 #define CMD_START         '1'    /* リモートスタートコマンド */
+#define KP					0.74/*0.74*/ //ライントレース制御 比例係数
+#define KI					0.01/*0.01*/ //ライントレース制御 積分係数
+#define KD					0.03/*0.20*/ //ライントレース制御 微分係数
 #define TARGET				35	 //ライントレース制御 光量ターゲット値
 #define DELTA_T				0.004 //処理周期（s）
-#define INT_NUM				250	//積分する偏差数(1s分)
 
 /* LCDフォントサイズ */
 #define CALIB_FONT (EV3_FONT_SMALL)
@@ -71,17 +76,18 @@ Clock*          clock;
 void main_task(intptr_t unused)
 {
     int8_t forward;      /* 前後進命令 */
+//  int8_t turn;         /* 旋回命令 */
 	float turn;         /* 旋回命令 */
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
+	int8_t white;		/* 白色の光センサ値 */
+	int8_t black;		/* 黒色の光センサ値 */
 	int8_t cur_brightness;	/* 検出した光センサ値 */
-	int errorList[INT_NUM];	//偏差履歴テーブル
-	int i;
-	for (i = 0; i < INT_NUM; i++) { //テーブル初期化
-		errorList[i] = 0;
-	}
-	int nextErrorIndex = 0;	//次の変更履歴のインデックス
+//	int8_t monochrome;	/* 線色判断値 */
+//	colorid_t color;	/* 色番号 */
+//	int8_t history;		/* 直近の旋回　0:無、1:右、2:左 */
+	float error=0, lasterror=0, integral=0;
 
-	/* 各オブジェクトを生成・初期化する */
+    /* 各オブジェクトを生成・初期化する */
     touchSensor = new TouchSensor(PORT_1);
     colorSensor = new ColorSensor(PORT_3);
     sonarSensor = new SonarSensor(PORT_2);
@@ -107,7 +113,47 @@ void main_task(intptr_t unused)
     act_tsk(BT_TASK);
 
     ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
+#if 0
+   /* カラーセンサーキャリブレーション */
+   /**
+   * Calibrate for light intensity of WHITE
+   */
+	ev3_speaker_play_tone(NOTE_C4, 100);
+	// TODO: Calibrate using maximum mode => 100
+	fprintf(bt, "Press the touch sensor to measure light intensity of WHITE.\n");
+	while (!touchSensor->isPressed());
+	while (touchSensor->isPressed());
+	white = colorSensor->getBrightness();
+	//color = colorSensor->getColorNumber();
+	fprintf(bt, "brightness: %d\n", white);
 
+	/**
+	* Calibrate for light intensity of BLACK
+	*/
+	ev3_speaker_play_tone(NOTE_C4, 100);
+	// TODO: Calibrate using maximum mode => 100
+	// TODO: Calibrate using minimum mode => 0
+	fprintf(bt, "Press the touch sensor to measure light intensity of BLACK.\n");
+	while (!touchSensor->isPressed());
+	while (touchSensor->isPressed());
+	black = colorSensor->getBrightness();
+	//color = colorSensor->getColorNumber();
+	fprintf(bt, "brightness: %d\n", black);
+#endif
+#if 0
+	/**
+	* Calibrate for light intensity of GRAY
+	*/
+	ev3_speaker_play_tone(NOTE_C4, 100);
+	// TODO: Calibrate using maximum mode => 100
+	// TODO: Calibrate using minimum mode => 0
+	fprintf(bt, "Press the touch sensor to measure light intensity of GRAY.\n");
+	while (!touchSensor->isPressed());
+	while (touchSensor->isPressed());
+	black = colorSensor->getBrightness();
+	//color = colorSensor->getColorNumber();
+	fprintf(bt, "brightness: %d , color: %d\n", black);
+#endif
 	/* スタート待機 */
     while(1)
     {
@@ -134,11 +180,19 @@ void main_task(intptr_t unused)
     gyroSensor->reset();
     balance_init(); /* 倒立振子API初期化 */
 
+	//count = 0; /* 連続旋回回数初期化*/
+	//history = 0; //直近の旋回初期化
+	
     ev3_led_set_color(LED_GREEN); /* スタート通知 */
 
     /**
     * Main loop for the self-balance control algorithm
     */
+	//clock_t start = clock();    // スタート時間
+	turn = 0;
+	forward = 23; /* 前進命令 */
+	int count=0, count2=0;
+	int min=255, max=-255;
     while(1)
     {
         int32_t motor_ang_l, motor_ang_r;
@@ -150,14 +204,22 @@ void main_task(intptr_t unused)
 
         if (sonar_alert() == 1) /* 障害物検知 */
         {
+			//fprintf(bt, "Detect things\n");
 			forward = turn = 0; /* 障害物を検知したら停止 */
 		}
         else
         {
-            forward = 45; /* 前進命令 */
 			cur_brightness = colorSensor->getBrightness();
-			turn = LineTrace(TARGET, cur_brightness, DELTA_T, errorList, nextErrorIndex);
-			fprintf(bt, "cur_brightness = %d, turn = %f\n", cur_brightness, turn);
+			
+			if(cur_brightness>=max){
+				max = cur_brightness;
+			}
+			if(cur_brightness<=min){
+				min = cur_brightness;
+			}
+			//forward = 0; /* 前進命令 */
+			fprintf(bt, "max = %d, min = %d\n", max, min);
+			//fprintf(bt, "color_id = %d\n", color);
 		}
 
         /* 倒立振子制御API に渡すパラメータを取得する */
@@ -165,6 +227,7 @@ void main_task(intptr_t unused)
         motor_ang_r = rightMotor->getCount();
         gyro = gyroSensor->getAnglerVelocity();
         volt = ev3_battery_voltage_mV();
+
 
         /* 倒立振子制御APIを呼び出し、倒立走行するための */
         /* 左右モータ出力値を得る */
@@ -181,8 +244,24 @@ void main_task(intptr_t unused)
 
         leftMotor->setPWM(pwm_L);
         rightMotor->setPWM(pwm_R);
+		//fprintf(bt, "left = %d, right = %d\n", pwm_L, pwm_R);
 
+	//	clock_t end = clock();     // 終了時間
+	//	if (((double)(end - start) / CLOCKS_PER_SEC)>=2) {
+	//		forward = forward*(-1);
+	//		start = clock();
+	//	}
+		//std::cout << "duration = " << (double)(end - start) / CLOCKS_PER_SEC << "sec.\n";
         clock->sleep(4); /* 4msec周期起動 */
+        if(count>=250){
+			forward=forward*(-1);
+			count2++;
+			if(count2>=4){
+					break;
+			}
+			count=0;
+		}
+        count++;
     }
     leftMotor->reset();
     rightMotor->reset();

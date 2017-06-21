@@ -2,9 +2,9 @@
  ******************************************************************************
  ** ファイル名 : app.cpp
  **
- ** 概要 : 2輪倒立振子ライントレースロボットのTOPPERS/HRP2用C++サンプルプログラム
+ ** 概要 : Bluetoothスタート ＋ ライントレース（PID制御）
  **
- ** 注記 : sample_cpp (ライントレース/尻尾モータ/超音波センサ/リモートスタート)
+ ** 注記 : 結合作業
  ******************************************************************************
  **/
 
@@ -52,10 +52,18 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 #define CALIB_FONT (EV3_FONT_SMALL)
 #define CALIB_FONT_WIDTH (6/*TODO: magic number*/)
 #define CALIB_FONT_HEIGHT (8/*TODO: magic number*/)
+#define MESSAGE_LEN 8
 
 /* 関数プロトタイプ宣言 */
 static int32_t sonar_alert(void);
 static void tail_control(int32_t angle);
+//メッセージを書く関数
+static void Message(const char* str);
+//状態を表示する関数
+void display();
+//各センサの初期化をする関数
+static void Init();
+
 
 /* オブジェクトへのポインタ定義 */
 TouchSensor*    touchSensor;
@@ -66,6 +74,10 @@ Motor*          leftMotor;
 Motor*          rightMotor;
 Motor*          tailMotor;
 Clock*          clock;
+
+/*表示するためのグローバル変数*/
+int count;
+static char message[MESSAGE_LEN + 1] = {0};
 
 /* メインタスク */
 void main_task(intptr_t unused)
@@ -81,50 +93,46 @@ void main_task(intptr_t unused)
 	}
 	int nextErrorIndex = 0;	//次の変更履歴のインデックス
 
-	/* 各オブジェクトを生成・初期化する */
-    touchSensor = new TouchSensor(PORT_1);
-    colorSensor = new ColorSensor(PORT_3);
-    sonarSensor = new SonarSensor(PORT_2);
-    gyroSensor  = new GyroSensor(PORT_4);
-    leftMotor   = new Motor(PORT_C);
-    rightMotor  = new Motor(PORT_B);
-    tailMotor   = new Motor(PORT_A);
-    clock       = new Clock();
-
-    /* LCD画面表示 */
-    ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
-    ev3_lcd_draw_string("EV3way-ET sample_cpp", 0, CALIB_FONT_HEIGHT*1);
-
-    /* 尻尾モーターのリセット */
+	/*グローバル変数の初期化*/
+	count = 1;
+	
+	/*各センサのポート設定*/
+	Init();
+	
+	/* 尻尾モーターのリセット */
     tailMotor->reset();
 	tail_control(TAIL_ANGLE_INIT); /* 0度に制御 */
 
+	
     /* Open Bluetooth file */
-    bt = ev3_serial_open_file(EV3_SERIAL_BT);
-    assert(bt != NULL);
-
+	/* iniファイルからbluetooth情報を取得する */
+	
+	/*シリアルポートを開く*/
+	bt = ev3_serial_open_file(EV3_SERIAL_BT);
+	assert(bt != NULL);
+	Message("bluetooth serial port open");
+    
     /* Bluetooth通信タスクの起動 */
-    act_tsk(BT_TASK);
-
+	act_tsk(BT_TASK);
+	Message("Bluetooth task Start");
+	
     ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
-
-	/* スタート待機 */
-    while(1)
-    {
-        tail_control(TAIL_ANGLE_STAND_UP); /* 完全停止用角度に制御 */
-
-        if (bt_cmd == 1)
+	Message("Init finished.");
+	
+	//bluetooth start
+	Message("bluetooth start waiting...");
+	while(1){
+		if (bt_cmd == 1){//bluetooth start
+			fprintf(bt,"bluetooth start");
+    		break;
+    	}
+		if (touchSensor->isPressed())
         {
-            break; /* リモートスタート */
-        }
-
-        if (touchSensor->isPressed())
-        {
+		 	Message("touch sensor start");
             break; /* タッチセンサが押された */
         }
-
-        clock->sleep(10);
-    }
+		clock->sleep(10);
+	}
 
     /* 走行モーターエンコーダーリセット */
     leftMotor->reset();
@@ -135,17 +143,21 @@ void main_task(intptr_t unused)
     balance_init(); /* 倒立振子API初期化 */
 
     ev3_led_set_color(LED_GREEN); /* スタート通知 */
-
+	
     /**
-    * Main loop for the self-balance control algorithm
+    * メインループ
     */
     while(1)
     {
         int32_t motor_ang_l, motor_ang_r;
         int32_t gyro, volt;
 
-        if (ev3_button_is_pressed(BACK_BUTTON)) break;
-
+    	if (ev3_button_is_pressed(BACK_BUTTON)){
+    		//backbuttonが押されると終了
+    		Message("finished...");
+    		break;
+    	}
+    	
         tail_control(TAIL_ANGLE_DRIVE); /* バランス走行用角度に制御 */
 
         if (sonar_alert() == 1) /* 障害物検知 */
@@ -187,6 +199,7 @@ void main_task(intptr_t unused)
     leftMotor->reset();
     rightMotor->reset();
 
+	/*終了処理*/
     ter_tsk(BT_TASK);
     fclose(bt);
 
@@ -254,22 +267,72 @@ static void tail_control(int32_t angle)
 // 関数名 : bt_task
 // 引数 : unused
 // 返り値 : なし
-// 概要 : Bluetooth通信によるリモートスタート。 Tera Termなどのターミナルソフトから、
-//       ASCIIコードで1を送信すると、リモートスタートする。
+// 概要 : 
 //*****************************************************************************
 void bt_task(intptr_t unused)
 {
-    while(1)
-    {
-        uint8_t c = fgetc(bt); /* 受信 */
-        switch(c)
-        {
-        case '1':
-            bt_cmd = 1;
-            break;
-        default:
-            break;
-        }
-        fputc(c, bt); /* エコーバック */
-    }
+	/*通信処理*/
+	while(1){
+		//受信
+		char c = fgetc(bt);
+		switch(c){
+		case '1':
+			bt_cmd = 1;
+			break;
+		default:
+			break;
+		
+		}
+		
+		clock->sleep(5);
+		
+	}
+	
 }
+
+//*******************************************************************
+// 関数名 : display
+// 引数 : なし
+// 返り値 : なし
+// 概要 : 状態を表示する
+//*******************************************************************
+void display()
+{
+  ev3_lcd_set_font(EV3_FONT_SMALL);
+  ev3_lcd_draw_string("Program is running", 10, 30);
+  ev3_lcd_set_font(EV3_FONT_MEDIUM);
+  ev3_lcd_draw_string(message, 10, 40);
+}
+
+//*******************************************************************
+// 関数名 : Message
+// 引数 : str(表示したい文字列)
+// 返り値 : なし
+// 概要 : 
+//*******************************************************************
+void Message(const char* str){
+	ev3_lcd_draw_string(str, 0, CALIB_FONT_HEIGHT*count);
+	count++;
+}
+
+
+//*******************************************************************
+// 関数名 : Init
+// 引数 : なし
+// 返り値 : なし
+// 概要 : 
+//*******************************************************************
+void Init(){
+
+	/* 各オブジェクトを生成・初期化する */
+    touchSensor = new TouchSensor(PORT_1);
+    colorSensor = new ColorSensor(PORT_3);
+    sonarSensor = new SonarSensor(PORT_2);
+    gyroSensor  = new GyroSensor(PORT_4);
+    leftMotor   = new Motor(PORT_C);
+    rightMotor  = new Motor(PORT_B);
+    tailMotor   = new Motor(PORT_A);
+    clock       = new Clock();
+}
+
+
