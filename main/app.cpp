@@ -64,8 +64,7 @@ void display();
 //各センサの初期化をする関数
 static void Init();
 //キャリブレーション
-void Calibration(int* min, int* max);
-
+void Calibration(int* min, int* max, Motor* left, Motor* right, GyroSensor* gyroSen, TouchSensor* touch);
 
 /* オブジェクトへのポインタ定義 */
 TouchSensor*    touchSensor;
@@ -80,10 +79,6 @@ Clock*          clock;
 /*表示するためのグローバル変数*/
 int count;
 static char message[MESSAGE_LEN + 1] = {0};
-
-/*キャリブレーションの結果*/
-//int min;
-//int max;
 
 /* メインタスク */
 void main_task(intptr_t unused)
@@ -113,8 +108,6 @@ void main_task(intptr_t unused)
 
 	
     /* Open Bluetooth file */
-	/* iniファイルからbluetooth情報を取得する */
-	
 	/*シリアルポートを開く*/
 	bt = ev3_serial_open_file(EV3_SERIAL_BT);
 	assert(bt != NULL);
@@ -126,9 +119,6 @@ void main_task(intptr_t unused)
 	
     ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
 	Message("Init finished.");
-	
-	//キャリブレーション
-	Calibration(&max,&min);
 	
 	//bluetooth start
 	Message("bluetooth start waiting...");
@@ -144,25 +134,27 @@ void main_task(intptr_t unused)
         }
 		clock->sleep(10);
 	}
+	
+	//キャリブレーション
+	//min,maxにキャリブレーションの結果が出力される
+	//Calibration(&min, &max);
+	Calibration(&min, &max, leftMotor, rightMotor, gyroSensor, touchSensor);
 
-    /* 走行モーターエンコーダーリセット */
+    ev3_led_set_color(LED_GREEN); /* スタート通知 */
+	
+	/* 走行モーターエンコーダーリセット */
     leftMotor->reset();
     rightMotor->reset();
     
     /* ジャイロセンサーリセット */
     gyroSensor->reset();
     balance_init(); /* 倒立振子API初期化 */
-
-    ev3_led_set_color(LED_GREEN); /* スタート通知 */
 	
     /**
     * メインループ
     */
     while(1)
     {
-        int32_t motor_ang_l, motor_ang_r;
-        int32_t gyro, volt;
-
     	if (ev3_button_is_pressed(BACK_BUTTON)){
     		//backbuttonが押されると終了
     		Message("finished...");
@@ -348,8 +340,10 @@ void Init(){
 
 //******
 // Calibration
+// 入力：なし
+// 出力：int min,int max
 //******
-void Calibration(int* max,int* min){
+void Calibration(int* min, int* max, ev3api::Motor* left, ev3api::Motor* right, ev3api::GyroSensor* gyroSen, ev3api::TouchSensor* touch){
 	int8_t cur_brightness;	/* 検出した光センサ値 */
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
 	
@@ -365,12 +359,12 @@ void Calibration(int* max,int* min){
         
     }
     
-        /* 走行モーターエンコーダーリセット */
-    leftMotor->reset();
-    rightMotor->reset();
+    /* 走行モーターエンコーダーリセット */
+    left->reset();
+    right->reset();
     
     /* ジャイロセンサーリセット */
-    gyroSensor->reset();
+    gyroSen->reset();
     balance_init(); /* 倒立振子API初期化 */
 	
     ev3_led_set_color(LED_GREEN); /* スタート通知 */
@@ -386,8 +380,6 @@ void Calibration(int* max,int* min){
 	//*max=-255;
     while(1)
     {
-        int32_t motor_ang_l, motor_ang_r;
-        int32_t gyro, volt;
 
         if (ev3_button_is_pressed(BACK_BUTTON)) break;
 
@@ -411,9 +403,9 @@ void Calibration(int* max,int* min){
 		}
 
         /* 倒立振子制御API に渡すパラメータを取得する */
-        motor_ang_l = leftMotor->getCount();
-        motor_ang_r = rightMotor->getCount();
-        gyro = gyroSensor->getAnglerVelocity();
+        motor_ang_l = left->getCount();
+        motor_ang_r = right->getCount();
+        gyro = gyroSen->getAnglerVelocity();
         volt = ev3_battery_voltage_mV();
 
 
@@ -430,9 +422,9 @@ void Calibration(int* max,int* min){
             (int8_t *)&pwm_L,
             (int8_t *)&pwm_R);
 
-        leftMotor->setPWM(pwm_L);
-        rightMotor->setPWM(pwm_R);
-
+        left->setPWM(pwm_L);
+        right->setPWM(pwm_R);
+    	
         clock->sleep(4); /* 4msec周期起動 */
         if(count>=250){
 			forward=forward*(-1);
@@ -444,6 +436,6 @@ void Calibration(int* max,int* min){
 		}
         count++;
     }
-    leftMotor->reset();
-    rightMotor->reset();
+    left->reset();
+    right->reset();
 }
