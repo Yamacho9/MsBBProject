@@ -65,8 +65,6 @@ void display();
 //各センサの初期化をする関数
 static void Init();
 
-
-
 /* オブジェクトへのポインタ定義 */
 TouchSensor*    touchSensor;
 SonarSensor*    sonarSensor;
