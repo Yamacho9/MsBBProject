@@ -1,6 +1,7 @@
 /*
  *      サンプルプログラム(1)のヘッダファイル
  */
+ 
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,3 +48,8 @@ extern void bt_task(intptr_t exinf);
 #ifdef __cplusplus
 }
 #endif
+
+/*グローバル変数*/
+int32_t motor_ang_l, motor_ang_r;
+int32_t gyro, volt;
+
