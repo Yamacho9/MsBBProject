@@ -116,6 +116,8 @@ void Calibration(int* min, int* max, ev3api::ColorSensor* color,ev3api::Motor* l
     }
     left->reset();
     right->reset();
+	gyroSen->reset();
+	balance_init();
 }
 
 //*****************************************************************************

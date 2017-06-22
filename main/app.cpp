@@ -119,9 +119,26 @@ void main_task(intptr_t unused)
     ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
 	Message("Init finished.");
 	
+	//キャリブレーション
+	//min,maxにキャリブレーションの結果が出力される
+	//Calibration(&min, &max);
+	Message("Calibration waiting..");
+	Calibration(&min, &max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
+
+    ev3_led_set_color(LED_GREEN); /* スタート通知 */
+	
+	/* 走行モーターエンコーダーリセット */
+    leftMotor->reset();
+    rightMotor->reset();
+    
+    /* ジャイロセンサーリセット */
+    gyroSensor->reset();
+    balance_init(); /* 倒立振子API初期化 */
+
 	//bluetooth start
 	Message("bluetooth start waiting...");
 	while(1){
+startwaiting:
 		if (bt_cmd == 1){//bluetooth start
 			fprintf(bt,"bluetooth start");
     		break;
@@ -134,34 +151,26 @@ void main_task(intptr_t unused)
 		clock->sleep(10);
 	}
 	
-	//キャリブレーション
-	//min,maxにキャリブレーションの結果が出力される
-	//Calibration(&min, &max);
-	Calibration(&min, &max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
-
-    ev3_led_set_color(LED_GREEN); /* スタート通知 */
-	
-	/* 走行モーターエンコーダーリセット */
-    leftMotor->reset();
-    rightMotor->reset();
-    
-    /* ジャイロセンサーリセット */
-    gyroSensor->reset();
-    balance_init(); /* 倒立振子API初期化 */
-	
     /**
     * メインループ
     */
     while(1)
     {
-    	int32_t motor_ang_l, motor_ang_r;
-		int32_t gyro, volt;
+    	int32_t motor_ang_l=0, motor_ang_r=0;
+		int32_t gyro, volt=0;
     	
     	if (ev3_button_is_pressed(BACK_BUTTON)){
     		//backbuttonが押されると終了
     		Message("finished...");
-    		break;
+    		//break;
+    		//初期化してスタート待ちに戻る
+    		leftMotor->reset();
+    		rightMotor->reset();
+    		gyroSensor->reset();
+    		balance_init(); /* 倒立振子API初期化 */
+    		goto startwaiting;
     	}
+    	
     	
         tail_control(TAIL_ANGLE_DRIVE); /* バランス走行用角度に制御 */
 
