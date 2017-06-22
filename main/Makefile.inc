@@ -1,6 +1,6 @@
 APPL_COBJS += balancer.o balancer_param.o LineTrace.o
 
-APPL_CXXOBJS += 
+APPL_CXXOBJS += Calibration.o
 
 SRCLANG := c++
 

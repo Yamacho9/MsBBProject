@@ -50,6 +50,5 @@ extern void bt_task(intptr_t exinf);
 #endif
 
 /*グローバル変数*/
-int32_t motor_ang_l, motor_ang_r;
-int32_t gyro, volt;
+
 
