@@ -17,7 +17,7 @@
 
 using namespace ev3api;
 
-#define TAIL_ANGLE_STAND_UP  93  /* 完全停止時の角度[度] */
+#define TAIL_ANGLE_STAND_UP  89  /* 完全停止時の角度[度] */
 #define TAIL_ANGLE_DRIVE      3  /* バランス走行時の角度[度] */
 #define TAIL_ANGLE_INIT       0  /* 0度 */
 #define P_GAIN             2.5F  /* 完全停止用モータ制御比例係数 */
