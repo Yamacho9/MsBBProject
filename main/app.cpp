@@ -37,11 +37,11 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 /* 下記のマクロは個体/環境に合わせて変更する必要があります */
 #define GYRO_OFFSET           0  /* ジャイロセンサオフセット値(角速度0[deg/sec]時) */
 #define SONAR_ALERT_DISTANCE 30  /* 超音波センサによる障害物検知距離[cm] */
-#define TAIL_ANGLE_STAND_UP  93  /* 完全停止時の角度[度] */
-#define TAIL_ANGLE_DRIVE      3  /* バランス走行時の角度[度] */
-#define TAIL_ANGLE_INIT       0  /* 0度 */
+//#define TAIL_ANGLE_STAND_UP  93  /* 完全停止時の角度[度] */
+//#define TAIL_ANGLE_DRIVE      3  /* バランス走行時の角度[度] */
+//#define TAIL_ANGLE_INIT       0  /* 0度 */
 #define P_GAIN             2.5F  /* 完全停止用モータ制御比例係数 */
-#define PWM_ABS_MAX          60  /* 完全停止用モータ制御PWM絶対最大値 */
+//#define PWM_ABS_MAX          60  /* 完全停止用モータ制御PWM絶対最大値 */
 //#define DEVICE_NAME     "ET0"  /* Bluetooth名 hrp2/target/ev3.h BLUETOOTH_LOCAL_NAMEで設定 */
 //#define PASS_KEY        "1234" /* パスキー    hrp2/target/ev3.h BLUETOOTH_PIN_CODEで設定 */
 #define CMD_START         '1'    /* リモートスタートコマンド */
@@ -138,7 +138,7 @@ void main_task(intptr_t unused)
 	//bluetooth start
 	Message("bluetooth start waiting...");
 	while(1){
-startwaiting:
+		tail_control(TAIL_ANGLE_STAND_UP);
 		if (bt_cmd == 1){//bluetooth start
 			fprintf(bt,"bluetooth start");
     		break;
@@ -162,13 +162,7 @@ startwaiting:
     	if (ev3_button_is_pressed(BACK_BUTTON)){
     		//backbuttonが押されると終了
     		Message("finished...");
-    		//break;
-    		//初期化してスタート待ちに戻る
-    		leftMotor->reset();
-    		rightMotor->reset();
-    		gyroSensor->reset();
-    		balance_init(); /* 倒立振子API初期化 */
-    		goto startwaiting;
+    		break;
     	}
     	
     	
@@ -263,8 +257,8 @@ static int32_t sonar_alert(void)
 //*****************************************************************************
 static void tail_control(int32_t angle)
 {
-    float pwm = (float)(angle - tailMotor->getCount()) * P_GAIN; /* 比例制御 */
-    /* PWM出力飽和処理 */
+    float pwm = (float)(angle - tailMotor->getCount()) * P_GAIN; // 比例制御
+    // PWM出力飽和処理
     if (pwm > PWM_ABS_MAX)
     {
         pwm = PWM_ABS_MAX;
@@ -289,6 +283,10 @@ void bt_task(intptr_t unused)
 	while(1){
 		//受信
 		char c = fgetc(bt);
+		if(c != EOF){
+			fprintf(bt,"%c",c);
+		}
+		
 		switch(c){
 		case '1':
 			bt_cmd = 1;

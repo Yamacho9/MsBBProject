@@ -23,10 +23,10 @@ void Calibration(int* min, int* max, ev3api::ColorSensor* color,ev3api::Motor* l
 	int8_t cur_brightness;	/* 検出した光センサ値 */
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
 	
-		/* キャリブレーション待機 */
+	/* キャリブレーション待機 */
     while(1)
     {
-        tail_control(TAIL_ANGLE_STAND_UP,tail); /* 完全停止用角度に制御 */
+    	tail_control(TAIL_ANGLE_STAND_UP,tail); /* 完全停止用角度に制御 */
         if (touch->isPressed())
         {
             break; /* タッチセンサが押された */
@@ -128,8 +128,8 @@ void Calibration(int* min, int* max, ev3api::ColorSensor* color,ev3api::Motor* l
 //*****************************************************************************
 void tail_control(int32_t angle, ev3api::Motor* tail)
 {
-    float pwm = (float)(angle - tail->getCount()) * P_GAIN; /* 比例制御 */
-    /* PWM出力飽和処理 */
+    float pwm = (float)(angle - tail->getCount()) * P_GAIN; // 比例制御
+    // PWM出力飽和処理
     if (pwm > PWM_ABS_MAX)
     {
         pwm = PWM_ABS_MAX;

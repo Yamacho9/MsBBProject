@@ -22,8 +22,6 @@ using namespace ev3api;
 #define TAIL_ANGLE_INIT       0  /* 0度 */
 #define P_GAIN             2.5F  /* 完全停止用モータ制御比例係数 */
 #define PWM_ABS_MAX          60  /* 完全停止用モータ制御PWM絶対最大値 */
-#define P_GAIN             2.5F  /* 完全停止用モータ制御比例係数 */
-#define PWM_ABS_MAX          60  /* 完全停止用モータ制御PWM絶対最大値 */
 #define GYRO_OFFSET           0  /*ジャイロオフセット値*/
 
 void Calibration(int* min, int* max, ev3api::ColorSensor* colorSensor, ev3api::Motor* left, ev3api::Motor* right, ev3api::GyroSensor* gyroSen, ev3api::Motor* tail, ev3api::TouchSensor* touch, ev3api::Clock* clock);
