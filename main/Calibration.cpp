@@ -52,8 +52,7 @@ void Calibration(int* min, int* max, ev3api::ColorSensor* color,ev3api::Motor* l
 	int forward = 23; /* 前進命令 */
 	int turn = 0;
 	int count=0, count2=0;
-	//*min=255;
-	//*max=-255;
+
     while(1)
     {
     	int32_t motor_ang_l, motor_ang_r;
@@ -63,20 +62,14 @@ void Calibration(int* min, int* max, ev3api::ColorSensor* color,ev3api::Motor* l
 
         tail_control(TAIL_ANGLE_DRIVE,tail); /* バランス走行用角度に制御 */
 
-        //if (sonar_alert() == 1) /* 障害物検知 */
-        //{
-		//	forward = turn = 0; /* 障害物を検知したら停止 */
-		//}
-        //else
-        //{
-			cur_brightness = color->getBrightness();
+        cur_brightness = color->getBrightness();
 			
-			if(cur_brightness>=*max){
-				*max = cur_brightness;
-			}
-			if(cur_brightness<=*min){
-				*min = cur_brightness;
-			}
+		if(cur_brightness>=*max){
+			*max = cur_brightness;
+		}
+		if(cur_brightness<=*min){
+			*min = cur_brightness;
+		}
 			//fprintf(bt, "max = %d, min = %d\n", *max, *min);
 		//}
 
@@ -93,7 +86,7 @@ void Calibration(int* min, int* max, ev3api::ColorSensor* color,ev3api::Motor* l
             (float)forward,
             (float)turn,
             (float)gyro,
-            (float)GYRO_OFFSET,
+            (float)GYRO_OFFSET_CALIBRATION,
             (float)motor_ang_l,
             (float)motor_ang_r,
             (float)volt,
@@ -116,8 +109,6 @@ void Calibration(int* min, int* max, ev3api::ColorSensor* color,ev3api::Motor* l
     }
     left->reset();
     right->reset();
-	//gyroSen->reset();
-	//balance_init();
 }
 
 //*****************************************************************************

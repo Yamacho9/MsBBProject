@@ -22,6 +22,7 @@ extern "C" {
 #define HIGH_PRIORITY   9           /* 並行実行されるタスクの優先度 */
 #define MID_PRIORITY    10
 #define LOW_PRIORITY    11
+#define GYRO_OFFSET_PID  0 //PID制御時のジャイロセンサのオフセット値
 
 /*
  *  ターゲットに依存する可能性のある定数の定義
