@@ -35,13 +35,12 @@ static int32_t   bt_cmd = 0;	  /* Bluetoothコマンド 1:リモートスタート */
 static FILE	 *bt = NULL;	  /* Bluetoothファイルハンドル */
 
 /* 下記のマクロは個体/環境に合わせて変更する必要があります */
-#define GYRO_OFFSET		   0  /* ジャイロセンサオフセット値(角速度0[deg/sec]時) */
 #define SONAR_ALERT_DISTANCE 30  /* 超音波センサによる障害物検知距離[cm] */
 #define CMD_START		 '1'	/* リモートスタートコマンド */
 #define TARGET				35	 //ライントレース制御 光量ターゲット値
 #define DELTA_T				0.004 //処理周期（s）
 #define INT_NUM				250	//積分する偏差数(1s分)
-#define GYRO_OFFSET_PID  10 //PID制御時のジャイロセンサのオフセット値
+#define GYRO_OFFSET_PID 3  //PID制御時のジャイロセンサのオフセット値
 
 /* LCDフォントサイズ */
 #define CALIB_FONT (EV3_FONT_SMALL)
