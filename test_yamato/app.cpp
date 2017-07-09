@@ -78,7 +78,7 @@ void main_task(intptr_t unused)
 	int8_t forward;	  /* 前後進命令 */
 	float turn;		 /* 旋回命令 */
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
-	int8_t cur_brightness;	/* 検出した光センサ値 */
+	int8_t cur_brightness=0;	/* 検出した光センサ値 */
 	int errorList[INT_NUM];	//偏差履歴テーブル
 	int i;
 	for (i = 0; i < INT_NUM; i++) { //テーブル初期化
@@ -88,6 +88,7 @@ void main_task(intptr_t unused)
 	int max=-255;//キャリブレーションの最大値
 	int min=255;//キャリブレーションの最小値
 	bool ret = false;
+	char *cmd ={0};
 
 	/*グローバル変数の初期化*/
 	count = 1;
@@ -140,13 +141,14 @@ void main_task(intptr_t unused)
 		clock->sleep(10);
 	}
 
-	// 走行モーターエンコーダーリセッ
+	// 走行モーターエンコーダーリセット
 	leftMotor->reset();
 	rightMotor->reset();
 	
 	// ジャイロセンサーリセット
 	gyroSensor->reset();
 	balance_init();
+	
 	/* 走行体の状態を起こす */
 	while(1)
 	{
@@ -180,9 +182,10 @@ void main_task(intptr_t unused)
 			break;
 		}
 		if (touchSensor->isPressed())
-		{
-			Message("finish");
-			break; // タッチセンサが押された
+		{ 
+			// タッチセンサが押されると終了
+			Message("finished...");
+			break;
 		}
 		
 		if(!ret){
@@ -219,13 +222,22 @@ void main_task(intptr_t unused)
 			(float)volt,
 			(int8_t *)&pwm_L,
 			(int8_t *)&pwm_R);
+		
+		if(pwm_L > 80 && pwm_R > 80)
+		{
+			//モーター暴走時(転倒時)は終了
+			sprintf(cmd, "finished....ERROR1 pwm_L=%d pwm_R=%d", pwm_L, pwm_R);
+			Message(cmd);
+			break;
+		}
 
 		leftMotor->setPWM(pwm_L);
 		rightMotor->setPWM(pwm_R);
-		fprintf(bt, "cur_brightness = %d, turn = %f gyro = %d\n", cur_brightness, turn, gyro);
+		fprintf(bt, "cur_brightness = %o, turn = %f gyro = %ld\n", cur_brightness, turn, gyro);
 
 		clock->sleep(4); /* 4msec周期起動 */
 	}
+	
 	leftMotor->reset();
 	rightMotor->reset();
 	tailMotor->reset();
@@ -293,6 +305,8 @@ static bool tail_control(int32_t angle, tailSpeed sp)
 			pwm_max = PWM_ABS_MAX_FAST;
 		}else if (sp == eSlow){
 			pwm_max = PWM_ABS_MAX_SLOW;
+		}else{
+			pwm_max = 45;
 		}
 		
 		// PWM出力飽和処理

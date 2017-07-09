@@ -19,7 +19,7 @@
 
 using namespace ev3api;
 
-void Calibration(int* min, int* max, ev3api::ColorSensor* color,ev3api::Motor* left, ev3api::Motor* right, ev3api::GyroSensor* gyroSen, ev3api::Motor* tail, ev3api::TouchSensor* touch, ev3api::Clock* clock){
+void Calibration(int* min, int* max, ColorSensor* color,Motor* left, Motor* right, GyroSensor* gyroSen, Motor* tail, TouchSensor* touch, Clock* clock){
 	int8_t cur_brightness;	/* 検出した光センサ値 */
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
 	bool ret = false;
@@ -141,7 +141,7 @@ void Calibration(int* min, int* max, ev3api::ColorSensor* color,ev3api::Motor* l
 // 返り値 : 無し
 // 概要 : 走行体完全停止用モータの角度制御
 //*****************************************************************************
-bool tail_control_cal(int32_t angle, ev3api::Motor* tail, tailSpeed sp)
+bool tail_control_cal(int32_t angle, Motor* tail, tailSpeed sp)
 {
 	float pwm_max;
 	float pwm = (float)(angle - tail->getCount()) * P_GAIN; // 比例制御
@@ -155,6 +155,8 @@ bool tail_control_cal(int32_t angle, ev3api::Motor* tail, tailSpeed sp)
 			pwm_max = PWM_ABS_MAX_FAST;
 		}else if (sp == eSlow){
 			pwm_max = PWM_ABS_MAX_SLOW;
+		}else{
+			pwm_max = 45;
 		}
 		
 		// PWM出力飽和処理
