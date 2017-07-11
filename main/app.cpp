@@ -72,6 +72,8 @@ Clock*          clock;
 /*表示するためのグローバル変数*/
 int count;
 static char message[MESSAGE_LEN + 1] = {0};
+int speed_count=0;
+int speed=0;
 
 /* メインタスク */
 void main_task(intptr_t unused)
@@ -115,17 +117,17 @@ void main_task(intptr_t unused)
 	
 	//キャリブレーション
 	//min,maxにキャリブレーションの結果が出力される
+	//Calibration(&min, &max);
 	Message("Calibration waiting..");
 	Calibration(&min, &max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
-	fprintf(bt,"Calibration result \nmin:%d max:%d\n",min,max);
+	fprintf(bt,"Calibration result\nmax:%d min:%d",max,min);
 	
     ev3_led_set_color(LED_GREEN); /* スタート通知 */
+	
 
 	//bluetooth start
 	Message("bluetooth start waiting...");
-
 	while(1){
-		//fprintf(bt, "getAnglerVelocity:%d", gyroSensor->getAnglerVelocity());
 		tail_control(TAIL_ANGLE_STAND_UP);
 		if (bt_cmd == 1){//bluetooth start
 			fprintf(bt,"bluetooth start");
@@ -134,19 +136,18 @@ void main_task(intptr_t unused)
 		if (touchSensor->isPressed())
         {
 		 	Message("touch sensor start");
-            break; // タッチセンサが押された
+            break; /* タッチセンサが押された */
         }
 		clock->sleep(10);
 	}
-
-	// 走行モーターエンコーダーリセッ
-	leftMotor->reset();
-	rightMotor->reset();
-
-	// ジャイロセンサーリセット
-	gyroSensor->reset();
-	balance_init();
 	
+	/* 走行モーターエンコーダーリセット */
+    leftMotor->reset();
+    rightMotor->reset();
+	
+	/* ジャイロセンサーリセット */
+    gyroSensor->reset();
+    balance_init(); /* 倒立振子API初期化 */
 	
     /**
     * メインループ
@@ -172,11 +173,21 @@ void main_task(intptr_t unused)
 		}
         else
         {
-            forward = 45; /* 前進命令 */
+        	//3s後に速度が45に到達するように少しずつ加速させる
+            /*forward = 10 + speed;
+        	speed_count = speed_count + 464;
+        	if(speed_count > 10000){
+        		if(speed < 35){
+        			speed++;
+        		}
+        		speed_count = speed_count - 10000;
+        	}*/
+        	
+        	forward = 10; /* 前進命令 */
 			cur_brightness = colorSensor->getBrightness();
         	target = (max + min)/2;
 			turn = LineTrace(target, cur_brightness, DELTA_T, errorList, nextErrorIndex);
-			fprintf(bt, "cur_brightness = %d, turn = %f gyro = %d\n", cur_brightness, turn, gyroSensor->getAngle());
+        	fprintf(bt, "cur_brightness = %d, turn = %f\n", cur_brightness, turn);
 		}
 
         /* 倒立振子制御API に渡すパラメータを取得する */
@@ -191,7 +202,7 @@ void main_task(intptr_t unused)
             (float)forward,
             (float)turn,
             (float)gyro,
-            (float)GYRO_OFFSET_PID,
+        	(float)GYRO_OFFSET_CALIBRATION,
             (float)motor_ang_l,
             (float)motor_ang_r,
             (float)volt,
@@ -291,8 +302,6 @@ void bt_task(intptr_t unused)
 			bt_cmd = 1;
 			break;
 		default:
-		case '2':
-			bt_cmd = 2;
 			break;
 		
 		}
