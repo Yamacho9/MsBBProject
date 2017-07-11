@@ -35,13 +35,14 @@ static int32_t   bt_cmd = 0;      /* Bluetoothコマンド 1:リモートスタート */
 static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 
 /* 下記のマクロは個体/環境に合わせて変更する必要があります */
-#define GYRO_OFFSET           0  /* ジャイロセンサオフセット値(角速度0[deg/sec]時) */
+#define GYRO_OFFSET           3  /* ジャイロセンサオフセット値(角速度0[deg/sec]時) */
 #define SONAR_ALERT_DISTANCE 30  /* 超音波センサによる障害物検知距離[cm] */
 #define P_GAIN             2.5F  /* 完全停止用モータ制御比例係数 */
 #define CMD_START         '1'    /* リモートスタートコマンド */
 #define TARGET				35	 //ライントレース制御 光量ターゲット値
 #define DELTA_T				0.004 //処理周期（s）
 #define INT_NUM				250	//積分する偏差数(1s分)
+#define GYRO_OFFSET_PID 3  //PID制御時のジャイロセンサのオフセット値
 
 /* LCDフォントサイズ */
 #define CALIB_FONT (EV3_FONT_SMALL)
@@ -51,7 +52,7 @@ static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 
 /* 関数プロトタイプ宣言 */
 static int32_t sonar_alert(void);
-static void tail_control(int32_t angle);
+static bool tail_control(int32_t angle, tailSpeed sp);
 //メッセージを書く関数
 static void Message(const char* str);
 //状態を表示する関数
@@ -81,7 +82,7 @@ void main_task(intptr_t unused)
     int8_t forward;      /* 前後進命令 */
 	float turn;         /* 旋回命令 */
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
-	int8_t cur_brightness;	/* 検出した光センサ値 */
+	int8_t cur_brightness=0;	/* 検出した光センサ値 */
 	int errorList[INT_NUM];	//偏差履歴テーブル
 	int i;
 	for (i = 0; i < INT_NUM; i++) { //テーブル初期化
@@ -90,6 +91,7 @@ void main_task(intptr_t unused)
 	int nextErrorIndex = 0;	//次の変更履歴のインデックス
 	int max=-255;//キャリブレーションの最大値
 	int min=255;//キャリブレーションの最小値
+	bool ret = false;
 
 	/*グローバル変数の初期化*/
 	count = 1;
@@ -99,7 +101,6 @@ void main_task(intptr_t unused)
 	
 	/* 尻尾モーターのリセット */
     tailMotor->reset();
-	tail_control(TAIL_ANGLE_INIT); /* 0度に制御 */
 
 	
     /* Open Bluetooth file */
@@ -117,7 +118,6 @@ void main_task(intptr_t unused)
 	
 	//キャリブレーション
 	//min,maxにキャリブレーションの結果が出力される
-	//Calibration(&min, &max);
 	Message("Calibration waiting..");
 	Calibration(&min, &max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
 	fprintf(bt,"Calibration result\nmax:%d min:%d",max,min);
@@ -128,7 +128,9 @@ void main_task(intptr_t unused)
 	//bluetooth start
 	Message("bluetooth start waiting...");
 	while(1){
-		tail_control(TAIL_ANGLE_STAND_UP);
+		if(!ret){
+			ret = tail_control(TAIL_ANGLE_STAND_UP, eSlow);
+		}
 		if (bt_cmd == 1){//bluetooth start
 			fprintf(bt,"bluetooth start");
     		break;
@@ -148,6 +150,23 @@ void main_task(intptr_t unused)
 	/* ジャイロセンサーリセット */
     gyroSensor->reset();
     balance_init(); /* 倒立振子API初期化 */
+
+	/* 走行体の状態を起こす */
+	while(1)
+	{
+		float pwm = (float)(TAIL_ANGLE_START - tailMotor->getCount()); // 比例制御
+		if (pwm > 0)
+		{
+			tailMotor->setPWM(20);
+		}
+		else if (pwm < 0)
+		{
+			break;
+		}
+		clock->sleep(4);
+		
+	}
+	ret = false;
 	
     /**
     * メインループ
@@ -163,9 +182,17 @@ void main_task(intptr_t unused)
     		Message("finished...");
     		break;
     	}
+		if (touchSensor->isPressed())
+		{ 
+			// タッチセンサが押されると終了
+			Message("finished...");
+			break;
+		}
     	
     	
-        tail_control(TAIL_ANGLE_DRIVE); /* バランス走行用角度に制御 */
+        if(!ret){
+			ret = tail_control(TAIL_ANGLE_DRIVE, eFast); /* バランス走行用角度に制御 */
+		}
 
         if (sonar_alert() == 1) /* 障害物検知 */
         {
@@ -174,16 +201,16 @@ void main_task(intptr_t unused)
         else
         {
         	//3s後に速度が45に到達するように少しずつ加速させる
-            /*forward = 10 + speed;
+            forward = 10 + speed;
         	speed_count = speed_count + 464;
         	if(speed_count > 10000){
         		if(speed < 35){
         			speed++;
         		}
         		speed_count = speed_count - 10000;
-        	}*/
+        	}
         	
-        	forward = 10; /* 前進命令 */
+        	//forward = 10; /* 前進命令 */
 			cur_brightness = colorSensor->getBrightness();
         	target = (max + min)/2;
 			turn = LineTrace(target, cur_brightness, DELTA_T, errorList, nextErrorIndex);
@@ -202,7 +229,7 @@ void main_task(intptr_t unused)
             (float)forward,
             (float)turn,
             (float)gyro,
-        	(float)GYRO_OFFSET_CALIBRATION,
+        	(float)GYRO_OFFSET_PID,
             (float)motor_ang_l,
             (float)motor_ang_r,
             (float)volt,
@@ -216,6 +243,7 @@ void main_task(intptr_t unused)
     }
     leftMotor->reset();
     rightMotor->reset();
+	tailMotor->reset();
 
 	/*終了処理*/
     ter_tsk(BT_TASK);
@@ -265,20 +293,37 @@ static int32_t sonar_alert(void)
 // 返り値 : 無し
 // 概要 : 走行体完全停止用モータの角度制御
 //*****************************************************************************
-static void tail_control(int32_t angle)
+static bool tail_control(int32_t angle, tailSpeed sp)
 {
-    float pwm = (float)(angle - tailMotor->getCount()) * P_GAIN; // 比例制御
-    // PWM出力飽和処理
-    if (pwm > PWM_ABS_MAX)
-    {
-        pwm = PWM_ABS_MAX;
-    }
-    else if (pwm < -PWM_ABS_MAX)
-    {
-        pwm = -PWM_ABS_MAX;
-    }
+	float pwm_max;
+	float pwm = (float)(angle - tailMotor->getCount()) * P_GAIN; // 比例制御
+	if (pwm<0.1 && pwm >-0.1){
+		tailMotor->setBrake(true);
+		tailMotor->setPWM(0);
+		return true;
+	}else{
+		tailMotor->setBrake(false);
+		if (sp == eFast){
+			pwm_max = PWM_ABS_MAX_FAST;
+		}else if (sp == eSlow){
+			pwm_max = PWM_ABS_MAX_SLOW;
+		}else{
+			pwm_max = 45;
+		}
+		
+		// PWM出力飽和処理
+		if (pwm > pwm_max)
+		{
+			pwm = pwm_max;
+		}
+		else if (pwm < -pwm_max)
+		{
+			pwm = -pwm_max;
+		}
+		tailMotor->setPWM(pwm);
+		return false;
+	}
 
-    tailMotor->setPWM(pwm);
 }
 
 //*****************************************************************************
