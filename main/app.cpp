@@ -75,6 +75,7 @@ int count;
 static char message[MESSAGE_LEN + 1] = {0};
 int speed_count=0;
 int speed=0;
+int errorList[INT_NUM];	//偏差履歴テーブル
 
 /* メインタスク */
 void main_task(intptr_t unused)
@@ -83,7 +84,7 @@ void main_task(intptr_t unused)
 	float turn;         /* 旋回命令 */
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
 	int8_t cur_brightness=0;	/* 検出した光センサ値 */
-	int errorList[INT_NUM];	//偏差履歴テーブル
+
 	int i;
 	for (i = 0; i < INT_NUM; i++) { //テーブル初期化
 		errorList[i] = 0;
