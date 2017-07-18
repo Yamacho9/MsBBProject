@@ -14,7 +14,6 @@
 #include "GyroSensor.h"
 #include "Motor.h"
 #include "Clock.h"
-#include "LineTrace.h"
 #include "Calibration.h"
 
 using namespace ev3api;
@@ -37,6 +36,13 @@ void Calibration(int* min, int* max, ev3api::ColorSensor* color,ev3api::Motor* l
 		{
 			break; /* タッチセンサが押された */
 		}
+		if(ev3_button_is_pressed(BACK_BUTTON)){
+			//キャリブレーションを行わない
+			*max = 70;
+			*min = 2;
+			return;
+		}
+		
 		clock->sleep(10);
 		
 	}

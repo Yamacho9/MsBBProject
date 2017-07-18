@@ -30,35 +30,30 @@ using namespace ev3api;
 #define _debug(x)
 #endif
 
+
+/*グローバル変数*/
+/*ロボットに文字を表示するためのグローバル変数*/
+int count;
+static char message[MESSAGE_LEN + 1] = {0};
+/*スピードを上げるためのグローバル変数*/
+int speed_count=0;
+int speed=0;
+/*PID制御の偏差履歴テーブル*/
+int errorList[INT_NUM];	//偏差履歴テーブル
 /* Bluetooth */
 static int32_t   bt_cmd = 0;      /* Bluetoothコマンド 1:リモートスタート */
 static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 
-/* 下記のマクロは個体/環境に合わせて変更する必要があります */
-#define GYRO_OFFSET           3  /* ジャイロセンサオフセット値(角速度0[deg/sec]時) */
-#define SONAR_ALERT_DISTANCE 30  /* 超音波センサによる障害物検知距離[cm] */
-#define P_GAIN             2.5F  /* 完全停止用モータ制御比例係数 */
-#define CMD_START         '1'    /* リモートスタートコマンド */
-#define TARGET				35	 //ライントレース制御 光量ターゲット値
-#define DELTA_T				0.004 //処理周期（s）
-#define INT_NUM				250	//積分する偏差数(1s分)
-#define GYRO_OFFSET_PID 3  //PID制御時のジャイロセンサのオフセット値
-
-/* LCDフォントサイズ */
-#define CALIB_FONT (EV3_FONT_SMALL)
-#define CALIB_FONT_WIDTH (6/*TODO: magic number*/)
-#define CALIB_FONT_HEIGHT (8/*TODO: magic number*/)
-#define MESSAGE_LEN 8
-
-/* 関数プロトタイプ宣言 */
-static int32_t sonar_alert(void);
-static bool tail_control(int32_t angle, tailSpeed sp);
+/*関数のプロトタイプ宣言*/
 //メッセージを書く関数
 static void Message(const char* str);
-//状態を表示する関数
-void display();
 //各センサの初期化をする関数
 static void Init();
+//超音波センサ
+static int32_t sonar_alert(void);
+//しっぽコントロール
+static bool tail_control(int32_t angle, tailSpeed sp);
+
 
 /* オブジェクトへのポインタ定義 */
 TouchSensor*    touchSensor;
@@ -70,12 +65,6 @@ Motor*          rightMotor;
 Motor*          tailMotor;
 Clock*          clock;
 
-/*表示するためのグローバル変数*/
-int count;
-static char message[MESSAGE_LEN + 1] = {0};
-int speed_count=0;
-int speed=0;
-int errorList[INT_NUM];	//偏差履歴テーブル
 
 /* メインタスク */
 void main_task(intptr_t unused)
@@ -120,6 +109,8 @@ void main_task(intptr_t unused)
 	//キャリブレーション
 	//min,maxにキャリブレーションの結果が出力される
 	Message("Calibration waiting..");
+	Message("push touch sensor : do calibration");
+	Message("push back button : don't calibration");
 	Calibration(&min, &max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
 	fprintf(bt,"Calibration result\nmax:%d min:%d",max,min);
 	
@@ -165,7 +156,6 @@ void main_task(intptr_t unused)
 			break;
 		}
 		clock->sleep(4);
-		
 	}
 	ret = false;
 	
@@ -215,7 +205,7 @@ void main_task(intptr_t unused)
 			cur_brightness = colorSensor->getBrightness();
         	target = (max + min)/2;
 			turn = LineTrace(target, cur_brightness, DELTA_T, errorList, nextErrorIndex);
-        	fprintf(bt, "cur_brightness = %d, turn = %f\n", cur_brightness, turn);
+        	fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
 		}
 
         /* 倒立振子制御API に渡すパラメータを取得する */
@@ -302,7 +292,8 @@ static bool tail_control(int32_t angle, tailSpeed sp)
 		tailMotor->setBrake(true);
 		tailMotor->setPWM(0);
 		return true;
-	}else{
+	}
+	else{
 		tailMotor->setBrake(false);
 		if (sp == eFast){
 			pwm_max = PWM_ABS_MAX_FAST;
@@ -349,7 +340,6 @@ void bt_task(intptr_t unused)
 			break;
 		default:
 			break;
-		
 		}
 		
 		clock->sleep(5);
