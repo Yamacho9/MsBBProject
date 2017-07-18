@@ -19,6 +19,7 @@
 #include "Clock.h"
 #include "LineTrace.h"
 #include "Calibration.h"
+#include "CalcDistanceAndDirection.h"
 
 using namespace ev3api;
 
@@ -167,6 +168,7 @@ void main_task(intptr_t unused)
     	int32_t motor_ang_l=0, motor_ang_r=0;
 		int32_t gyro, volt=0;
     	int target=0;
+    	int distance, direction; //走行距離、向き
     	
     	if (ev3_button_is_pressed(BACK_BUTTON)){
     		//backbuttonが押されると終了
@@ -230,6 +232,18 @@ void main_task(intptr_t unused)
         leftMotor->setPWM(pwm_L);
         rightMotor->setPWM(pwm_R);
 
+#if 0
+		int angle;
+    	angle = (motor_ang_l + motor_ang_r) / 2;	// モーターの検出角度（累積値）
+    	distance = angle * PI * DIAMETER / 360;		// 距離
+    	direction = (motor_ang_l % (360 * 4) - motor_ang_r % (360 * 4)) / 4; // 向き（スタート時の向きを0度として、時計回りの角度）
+#endif
+#if 1
+    	distance = 0;
+    	direction = 0;
+		CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+#endif
+    	fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
         clock->sleep(4); /* 4msec周期起動 */
     }
     leftMotor->reset();
