@@ -34,21 +34,6 @@ extern "C" {
 #ifndef STACK_SIZE
 #define STACK_SIZE      4096        /* タスクのスタックサイズ */
 #endif /* STACK_SIZE */
-	
-/* 下記のマクロは個体/環境に合わせて変更する必要があります */
-#define SONAR_ALERT_DISTANCE 30  //超音波センサによる障害物検知距離[cm]
-#define P_GAIN             2.5F  //完全停止用モータ制御比例係数
-#define CMD_START         '1'    //リモートスタートコマンド
-#define TARGET				35	 //ライントレース制御 光量ターゲット値
-#define DELTA_T				0.004 //処理周期（s）
-#define INT_NUM				250	//積分する偏差数(1s分)
-#define GYRO_OFFSET_PID 3  //PID制御時のジャイロセンサのオフセット値
-	
-/* LCDフォントサイズ */
-#define CALIB_FONT (EV3_FONT_SMALL)
-#define CALIB_FONT_WIDTH (6/*TODO: magic number*/)
-#define CALIB_FONT_HEIGHT (8/*TODO: magic number*/)
-#define MESSAGE_LEN 8
 
 /*
  *  関数のプロトタイプ宣言
@@ -64,5 +49,6 @@ extern void bt_task(intptr_t exinf);
 }
 #endif
 
+/*グローバル変数*/
 
 

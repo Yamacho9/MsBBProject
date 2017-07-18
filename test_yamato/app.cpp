@@ -19,7 +19,6 @@
 #include "Clock.h"
 #include "LineTrace.h"
 #include "Calibration.h"
-#include "CalcDistanceAndDirection.h"
 
 using namespace ev3api;
 
@@ -31,50 +30,56 @@ using namespace ev3api;
 #define _debug(x)
 #endif
 
-
-/*グローバル変数*/
-/*ロボットに文字を表示するためのグローバル変数*/
-int count;
-static char message[MESSAGE_LEN + 1] = {0};
-/*スピードを上げるためのグローバル変数*/
-int speed_count=0;
-int speed=0;
-/*PID制御の偏差履歴テーブル*/
-int errorList[INT_NUM];	//偏差履歴テーブル
 /* Bluetooth */
-static int32_t   bt_cmd = 0;      /* Bluetoothコマンド 1:リモートスタート */
-static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
+static int32_t   bt_cmd = 0;	  /* Bluetoothコマンド 1:リモートスタート */
+static FILE	 *bt = NULL;	  /* Bluetoothファイルハンドル */
 
-/*関数のプロトタイプ宣言*/
+/* 下記のマクロは個体/環境に合わせて変更する必要があります */
+#define SONAR_ALERT_DISTANCE 30  /* 超音波センサによる障害物検知距離[cm] */
+#define CMD_START		 '1'	/* リモートスタートコマンド */
+#define TARGET				35	 //ライントレース制御 光量ターゲット値
+#define DELTA_T				0.004 //処理周期（s）
+#define INT_NUM				250	//積分する偏差数(1s分)
+#define GYRO_OFFSET_PID 3  //PID制御時のジャイロセンサのオフセット値
+
+/* LCDフォントサイズ */
+#define CALIB_FONT (EV3_FONT_SMALL)
+#define CALIB_FONT_WIDTH (6/*TODO: magic number*/)
+#define CALIB_FONT_HEIGHT (8/*TODO: magic number*/)
+#define MESSAGE_LEN 8
+
+/* 関数プロトタイプ宣言 */
+static int32_t sonar_alert(void);
+static bool tail_control(int32_t angle, tailSpeed sp);
 //メッセージを書く関数
 static void Message(const char* str);
+//状態を表示する関数
+void display();
 //各センサの初期化をする関数
 static void Init();
-//超音波センサ
-static int32_t sonar_alert(void);
-//しっぽコントロール
-static bool tail_control(int32_t angle, tailSpeed sp);
-
 
 /* オブジェクトへのポインタ定義 */
-TouchSensor*    touchSensor;
-SonarSensor*    sonarSensor;
-ColorSensor*    colorSensor;
-GyroSensor*     gyroSensor;
-Motor*          leftMotor;
-Motor*          rightMotor;
-Motor*          tailMotor;
-Clock*          clock;
+TouchSensor*	touchSensor;
+SonarSensor*	sonarSensor;
+ColorSensor*	colorSensor;
+GyroSensor*	 gyroSensor;
+Motor*		  leftMotor;
+Motor*		  rightMotor;
+Motor*		  tailMotor;
+Clock*		  clock;
 
+/*表示するためのグローバル変数*/
+int count;
+static char message[MESSAGE_LEN + 1] = {0};
 
 /* メインタスク */
 void main_task(intptr_t unused)
 {
-    int8_t forward;      /* 前後進命令 */
-	float turn;         /* 旋回命令 */
+	int8_t forward;	  /* 前後進命令 */
+	float turn;		 /* 旋回命令 */
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
 	int8_t cur_brightness=0;	/* 検出した光センサ値 */
-
+	int errorList[INT_NUM];	//偏差履歴テーブル
 	int i;
 	for (i = 0; i < INT_NUM; i++) { //テーブル初期化
 		errorList[i] = 0;
@@ -83,6 +88,7 @@ void main_task(intptr_t unused)
 	int max=-255;//キャリブレーションの最大値
 	int min=255;//キャリブレーションの最小値
 	bool ret = false;
+	char *cmd ={0};
 
 	/*グローバル変数の初期化*/
 	count = 1;
@@ -91,59 +97,58 @@ void main_task(intptr_t unused)
 	Init();
 	
 	/* 尻尾モーターのリセット */
-    tailMotor->reset();
+	tailMotor->reset();
 
 	
-    /* Open Bluetooth file */
+	/* Open Bluetooth file */
 	/*シリアルポートを開く*/
 	bt = ev3_serial_open_file(EV3_SERIAL_BT);
 	assert(bt != NULL);
 	Message("bluetooth serial port open");
-    
-    /* Bluetooth通信タスクの起動 */
+	
+	/* Bluetooth通信タスクの起動 */
 	act_tsk(BT_TASK);
 	Message("Bluetooth task Start");
 	
-    ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
+	ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
 	Message("Init finished.");
 	
 	//キャリブレーション
 	//min,maxにキャリブレーションの結果が出力される
 	Message("Calibration waiting..");
-	Message("push touch sensor : do calibration");
-	Message("push back button : don't calibration");
 	Calibration(&min, &max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
-	fprintf(bt,"Calibration result\nmax:%d min:%d",max,min);
+	fprintf(bt,"Calibration result \nmin:%d max:%d\n",min,max);
 	
-    ev3_led_set_color(LED_GREEN); /* スタート通知 */
-	
+	ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
 
 	//bluetooth start
 	Message("bluetooth start waiting...");
+
 	while(1){
+		//fprintf(bt, "getAnglerVelocity:%d", gyroSensor->getAnglerVelocity());
 		if(!ret){
 			ret = tail_control(TAIL_ANGLE_STAND_UP, eSlow);
 		}
 		if (bt_cmd == 1){//bluetooth start
 			fprintf(bt,"bluetooth start");
-    		break;
-    	}
+			break;
+		}
 		if (touchSensor->isPressed())
-        {
-		 	Message("touch sensor start");
-            break; /* タッチセンサが押された */
-        }
+		{
+			Message("touch sensor start");
+			break; // タッチセンサが押された
+		}
 		clock->sleep(10);
 	}
-	
-	/* 走行モーターエンコーダーリセット */
-    leftMotor->reset();
-    rightMotor->reset();
-	
-	/* ジャイロセンサーリセット */
-    gyroSensor->reset();
-    balance_init(); /* 倒立振子API初期化 */
 
+	// 走行モーターエンコーダーリセット
+	leftMotor->reset();
+	rightMotor->reset();
+	
+	// ジャイロセンサーリセット
+	gyroSensor->reset();
+	balance_init();
+	
 	/* 走行体の状態を起こす */
 	while(1)
 	{
@@ -157,104 +162,92 @@ void main_task(intptr_t unused)
 			break;
 		}
 		clock->sleep(4);
+		
 	}
-	ret = false;
 	
-    /**
-    * メインループ
-    */
-    while(1)
-    {
-    	int32_t motor_ang_l=0, motor_ang_r=0;
+	ev3_led_set_color(LED_GREEN); /* スタート通知 */
+	ret = false;
+	/**
+	* メインループ
+	*/
+	while(1)
+	{
+		int32_t motor_ang_l=0, motor_ang_r=0;
 		int32_t gyro, volt=0;
-    	int target=0;
-    	int distance, direction; //走行距離、向き
-    	
-    	if (ev3_button_is_pressed(BACK_BUTTON)){
-    		//backbuttonが押されると終了
-    		Message("finished...");
-    		break;
-    	}
+		int target=0;
+		
+		if (ev3_button_is_pressed(BACK_BUTTON)){
+			//backbuttonが押されると終了
+			Message("finished...");
+			break;
+		}
 		if (touchSensor->isPressed())
 		{ 
 			// タッチセンサが押されると終了
 			Message("finished...");
 			break;
 		}
-    	
-    	
-        if(!ret){
+		
+		if(!ret){
 			ret = tail_control(TAIL_ANGLE_DRIVE, eFast); /* バランス走行用角度に制御 */
 		}
 
-        if (sonar_alert() == 1) /* 障害物検知 */
-        {
+		if (sonar_alert() == 1) /* 障害物検知 */
+		{
 			forward = turn = 0; /* 障害物を検知したら停止 */
 		}
-        else
-        {
-        	//3s後に速度が45に到達するように少しずつ加速させる
-            forward = 10 + speed;
-        	speed_count = speed_count + 464;
-        	if(speed_count > 10000){
-        		if(speed < 35){
-        			speed++;
-        		}
-        		speed_count = speed_count - 10000;
-        	}
-        	
-        	//forward = 10; /* 前進命令 */
+		else
+		{
+			forward = 45; /* 前進命令 */
 			cur_brightness = colorSensor->getBrightness();
-        	target = (max + min)/2;
+			target = (max + min)/2;
 			turn = LineTrace(target, cur_brightness, DELTA_T, errorList, nextErrorIndex);
-        	fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
 		}
 
-        /* 倒立振子制御API に渡すパラメータを取得する */
-        motor_ang_l = leftMotor->getCount();
-        motor_ang_r = rightMotor->getCount();
-        gyro = gyroSensor->getAnglerVelocity();
-        volt = ev3_battery_voltage_mV();
+		/* 倒立振子制御API に渡すパラメータを取得する */
+		motor_ang_l = leftMotor->getCount();
+		motor_ang_r = rightMotor->getCount();
+		gyro = gyroSensor->getAnglerVelocity();
+		volt = ev3_battery_voltage_mV();
 
-        /* 倒立振子制御APIを呼び出し、倒立走行するための */
-        /* 左右モータ出力値を得る */
-        balance_control(
-            (float)forward,
-            (float)turn,
-            (float)gyro,
-        	(float)GYRO_OFFSET_PID,
-            (float)motor_ang_l,
-            (float)motor_ang_r,
-            (float)volt,
-            (int8_t *)&pwm_L,
-            (int8_t *)&pwm_R);
+		/* 倒立振子制御APIを呼び出し、倒立走行するための */
+		/* 左右モータ出力値を得る */
+		balance_control(
+			(float)forward,
+			(float)turn,
+			(float)gyro,
+			(float)GYRO_OFFSET_PID,
+			(float)motor_ang_l,
+			(float)motor_ang_r,
+			(float)volt,
+			(int8_t *)&pwm_L,
+			(int8_t *)&pwm_R);
+		
+		if(pwm_L > 80 && pwm_R > 80)
+		{
+			//モーター暴走時(転倒時)は終了
+			sprintf(cmd, "finished....ERROR1 pwm_L=%d pwm_R=%d", pwm_L, pwm_R);
+			Message(cmd);
+			break;
+		}
 
-        leftMotor->setPWM(pwm_L);
-        rightMotor->setPWM(pwm_R);
+		leftMotor->setPWM(pwm_L);
+		rightMotor->setPWM(pwm_R);
+		fprintf(bt, "cur_brightness = %o, turn = %f gyro = %ld\n", cur_brightness, turn, gyro);
 
-#if 0
-		int angle;
-    	angle = (motor_ang_l + motor_ang_r) / 2;	// モーターの検出角度（累積値）
-    	distance = angle * PI * DIAMETER / 360;		// 距離
-    	direction = (motor_ang_l % (360 * 4) - motor_ang_r % (360 * 4)) / 4; // 向き（スタート時の向きを0度として、時計回りの角度）
-#endif
-#if 1
-    	distance = 0;
-    	direction = 0;
-		CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
-#endif
-    	fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
-        clock->sleep(4); /* 4msec周期起動 */
-    }
-    leftMotor->reset();
-    rightMotor->reset();
+		clock->sleep(4); /* 4msec周期起動 */
+	}
+	
+	leftMotor->reset();
+	rightMotor->reset();
 	tailMotor->reset();
+	ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
 
 	/*終了処理*/
-    ter_tsk(BT_TASK);
-    fclose(bt);
+	ter_tsk(BT_TASK);
+	fclose(bt);
 
-    ext_tsk();
+	ext_tsk();
 }
 
 //*****************************************************************************
@@ -265,31 +258,31 @@ void main_task(intptr_t unused)
 //*****************************************************************************
 static int32_t sonar_alert(void)
 {
-    static uint32_t counter = 0;
-    static int32_t alert = 0;
+	static uint32_t counter = 0;
+	static int32_t alert = 0;
 
-    int32_t distance;
+	int32_t distance;
 
-    if (++counter == 40/4) /* 約40msec周期毎に障害物検知  */
-    {
-        /*
-         * 超音波センサによる距離測定周期は、超音波の減衰特性に依存します。
-         * NXTの場合は、40msec周期程度が経験上の最短測定周期です。
-         * EV3の場合は、要確認
-         */
-        distance = sonarSensor->getDistance();
-        if ((distance <= SONAR_ALERT_DISTANCE) && (distance >= 0))
-        {
-            alert = 1; /* 障害物を検知 */
-        }
-        else
-        {
-            alert = 0; /* 障害物無し */
-        }
-        counter = 0;
-    }
+	if (++counter == 40/4) /* 約40msec周期毎に障害物検知  */
+	{
+		/*
+		 * 超音波センサによる距離測定周期は、超音波の減衰特性に依存します。
+		 * NXTの場合は、40msec周期程度が経験上の最短測定周期です。
+		 * EV3の場合は、要確認
+		 */
+		distance = sonarSensor->getDistance();
+		if ((distance <= SONAR_ALERT_DISTANCE) && (distance >= 0))
+		{
+			alert = 1; /* 障害物を検知 */
+		}
+		else
+		{
+			alert = 0; /* 障害物無し */
+		}
+		counter = 0;
+	}
 
-    return alert;
+	return alert;
 }
 
 //*****************************************************************************
@@ -306,8 +299,7 @@ static bool tail_control(int32_t angle, tailSpeed sp)
 		tailMotor->setBrake(true);
 		tailMotor->setPWM(0);
 		return true;
-	}
-	else{
+	}else{
 		tailMotor->setBrake(false);
 		if (sp == eFast){
 			pwm_max = PWM_ABS_MAX_FAST;
@@ -353,7 +345,10 @@ void bt_task(intptr_t unused)
 			bt_cmd = 1;
 			break;
 		default:
+		case '2':
+			bt_cmd = 2;
 			break;
+		
 		}
 		
 		clock->sleep(5);
@@ -397,13 +392,13 @@ void Message(const char* str){
 void Init(){
 
 	/* 各オブジェクトを生成・初期化する */
-    touchSensor = new TouchSensor(PORT_1);
-    colorSensor = new ColorSensor(PORT_3);
-    sonarSensor = new SonarSensor(PORT_2);
-    gyroSensor  = new GyroSensor(PORT_4);
-    leftMotor   = new Motor(PORT_C);
-    rightMotor  = new Motor(PORT_B);
-    tailMotor   = new Motor(PORT_A);
-    clock       = new Clock();
+	touchSensor = new TouchSensor(PORT_1);
+	colorSensor = new ColorSensor(PORT_3);
+	sonarSensor = new SonarSensor(PORT_2);
+	gyroSensor  = new GyroSensor(PORT_4);
+	leftMotor   = new Motor(PORT_C);
+	rightMotor  = new Motor(PORT_B);
+	tailMotor   = new Motor(PORT_A);
+	clock	   = new Clock();
 }
 
