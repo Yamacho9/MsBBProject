@@ -43,6 +43,7 @@ extern "C" {
 #define DELTA_T				0.004 //処理周期（s）
 #define INT_NUM				250	//積分する偏差数(1s分)
 #define GYRO_OFFSET_PID 3  //PID制御時のジャイロセンサのオフセット値
+#define FALL_DOWN	400	//転倒検知の閾値
 	
 /* LCDフォントサイズ */
 #define CALIB_FONT (EV3_FONT_SMALL)

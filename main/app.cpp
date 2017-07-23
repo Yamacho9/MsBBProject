@@ -181,7 +181,15 @@ void main_task(intptr_t unused)
 			Message("finished...");
 			break;
 		}
-    	
+
+    	if (gyroSensor->getAnglerVelocity() > FALL_DOWN || -(gyroSensor->getAnglerVelocity()) > FALL_DOWN)
+    	{
+			// 転倒を検知すると終了
+	    	fprintf(bt, "getAnglerVelocity = %d\n", gyroSensor->getAnglerVelocity());
+    		fprintf(bt, "Emergency Stop.\n");
+			Message("finished...");
+    		break;
+    	}
     	
         if(!ret){
 			ret = tail_control(TAIL_ANGLE_DRIVE, eFast); /* バランス走行用角度に制御 */
@@ -232,17 +240,10 @@ void main_task(intptr_t unused)
         leftMotor->setPWM(pwm_L);
         rightMotor->setPWM(pwm_R);
 
-#if 0
-		int angle;
-    	angle = (motor_ang_l + motor_ang_r) / 2;	// モーターの検出角度（累積値）
-    	distance = angle * PI * DIAMETER / 360;		// 距離
-    	direction = (motor_ang_l % (360 * 4) - motor_ang_r % (360 * 4)) / 4; // 向き（スタート時の向きを0度として、時計回りの角度）
-#endif
-#if 1
+    	/* 距離・角度計測 */
     	distance = 0;
     	direction = 0;
 		CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
-#endif
     	fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
         clock->sleep(4); /* 4msec周期起動 */
     }
