@@ -19,12 +19,17 @@
 void CalcDistanceAndDirection (int leftCnt, int rightCnt, int* distance, int* direction) {
 	// モーターの検出角度（累積値）
 	int angle;
+	int dir;
 	angle = (leftCnt + rightCnt) / 2;
 
 	*distance = angle * PI * DIAMETER / 360;		// 距離
 	
 	// 向き（スタート時の向きを0度として、時計回りの角度）
-	*direction = (leftCnt % (360 * 4) - rightCnt % (360 * 4)) / 4;
+	dir = (leftCnt % (360 * 4) - rightCnt % (360 * 4)) / 4;
+	if (dir < 0) {
+		dir = dir + 360;
+	}
+	*direction = dir;
 	
 	return;
 }
