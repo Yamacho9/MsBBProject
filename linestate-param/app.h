@@ -49,6 +49,13 @@ extern "C" {
 #define CALIB_FONT_WIDTH (6/*TODO: magic number*/)
 #define CALIB_FONT_HEIGHT (8/*TODO: magic number*/)
 #define MESSAGE_LEN 8
+	
+/* パラメータファイル情報 */
+#define BUF_COLUMN_SIZE 4
+#define BUF_LINE_SIZE 9
+
+extern int buf[BUF_LINE_SIZE][BUF_COLUMN_SIZE];
+extern int param[BUF_COLUMN_SIZE];
 
 /*
  *  関数のプロトタイプ宣言
