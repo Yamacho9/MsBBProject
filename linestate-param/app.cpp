@@ -45,11 +45,20 @@ int errorList[INT_NUM];	//偏差履歴テーブル
 static int32_t   bt_cmd = 0;      /* Bluetoothコマンド 1:リモートスタート */
 static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 
+/* パラメータファイル情報 extern */
+int buf[BUF_LINE_SIZE][BUF_COLUMN_SIZE];
+int param[BUF_COLUMN_SIZE];
+/* パラメータファイル情報 extern以外 */
+FILE *fp;
+
+
 /*関数のプロトタイプ宣言*/
 //メッセージを書く関数
 static void Message(const char* str);
-//各センサの初期化をする関数
+//各センサの初期化、パラメータファイルの読み込みをする関数
 static void Init();
+//終了処理
+void Finalize();
 //超音波センサ
 static int32_t sonar_alert(void);
 //しっぽコントロール
@@ -209,7 +218,7 @@ void main_task(intptr_t unused)
 			cur_brightness = colorSensor->getBrightness();
         	target = (max + min)/2;
         	//turn値とforwardが返り値
-			turn = LineTrace(LINESTATUS_DEFAULT, target, cur_brightness, DELTA_T, errorList, nextErrorIndex, &forward);
+			turn = LineTrace(SECTION1, target, cur_brightness, DELTA_T, errorList, nextErrorIndex, &forward);
 		}
 
         /* 倒立振子制御API に渡すパラメータを取得する */
@@ -254,6 +263,7 @@ void main_task(intptr_t unused)
 	tailMotor->reset();
 
 	/*終了処理*/
+	Finalize();
     ter_tsk(BT_TASK);
     fclose(bt);
 
@@ -408,5 +418,48 @@ void Init(){
     rightMotor  = new Motor(PORT_B);
     tailMotor   = new Motor(PORT_A);
     clock       = new Clock();
+	
+	/* 配列の要素数計算 */
+	int buf_size_c = sizeof(buf[0])/sizeof(buf[0][0]);/*4*/
+	int buf_size_l = sizeof(buf)/sizeof(buf[0]);/*9*/
+	
+	/* パラメータファイルを読み込み用として開く */
+	int i=0,j=0;
+	fp = fopen("/ev3rt/apps/param.txt","r");
+	if(fp == NULL){
+		printf("%sが開けませんでした\n","/ev3rt/apps/param.txt");
+		/* default値を代入して戻る */
+		for (j=0; j<buf_size_c; j++){
+			for(i=0; i<buf_size_l; i++){
+				buf[0][j] = 0;
+				buf[1][j] = 50;
+				buf[2][j] = 74;
+				buf[3][j] = 1;
+				buf[4][j] = 3;
+			}
+		}
+		return;
+	}
+	
+	/* ファイルを読み込んで配列bufに格納 */
+	for (j=0; j<buf_size_c; j++){
+		for(i=0; i<buf_size_l; i++){
+			if(fscanf(fp,"%d,",&buf[i][j])!='\0'){
+				;
+			}
+		}
+	}
 }
 
+//*******************************************************************
+// 関数名 : Finalize()
+// 引数 : なし
+// 返り値 : なし
+// 概要 : 終了処理たち
+//*******************************************************************
+void Finalize(){
+
+	/* パラメータファイルを閉じる */
+	fclose(fp);
+	
+}

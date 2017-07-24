@@ -27,9 +27,8 @@ float LineTrace(enum Line_status status, int targetVal, int currentVal, float op
 	int diff;	//偏差微分
 	float turn;	//旋回角度
 	float kp,ki,kd;
-	int result;//linetrace_paramの成功or失敗
 	
-	result = LineTrace_param(LINESTATUS_CURVE_STRONG,forward,&kp,&ki,&kd);
+	LineTrace_param(status,forward,&kp,&ki,&kd);
 
 	// P制御
 	err = currentVal - targetVal;	// 黒線の左側をトレース
