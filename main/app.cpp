@@ -8,6 +8,10 @@
  ******************************************************************************
  **/
 
+#include <fstream>
+#include <iostream>
+#include <string.h>
+#include <stdlib.h>
 #include "ev3api.h"
 #include "app.h"
 #include "balancer.h"
@@ -19,6 +23,7 @@
 #include "Clock.h"
 #include "LineTrace.h"
 #include "Calibration.h"
+#include "judgeSection.h"
 #include "CalcDistanceAndDirection.h"
 
 using namespace ev3api;
@@ -45,16 +50,31 @@ int errorList[INT_NUM];	//偏差履歴テーブル
 static int32_t   bt_cmd = 0;      /* Bluetoothコマンド 1:リモートスタート */
 static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 
+/* パラメータファイル情報 extern */
+int buf[BUF_LINE_SIZE][BUF_COLUMN_SIZE];
+int param[BUF_COLUMN_SIZE];
+int linenum;
+int *arr0, *arr1;
+
+
+
 /*関数のプロトタイプ宣言*/
 //メッセージを書く関数
 static void Message(const char* str);
-//各センサの初期化をする関数
+//各センサの初期化、パラメータファイルの読み込みをする関数
 static void Init();
+//終了処理
+void Finalize();
 //超音波センサ
 static int32_t sonar_alert(void);
 //しっぽコントロール
 static bool tail_control(int32_t angle, tailSpeed sp);
-
+//マップ情報読み込み関数
+void readMapdata();
+//PIDパラメータ読み込み関数
+void readPIDdata();
+//
+void split(char* s, const std::string& delim,int i);
 
 /* オブジェクトへのポインタ定義 */
 TouchSensor*    touchSensor;
@@ -80,9 +100,10 @@ void main_task(intptr_t unused)
 		errorList[i] = 0;
 	}
 	int nextErrorIndex = 0;	//次の変更履歴のインデックス
-	int max=-255;//キャリブレーションの最大値
-	int min=255;//キャリブレーションの最小値
+	int max=255;//キャリブレーションの最大値
+	int min=0;//キャリブレーションの最小値
 	bool ret = false;
+	int section=1; //現在の区間
 
 	/*グローバル変数の初期化*/
 	count = 1;
@@ -192,7 +213,8 @@ void main_task(intptr_t unused)
     	}
     	
         if(!ret){
-			ret = tail_control(TAIL_ANGLE_DRIVE, eFast); /* バランス走行用角度に制御 */
+        	/* バランス走行用角度に制御 */
+			ret = tail_control(TAIL_ANGLE_DRIVE, eFast);
 		}
 
         if (sonar_alert() == 1) /* 障害物検知 */
@@ -201,6 +223,7 @@ void main_task(intptr_t unused)
 		}
         else
         {
+        	/*
         	//3s後に速度が45に到達するように少しずつ加速させる
             forward = 10 + speed;
         	speed_count = speed_count + 464;
@@ -210,12 +233,13 @@ void main_task(intptr_t unused)
         		}
         		speed_count = speed_count - 10000;
         	}
-        	
+        	*/
         	//forward = 10; /* 前進命令 */
 			cur_brightness = colorSensor->getBrightness();
         	target = (max + min)/2;
-			turn = LineTrace(target, cur_brightness, DELTA_T, errorList, nextErrorIndex);
-        	fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
+
+        	//turn値とforwardが返り値
+			turn = LineTrace(section, target, cur_brightness, DELTA_T, errorList, nextErrorIndex, &forward);
 		}
 
         /* 倒立振子制御API に渡すパラメータを取得する */
@@ -244,7 +268,14 @@ void main_task(intptr_t unused)
     	distance = 0;
     	direction = 0;
 		CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
-    	fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
+
+    	//現在の区間を取得する
+    	section = judgeSection(distance,direction);
+    	//fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
+    	//fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
+    	//現在の走行状況を記録
+    	fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d\n",distance,direction,section,cur_brightness,turn,forward);
+    	
         clock->sleep(4); /* 4msec周期起動 */
     }
     leftMotor->reset();
@@ -252,6 +283,7 @@ void main_task(intptr_t unused)
 	tailMotor->reset();
 
 	/*終了処理*/
+	Finalize();
     ter_tsk(BT_TASK);
     fclose(bt);
 
@@ -387,7 +419,123 @@ void Message(const char* str){
 	ev3_lcd_draw_string(str, 0, CALIB_FONT_HEIGHT*count);
 	count++;
 }
+//*******************************************************************
+// 関数名 : readMapdata()
+// 引数 : 
+// 返り値 : 
+// 概要 : 
+//*******************************************************************
+void readMapdata() {
+	
+	int i;
+	
+	std::cerr << "reading" << std::endl;
 
+	std::ifstream ifs;  // ファイル読み取り用ストリーム
+	ifs.open("/ev3rt/apps/sumL.txt");	// ファイルオープン
+
+	if (ifs.fail()) {	// ファイルオープンに失敗したらそこで終了
+		std::cerr << "ファイルを開けません\n";
+		return;
+	}
+
+	char buf[256];	// データ一時保管用配列
+
+	while (ifs.getline(buf, sizeof(buf))) {	// ファイルから1行ずつ読み込む
+		linenum++;	// 行数をカウントしている
+	}
+
+	std::cerr << "読み込んだ行数 = " << linenum << "\n";
+
+	ifs.clear(); // ファイル末尾に到達というフラグをクリア
+	ifs.seekg(0, std::ios::beg);	// ファイル先頭に戻る
+
+	arr0 = (int *)malloc(linenum * sizeof(int));
+	arr1 = (int *)malloc(linenum * sizeof(int));
+
+	for (i = 0; i<linenum; i++) {
+		ifs.getline(buf, sizeof(buf));	// 一行読込
+		split(buf, ",",i);
+		std::cout << i << " = " << arr0[i] << ", " << arr1[i] << std::endl;
+	}
+	
+	ifs.close();
+
+	return;
+}
+
+//*******************************************************************
+// 関数名 : readMapdata()
+// 引数 : 
+// 返り値 : なし
+// 概要 : 
+//*******************************************************************
+
+void readPIDdata(){
+	/* 配列の要素数計算 */
+	
+	/* パラメータファイル情報 */
+	FILE *fp;
+	int buf_size_c = sizeof(buf[0])/sizeof(buf[0][0]);/*4*/
+	int buf_size_l = sizeof(buf)/sizeof(buf[0]);/*9*/
+	
+	/* パラメータファイルを読み込み用として開く */
+	int i=0,j=0;
+	fp = fopen("/ev3rt/apps/param.txt","r");
+	if(fp == NULL){
+		printf("%sが開けませんでした\n","/ev3rt/apps/param.txt");
+		/* default値を代入して戻る */
+		for (j=0; j<buf_size_c; j++){
+			for(i=0; i<buf_size_l; i++){
+				buf[0][j] = 0;
+				buf[1][j] = 50;
+				buf[2][j] = 74;
+				buf[3][j] = 1;
+				buf[4][j] = 3;
+			}
+		}
+		return;
+	}
+	
+	/* ファイルを読み込んで配列bufに格納 */
+	for (j=0; j<buf_size_c; j++){
+		for(i=0; i<buf_size_l; i++){
+			if(fscanf(fp,"%d,",&buf[i][j])!='\0'){
+				;
+			}
+		}
+	}
+	
+	fclose(fp);
+	
+}
+//*******************************************************************
+// 関数名 : split
+// 引数 : 
+// 返り値 : 
+// 概要 : 
+//*******************************************************************
+void split(char* s, const std::string& delim,int i)
+{
+	using namespace std;
+	int count = 0;
+	char *tok;
+
+	//std::cerr << "split" << std::endl;
+
+	tok = strtok(s, delim.c_str());
+	while (tok != NULL) {
+		if ((count % 2) == 0) {
+			arr0[i] = atoi(tok);
+		}
+		else {
+			arr1[i] = atoi(tok);
+		}
+		tok = strtok(NULL, delim.c_str());  /* 2回目以降 */
+		count++;
+	}
+	//printf("i=%d, count=%d, arr0=%d, arr1=%d\n", i, count, arr0[i], arr1[i]);
+}
 
 //*******************************************************************
 // 関数名 : Init
@@ -406,5 +554,38 @@ void Init(){
     rightMotor  = new Motor(PORT_B);
     tailMotor   = new Motor(PORT_A);
     clock       = new Clock();
+	
+	//マップデータ読み込み
+	readMapdata();
+	//PIDパラメータデータ読み込み
+	readPIDdata();
+	
 }
 
+//*******************************************************************
+// 関数名 : Finalize()
+// 引数 : なし
+// 返り値 : なし
+// 概要 : 終了処理たち
+//*******************************************************************
+void Finalize(){
+
+	free(arr0);
+	free(arr1);
+}
+
+
+
+/*getset関数たち*/
+int getBufLineSize(){
+	return BUF_LINE_SIZE;
+}
+int getBufColumnSize(){
+	return BUF_COLUMN_SIZE;
+}
+int getlinenum(){
+	return linenum;
+}
+void setlinenum(int num){
+	linenum = num;
+}

@@ -8,15 +8,17 @@
 
 /**
  * @brief ライントレース制御
+ * @param [in] int state ラインの状態(直線/カーブ)
  * @param [in] int targetVal 目標の光センサ値
  * @param [in] int currentVal 現在の光センサ値
  * @param [in] float opePeriod 処理周期[s]
  * @param [in,out] int errList[] 偏差履歴
  * @param [in,out] int nextErrIndex 次の偏差履歴インデックス
+ * @param [in, out] int forward
  * @return 旋回角度[deg.] 100(右旋回最大値)～-100(左旋回最大値)
  * @detail 光センサ値を基にPID制御を行う
  */
-float LineTrace(int targetVal, int currentVal, float opePeriod, int errList[], int nextErrIndex) {
+float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int errList[], int nextErrIndex, int8_t* forward) {
 	int err;	//偏差
 	int i;	//偏差履歴用インデックス
 	int errNum;	//偏差履歴数
@@ -24,6 +26,9 @@ float LineTrace(int targetVal, int currentVal, float opePeriod, int errList[], i
 	int integral;	//偏差積分
 	int diff;	//偏差微分
 	float turn;	//旋回角度
+	float kp,ki,kd;
+	
+	LineTrace_param(status,forward,&kp,&ki,&kd);
 
 	// P制御
 	err = currentVal - targetVal;	// 黒線の左側をトレース
@@ -44,7 +49,7 @@ float LineTrace(int targetVal, int currentVal, float opePeriod, int errList[], i
 	}
 	diff = (err - errList[lastErrIndex]) / opePeriod;
 
-	turn = KP * (float)err + KI * (float)integral + KD * (float)diff;
+	turn = kp * (float)err + ki * (float)integral + kd * (float)diff;
 
 	if (nextErrIndex + 1 < errNum) {
 		nextErrIndex++;

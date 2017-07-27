@@ -13,7 +13,6 @@
 #include "GyroSensor.h"
 #include "Motor.h"
 #include "Clock.h"
-#include "LineTrace.h"
 
 using namespace ev3api;
 
