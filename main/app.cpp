@@ -100,8 +100,8 @@ void main_task(intptr_t unused)
 		errorList[i] = 0;
 	}
 	int nextErrorIndex = 0;	//次の変更履歴のインデックス
-	int max=255;//キャリブレーションの最大値
-	int min=0;//キャリブレーションの最小値
+	int max=-255;//キャリブレーションの最大値
+	int min=255;//キャリブレーションの最小値
 	bool ret = false;
 	int section=1; //現在の区間
 
