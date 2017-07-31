@@ -54,8 +54,8 @@ extern "C" {
 #define MESSAGE_LEN 8
 	
 /* パラメータファイル情報 */
-#define BUF_COLUMN_SIZE 4
-#define BUF_LINE_SIZE 9
+#define BUF_COLUMN_SIZE 5
+#define BUF_LINE_SIZE 10
 
 extern int buf[BUF_LINE_SIZE][BUF_COLUMN_SIZE];
 extern int param[BUF_COLUMN_SIZE];
