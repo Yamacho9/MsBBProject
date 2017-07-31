@@ -119,10 +119,10 @@ void LineTrace_param(int status, int8_t* forward, float* kp, float* ki, float* k
 	}
 
 	/* ’l‚ð‘ã“ü */
-	*forward = param[0];
-	*kp = (float)param[1]/100;
-	*ki = (float)param[2]/100;
-	*kd = (float)param[3]/100;
+	*forward = param[1];
+	*kp = (float)param[2]/100;
+	*ki = (float)param[3]/100;
+	*kd = (float)param[4]/100;
 }
 
 
