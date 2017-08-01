@@ -26,7 +26,6 @@ float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int 
 	int integral;	//•Î·Ï•ª
 	int diff;	//•Î·”÷•ª
 	float turn;	//ù‰ñŠp“x
-	float kp,ki,kd;
 	
 	LineTrace_param(status,forward,&kp,&ki,&kd);
 
@@ -65,4 +64,12 @@ float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int 
 		turn = MAX_TURN_LEFT;
 	}
 	return turn;
+}
+
+
+void GetPID(float* kkp,float* kki, float* kkd){
+
+	*kkp = kp;
+	*kki = ki;
+	*kkd = kd;
 }

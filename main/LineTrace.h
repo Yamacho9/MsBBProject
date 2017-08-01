@@ -22,7 +22,10 @@ extern "C" {
 #define MAX_TURN_LEFT	-100 //¶ù‰ñÅ‘å’l
 
 extern float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int errList[], int nextErrIndex, int8_t* forward);
-
+extern void GetPID(float* kp,float* ki, float* kd);
+	
+float kp,ki,kd;
+	
 #ifdef __cplusplus
 }
 #endif
