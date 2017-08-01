@@ -12,7 +12,7 @@
 #define DegMargine 10
 #define OffLineSeconds 1.5
 
-extern bool judgeSection(int distance, int degree);
+extern int judgeSection(int distance, int degree);
 
 /*
 __judge_h__
