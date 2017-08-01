@@ -23,6 +23,10 @@ bool judgeSection(int distance, int degree) {
 
 	//distance range check
 	while (1) {
+		
+		if(arr0[linenum-1]<=distance) {
+			return (linenum-1);
+		}
 		if ((arr0[linenum - (flag-1)] + DistMargine) <= distance) { //ŽŸ‚Ì‹æŠÔ‚Ö
 			flag--;
 			printf("callednum=%d, arr0[]=%d\n", linenum-flag, arr0[linenum - flag]);
