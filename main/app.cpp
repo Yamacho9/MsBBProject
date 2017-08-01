@@ -274,6 +274,9 @@ void main_task(intptr_t unused)
     	//fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
     	//fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
     	//Œ»İ‚Ì‘–só‹µ‚ğ‹L˜^
+    	float p,i,d;
+    	GetPID(&p,&i,&d);
+    	fprintf(bt,"p:%f i:%f d:%f\n",p,i,d);
     	fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d\n",distance,direction,section,cur_brightness,turn,forward);
     	
         clock->sleep(4); /* 4msecüŠú‹N“® */
