@@ -13,7 +13,7 @@ int main()
 }
 */
 
-int judgeSection(int distance, int degree) {
+bool judgeSection(int distance, int degree) {
 	//bool result = true; //on line
 	//int degMax=0, degMin=0;
 	int linenum = getlinenum();
