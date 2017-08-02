@@ -8,54 +8,32 @@
 
 /**
  * @brief ライントレース制御
- * @param [in] int state ラインの状態(直線/カーブ)
+ * @param [in] int status ラインの状態(直線/カーブ)
  * @param [in] int targetVal 目標の光センサ値
  * @param [in] int currentVal 現在の光センサ値
  * @param [in] float opePeriod 処理周期[s]
- * @param [in,out] int errList[] 偏差履歴
- * @param [in,out] int nextErrIndex 次の偏差履歴インデックス
+ * @param [in,out] int* lastErr 前回偏差
  * @param [in, out] int forward
  * @return 旋回角度[deg.] 100(右旋回最大値)～-100(左旋回最大値)
  * @detail 光センサ値を基にPID制御を行う
  */
-float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int errList[], int nextErrIndex, int8_t* forward) {
-	int err;	//偏差
-	int i;	//偏差履歴用インデックス
-	int errNum;	//偏差履歴数
-	int lastErrIndex;	//前回偏差のインデックス
-	int integral;	//偏差積分
-	int diff;	//偏差微分
+float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int* lastErr, int8_t* forward) {
+	int integral=0;	//偏差積分
 	float turn;	//旋回角度
 	
 	LineTrace_param(status,forward,&kp,&ki,&kd);
 
 	// P制御
-	err = currentVal - targetVal;	// 黒線の左側をトレース
-
-	// I制御
-	errList[nextErrIndex] = err;
-	errNum = sizeof errList / sizeof errList[0];
-	integral = 0;
-	for (i = 0; i < errNum; i++) {
-		integral += errList[i] * opePeriod;
-	}
+	errParam = currentVal - targetVal;	// 黒線の左側をトレース
 
 	// D制御
-	if (nextErrIndex != 0) {
-		lastErrIndex = nextErrIndex - 1;
-	} else {
-		lastErrIndex = errNum - 1;
-	}
-	diff = (err - errList[lastErrIndex]) / opePeriod;
+	diffParam = (errParam - *lastErr) / opePeriod;
+	*lastErr = errParam;
 
-	turn = kp * (float)err + ki * (float)integral + kd * (float)diff;
+	// PD制御に基づいた旋回値を算出
+	// I制御の係数、及び、変数は不要だが、コースマップに合わせて含んだ形にする。
+	turn = kp * (float)errParam + ki * (float)integral + kd * diffParam;
 
-	if (nextErrIndex + 1 < errNum) {
-		nextErrIndex++;
-	} else {
-		nextErrIndex = 0;
-	}
-	
 	// 旋回角度が範囲内に収まっているか確認
 	if (turn > MAX_TURN_RIGHT) {
 		turn = MAX_TURN_RIGHT;
@@ -66,10 +44,15 @@ float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int 
 	return turn;
 }
 
-
+// PID制御係数取得（デバッグ用）
 void GetPID(float* kkp,float* kki, float* kkd){
-
 	*kkp = kp;
 	*kki = ki;
 	*kkd = kd;
+}
+
+// PID制御変数取得（デバッグ用）
+void GetVar(int* err, float* diff){
+	*err = errParam;
+	*diff = diffParam;
 }

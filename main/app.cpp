@@ -44,8 +44,8 @@ static char message[MESSAGE_LEN + 1] = {0};
 /*スピードを上げるためのグローバル変数*/
 int speed_count=0;
 int speed=0;
-/*PID制御の偏差履歴テーブル*/
-int errorList[INT_NUM];	//偏差履歴テーブル
+/* D制御用 */
+int lastErr=0; //前回偏差
 /* Bluetooth */
 static int32_t   bt_cmd = 0;      /* Bluetoothコマンド 1:リモートスタート */
 static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
@@ -95,11 +95,6 @@ void main_task(intptr_t unused)
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
 	int8_t cur_brightness=0;	/* 検出した光センサ値 */
 
-	int i;
-	for (i = 0; i < INT_NUM; i++) { //テーブル初期化
-		errorList[i] = 0;
-	}
-	int nextErrorIndex = 0;	//次の変更履歴のインデックス
 	int max=-255;//キャリブレーションの最大値
 	int min=255;//キャリブレーションの最小値
 	bool ret = false;
@@ -239,7 +234,7 @@ void main_task(intptr_t unused)
         	target = (max + min)/2;
 
         	//turn値とforwardが返り値
-			turn = LineTrace(section, target, cur_brightness, DELTA_T, errorList, nextErrorIndex, &forward);
+			turn = LineTrace(section, target, cur_brightness, DELTA_T, &lastErr, &forward);
 		}
 
         /* 倒立振子制御API に渡すパラメータを取得する */
@@ -274,9 +269,13 @@ void main_task(intptr_t unused)
     	//fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
     	//fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
     	//現在の走行状況を記録
-    	float p,i,d;
-    	GetPID(&p,&i,&d);
+    	float p,i,d;	//PID制御係数
+    	GetPID(&p,&i,&d);	//取得
+    	int err;	//偏差
+    	float diff;	//偏差微分
+    	GetVar(&err,&diff);	//取得
     	fprintf(bt,"p:%f i:%f d:%f\n",p,i,d);
+    	fprintf(bt,"err:%d diff:%f\n",err,diff);
     	fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d\n",distance,direction,section,cur_brightness,turn,forward);
     	
         clock->sleep(4); /* 4msec周期起動 */

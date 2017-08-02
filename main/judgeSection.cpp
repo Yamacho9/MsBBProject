@@ -13,7 +13,7 @@ int main()
 }
 */
 
-bool judgeSection(int distance, int degree) {
+int judgeSection(int distance, int degree) {
 	//bool result = true; //on line
 	//int degMax=0, degMin=0;
 	int linenum = getlinenum();
@@ -27,7 +27,7 @@ bool judgeSection(int distance, int degree) {
 		if(arr0[linenum-1]<=distance) {
 			return (linenum-1);
 		}
-		if ((arr0[linenum - (flag-1)] + DistMargine) <= distance) { //Ÿ‚Ì‹æŠÔ‚Ö
+		if ((arr0[linenum - (flag-1)] + DistMargine) <= distance) { //???I?a?O?O
 			flag--;
 			printf("callednum=%d, arr0[]=%d\n", linenum-flag, arr0[linenum - flag]);
 		}
