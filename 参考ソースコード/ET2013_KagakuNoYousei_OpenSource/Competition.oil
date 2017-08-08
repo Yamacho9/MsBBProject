@@ -1,0 +1,153 @@
+#include "implementation.oil"
+
+CPU ATMEL_AT91SAM7S256
+{
+	OS LEJOS_OSEK
+	{
+		STATUS = EXTENDED;
+		STARTUPHOOK = FALSE;
+		ERRORHOOK = FALSE;
+		SHUTDOWNHOOK = FALSE;
+		PRETASKHOOK = FALSE;
+		POSTTASKHOOK = FALSE;
+		USEGETSERVICEID = FALSE;
+		USEPARAMETERACCESS = FALSE;
+		USERESSCHEDULER = FALSE;
+	};
+
+	APPMODE appmode1{}; 
+
+	/* 走行タスク */
+	TASK RunTask
+	{
+		AUTOSTART = TRUE { APPMODE = appmode1; };
+		PRIORITY = 3;			/* 優先度3 */
+		ACTIVATION = 1;
+		RESOURCE = resource1;
+		SCHEDULE = FULL;
+		STACKSIZE = 1024;
+		EVENT = RunEvent;
+		EVENT = EventSleepI2C;	/* Clockクラスで使用 */
+		EVENT = EventSleep;		/* Clockクラスで使用 */
+	};
+
+	/* UIタスク */
+	TASK UiTask
+	{
+		AUTOSTART = FALSE;
+		PRIORITY = 2;			/* 優先度2 */
+		ACTIVATION = 1;
+		RESOURCE = resource1;
+		SCHEDULE = FULL;
+		STACKSIZE = 512;
+		EVENT = UiEvent;
+	};
+	
+	/* 緊急停止タスク */
+	TASK EmergencyStopTask
+	{
+		AUTOSTART = FALSE;
+		PRIORITY = 1;			/* 優先度1 */
+		ACTIVATION = 1;
+		RESOURCE = resource1;
+		SCHEDULE = FULL;
+		STACKSIZE = 512;
+		EVENT = EmergencyStopEvent;
+	};
+
+	/* 走行アラーム */
+	ALARM RunAlarm
+	{
+		COUNTER = SysTimerCnt;
+		ACTION = SETEVENT
+		{
+			TASK = RunTask;
+			EVENT = RunEvent;
+		};
+		AUTOSTART = TRUE 
+		{ 
+			ALARMTIME = 1;
+			CYCLETIME = 4;		/* 4ミリ秒周期 */
+			APPMODE = appmode1;
+		};
+	};
+
+	/* UIアラーム */
+	ALARM UiAlarm
+	{
+		COUNTER = SysTimerCnt;
+		ACTION = SETEVENT
+		{
+			TASK = UiTask;
+			EVENT = UiEvent;
+		};
+		AUTOSTART = TRUE 
+		{ 
+			ALARMTIME = 1;
+			CYCLETIME = 10;		/* 10ミリ秒周期 */
+			APPMODE = appmode1;
+		};
+	};
+
+	/* 緊急停止アラーム */
+	ALARM EmergencyStopAlarm
+	{
+		COUNTER = SysTimerCnt;
+		ACTION = SETEVENT
+		{
+			TASK = EmergencyStopTask;
+			EVENT = EmergencyStopEvent;
+		};
+		AUTOSTART = TRUE 
+		{ 
+			ALARMTIME = 1;
+			CYCLETIME = 100;		/* 100ミリ秒周期 */
+			APPMODE = appmode1;
+		};
+	};
+	
+	/* 走行イベント */
+	EVENT RunEvent
+	{
+		MASK = AUTO;
+	};
+	
+	/* UIイベント */
+	EVENT UiEvent
+	{
+		MASK = AUTO;
+	};
+	
+	/* 緊急停止イベント */
+	EVENT EmergencyStopEvent
+	{
+		MASK = AUTO;
+	};
+
+	/* Clockクラスイベント */	
+	EVENT EventSleepI2C
+	{
+		MASK = AUTO;
+	};	
+	EVENT EventSleep
+	{
+		MASK = AUTO;
+	};
+
+	
+	/* カウンタ */
+	COUNTER SysTimerCnt
+	{
+		MINCYCLE = 1;
+		MAXALLOWEDVALUE = 10000;
+		TICKSPERBASE = 1;
+	};
+
+	 RESOURCE resource1
+  	{
+    		RESOURCEPROPERTY = STANDARD;
+  	};
+
+};
+
+/*Copyright (c) 2014 Kagaku No Yousei. All Rights Reserved.*/

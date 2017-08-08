@@ -1,0 +1,56 @@
+sudo: required
+
+compiler:
+  - gcc
+
+addons:
+  apt_packages:
+    - lib32bz2-1.0
+    - lib32ncurses5
+    - lib32z1
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      # - llvm-toolchain-precise-3.7 # 2016/6時点でサーバ不調のため取得できない
+      # - llvm-toolchain-precise
+    packages:
+      # - clang-3.7
+      - clang
+      - g++-5
+      - gcc-5
+
+before_install:
+  # Travisのgccはバージョンが古く(2016/04/04時点)Segmentation Faultを起こすため使用しない
+  - sudo apt-get remove gcc
+  # Travis上ではgcc-5を使用するように各Makefileを書き換える
+  - gcc-5 -v
+  # gcc-arm-none-eabiのリポジトリ
+  - sudo add-apt-repository -y ppa:terry.guo/gcc-arm-embedded
+  - sudo add-apt-repository -y 'deb http://old-releases.ubuntu.com/ubuntu/ raring main restricted universe multiverse'
+  - sudo apt-get update
+
+install:
+  # ARMコンパイラ
+  - sudo apt-cache madison gcc-arm-none-eabi
+  - sudo apt-get --force-yes install gcc-arm-none-eabi=4.9.3.2015q3-1precise1
+  #  その他必要なツール
+  - sudo apt-get install libboost-all-dev
+  - sudo apt-get install u-boot-tools
+
+
+before_script:
+  # cfgをビルド appビルドに使用されるバイナリ
+  - cd src/cfg
+  - make clean
+  - make
+  - chmod 777 cfg/cfg
+  # workspaceに移動
+  - cd ../sdk/workspace/
+  - make clean
+
+script:
+#  - make app=gyroboy
+#  - make app=helloev3
+#  - make app=riso-ranger2016
+  - make app=test-cpp
+
