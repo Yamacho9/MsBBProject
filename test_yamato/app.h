@@ -63,6 +63,9 @@ extern int param[BUF_COLUMN_SIZE];
 /* map data */
 extern int *arr0, *arr1;
 extern int linenum; // データの行数を数える
+	
+	
+enum runmode {eModeLineTrace, eModeStep, eModeLookUp};
 
 /*
  *  関数のプロトタイプ宣言
