@@ -106,6 +106,9 @@ void main_task(intptr_t unused)
 	static int step_frag = 0;
 	static bool tail_step = false;
 	static int32_t motor_ang_l_bak = 0, motor_ang_r_bak = 0;
+	int distance_org = 0, direction_org = 0; //走行距離、向き
+	static int count_stable = 0;
+	int max_s = 40;
 
 	/*グローバル変数の初期化*/
 	count = 1;
@@ -269,9 +272,9 @@ void main_task(intptr_t unused)
 			int err;	//偏差
 			float diff;	//偏差微分
 			GetVar(&err,&diff);	//取得
-			fprintf(bt,"p:%f i:%f d:%f\n",p,i,d);
-			fprintf(bt,"err:%d diff:%f\n",err,diff);
-			fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d\n",distance,direction,section,cur_brightness,turn,forward);
+			//fprintf(bt,"p:%f i:%f d:%f\n",p,i,d);
+			//fprintf(bt,"err:%d diff:%f\n",err,diff);
+			//fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d\n",distance,direction,section,cur_brightness,turn,forward);
 		
 			clock->sleep(4); /* 4msec周期起動 */
 			break;
@@ -282,8 +285,12 @@ void main_task(intptr_t unused)
 					forward = 0;
 					turn = 0;
 					fprintf(bt, "find step....\n");
+					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
+					CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+					distance_org = distance;
+					direction_org = direction;
 				}else{
-					fprintf(bt, "motor_ang_l = %d | motor_ang_r = %d\n",motor_ang_l,motor_ang_r);
+					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
 					//turn値とforwardが返り値
 					turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward);
 					forward = 30;
@@ -293,7 +300,8 @@ void main_task(intptr_t unused)
 			}
 			else if(step_frag == 1){
 				if(!tail_step){
-					tail_step = tail_control(70, eSlow);
+					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
+					tail_step = tail_control(TAIL_ANGLE_STAND_UP, eSlow);
 					forward = 0;
 					turn = 0;
 				}
@@ -304,16 +312,106 @@ void main_task(intptr_t unused)
 						step_frag = 2;
 						forward = 0;
 						turn = 0;
+						tail_step = false;
 						fprintf(bt, "clear step....\n");
 					}
 					motor_ang_l_bak = motor_ang_l;
 					motor_ang_r_bak = motor_ang_r;
-					fprintf(bt, "motor_ang_l = %d | motor_ang_r = %d\n",motor_ang_l,motor_ang_r);
+					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
 				}
 			}
 			else if(step_frag == 2){
+				turn = 0;
+				//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
+				CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+				if((distance - distance_org) >= 150 && (distance - distance_org) < 170){
+					if(pwm_L<0 || pwm_R<0){
+						leftMotor->reset();
+						rightMotor->reset();
+						step_frag = 3;
+						fprintf(bt, "stop motor step....\n");
+						clock->sleep(250); /* 0.2sec待つ */
+						
+						break;
+					}else{
+						forward = -10;
+					}
+				}if(distance-distance_org < 150){
+					forward = 10;
+				}else{
+					forward = -10;
+				}
+			}
+			else if(step_frag == 3){
+				leftMotor->setPWM(10);
+				rightMotor->setPWM(-10);
+				CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+				if(direction > 358){
+					leftMotor->reset();
+					rightMotor->reset();
+					gyroSensor->reset();
+					balance_init(); /* 倒立振子API初期化 */
+					step_frag = 4;
+					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,direction);
+					//fprintf(bt, "%d\t%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro,tailMotor->getCount());
+					fprintf(bt, "rotation OK step....\n");
+				}
+				//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,direction);
+				//fprintf(bt, "%d\t%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro,tailMotor->getCount());
+				break;
+			}			
+			else if(step_frag == 4){
+#if 0
+				if(!tail_step){
+					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
+					tail_step = tail_control(90, eSlow);					
+					fprintf(bt, "%d\t%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro,tailMotor->getCount());
+					break;
+				}
 				forward = 0;
 				turn = 0;
+#endif
+				//fprintf(bt, "%d\t%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro,tailMotor->getCount());
+				float pwm = (float)(TAIL_ANGLE_START - tailMotor->getCount()); // 比例制御
+				if (pwm > 0)
+				{
+					tailMotor->setPWM(20);
+					break;
+				}
+				else if (pwm < 0)
+				{
+					tailMotor->setPWM(-20);
+					step_frag = 5;
+					lastErr = 0;
+					forward = 0;
+					turn = 0;
+					fprintf(bt, "%d\t%f\n",cur_brightness,turn);
+					fprintf(bt, "tailUP OK step....\n");
+				}
+			}			
+			else if(step_frag == 5){
+				turn = 0;
+				forward = 0;
+				count_stable++;
+				if(count_stable > 250){
+					step_frag = 6;
+					count_stable = 0;
+					fprintf(bt, "RobotStable OK step....\n");
+				}
+				fprintf(bt, "%d\t%f\n",cur_brightness,turn);
+			}		
+			else if(step_frag == 6){
+				if(cur_brightness < max_s ){
+					max_s = cur_brightness;
+				}
+				target = (max_s + min)/2;
+				turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward);
+				forward = 5;
+				count_stable++;
+				if(cur_brightness < min +10){
+					step_frag = 0;
+				}
+				fprintf(bt, "%d\t%f\n",cur_brightness,turn);
 			}
 				
 			/* 倒立振子制御APIを呼び出し、倒立走行するための */
