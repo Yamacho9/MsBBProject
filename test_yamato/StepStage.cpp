@@ -11,29 +11,51 @@
 
 #include "StepStage.hpp"
 
+
+static bool ret_motor = false;
+static bool ret_gyro = false;
+static int count_r = 0;
+static int count_l = 0;
+
 /*
 **! @note 
 **! @param 
 **! @return Ture:ŠK’i”­Œ© False:ŠK’iŒ©‚Â‚©‚Á‚Ä‚¢‚È‚¢
 */
-bool findStep(int32_t motor_ang_l,int32_t motor_ang_r,int32_t motor_ang_l_bak,int32_t motor_ang_r_bak)
+bool findStep(int32_t motor_ang_l,int32_t motor_ang_r,int32_t motor_ang_l_bak,int32_t motor_ang_r_bak,int32_t gyro)
 {
-	bool right_frag = false;
-	bool left_frag = false;
+	bool ret = false;	
 	
-	bool ret = false;
-	
-	if((motor_ang_r - motor_ang_r_bak) < 0){
-		right_frag = true;
-	}
-	if((motor_ang_l - motor_ang_l_bak) < 0){
-		left_frag = true;
-	}
-	
-	if(right_frag == true && left_frag == true){
+	if(((motor_ang_r - motor_ang_r_bak) < 0) && ((motor_ang_l - motor_ang_l_bak) < 0)){
+		//ret_motor = true;
 		ret = true;
 	}
+	/*if(gyro > 150){
+		ret_gyro = true;
+	}
 	
+	if(ret_motor && ret_gyro){
+		ret = true;
+		ret_motor = false;
+		ret_gyro = false;
+	}*/
+	
+	return ret;
+}
+
+
+/*
+**! @note ‚µ‚Á‚Û‘–sŽž—p‚Ì’i·ŒŸ’m
+**! @param 
+**! @return Ture:ŠK’i”­Œ© False:ŠK’iŒ©‚Â‚©‚Á‚Ä‚¢‚È‚¢
+*/
+bool findStep2(int32_t gyro)
+{
+	bool ret = false;	
+	
+	if(gyro>=15 || gyro<=-15){
+		ret = true;
+	}
 	return ret;
 }
 /*

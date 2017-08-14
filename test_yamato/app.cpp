@@ -108,7 +108,9 @@ void main_task(intptr_t unused)
 	static int32_t motor_ang_l_bak = 0, motor_ang_r_bak = 0;
 	int distance_org = 0, direction_org = 0; //走行距離、向き
 	static int count_stable = 0;
-	int max_s = 40;
+	int max_s = 25;
+	int32_t gyro_ang = 0;
+	bool spin_frag = false;
 
 	/*グローバル変数の初期化*/
 	count = 1;
@@ -132,7 +134,8 @@ void main_task(intptr_t unused)
 	
 	ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
 	Message("Init finished.");
-	
+
+	while(1){	
 	//キャリブレーション
 	//min,maxにキャリブレーションの結果が出力される
 	Message("Calibration waiting..");
@@ -153,6 +156,7 @@ void main_task(intptr_t unused)
 		}
 		if (bt_cmd == 1){//bluetooth start
 			fprintf(bt,"bluetooth start\n");
+			bt_cmd = 0;
 			break;
 		}
 		if (touchSensor->isPressed())
@@ -232,6 +236,7 @@ void main_task(intptr_t unused)
 		motor_ang_r = rightMotor->getCount();
 		gyro = gyroSensor->getAnglerVelocity();
 		volt = ev3_battery_voltage_mV();
+		//gyro_ang = gyroSensor->getAngle();
 		
 		switch(mode){
 		case (eModeLineTrace):
@@ -260,6 +265,7 @@ void main_task(intptr_t unused)
 			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
 			if(distance > 100){
 				mode=eModeStep;
+				fprintf(bt, "Step Stage Start....\n");
 			}
 
 			//現在の区間を取得する
@@ -279,28 +285,31 @@ void main_task(intptr_t unused)
 			clock->sleep(4); /* 4msec周期起動 */
 			break;
 		case (eModeStep):
-			if (step_frag == 0){
-				if(findStep(motor_ang_l,motor_ang_r,motor_ang_l_bak,motor_ang_r_bak)==true){
+			if (step_frag == 0){	//ステップ0：段差検知まで
+				if(findStep(motor_ang_l,motor_ang_r,motor_ang_l_bak,motor_ang_r_bak,gyro)==true){
 					step_frag = 1;
 					forward = 0;
 					turn = 0;
 					fprintf(bt, "find step....\n");
-					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
+					motor_ang_l_bak = 0;
+					motor_ang_r_bak = 0;
+					//fprintf(bt, "%d\t%d\t%d\t%d\t%d\n",step_frag,motor_ang_l,motor_ang_r,gyro,gyro_ang);
 					CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
 					distance_org = distance;
 					direction_org = direction;
+					fprintf(bt, "%d\t%d\t%d\n",direction_org,direction,spin_frag);
 				}else{
-					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
+					//fprintf(bt, "%d\t%d\t%d\t%d\t%d\n",step_frag,motor_ang_l,motor_ang_r,gyro,gyro_ang);
 					//turn値とforwardが返り値
 					turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward);
-					forward = 30;
+					forward = 20;
 					motor_ang_l_bak = motor_ang_l;
 					motor_ang_r_bak = motor_ang_r;
 				}
 			}
-			else if(step_frag == 1){
+			else if(step_frag == 1){	//ステップ１：段差を上がるまで
 				if(!tail_step){
-					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
+					//fprintf(bt, "%d\t%d\t%d\t%d\t%d\n",step_frag,motor_ang_l,motor_ang_r,gyro,gyro_ang);
 					tail_step = tail_control(TAIL_ANGLE_STAND_UP, eSlow);
 					forward = 0;
 					turn = 0;
@@ -314,18 +323,84 @@ void main_task(intptr_t unused)
 						turn = 0;
 						tail_step = false;
 						fprintf(bt, "clear step....\n");
+						motor_ang_l_bak = 0;
+						motor_ang_r_bak = 0;
+						//fprintf(bt, "%d\t%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro,gyro_ang);
 					}
-					motor_ang_l_bak = motor_ang_l;
-					motor_ang_r_bak = motor_ang_r;
-					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
+					else{
+						motor_ang_l_bak = motor_ang_l;
+						motor_ang_r_bak = motor_ang_r;
+					}
+					//fprintf(bt, "%d\t%d\t%d\t%d\t%d\n",step_frag,motor_ang_l,motor_ang_r,gyro,gyro_ang);
 				}
 			}
-			else if(step_frag == 2){
+#if 0
+			else if(step_frag == 2){	//ステップ２：スピン位置につくまで
+				turn = 0;
+				//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
+				CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+				fprintf(bt, "%d\t%d\t%d\n",direction_org,direction,spin_frag);
+				if((distance - distance_org) >= 155 && (distance - distance_org) < 170){
+					forward = 0;
+					if((pwm_L<2 && pwm_R<2 && pwm_L>-2 && pwm_R>-2 )){
+						step_frag = 3;
+						fprintf(bt, "stop spin point step....\n");
+					}
+				}if(distance-distance_org < 155){
+					forward = 10;
+				}else{
+					forward = -10;
+				}
+			}
+			else if(step_frag == 3){	//ステップ３：スピン終わるまで
+				turn = 30;
+				CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+				if(spin_frag){
+					if((direction > (direction_org - 3)) && (direction < (direction_org+3))){
+						lastErr = 0;
+						step_frag = 4;
+						spin_frag = false;
+						fprintf(bt, "rotation OK step....\n");
+					}
+				}
+				else{
+					if(direction_org <180){
+						if((direction > (direction_org + 170)) && (direction < (direction_org + 180))){
+							spin_frag = true;
+						}
+					}
+					else{
+						if((direction > (direction_org - 180)) && (direction > (direction_org - 170))){
+							spin_frag = true;
+						}
+					}
+				}
+				fprintf(bt, "%d\t%d\t%d\n",direction_org,direction,spin_frag);
+				
+			}
+			else if(step_frag == 4){
+				if(cur_brightness > max_s ){
+					max_s = cur_brightness;
+				}
+				target = (max_s + min)/2;
+				turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward);
+				forward = 10;
+				count_stable++;
+				if(count_stable > 200){
+					step_frag = 0;
+					count_stable = 0;
+					max = max_s;
+					fprintf(bt, "RobotStable OK step....\n");
+				}
+			}
+#endif
+//#if 0
+			else if(step_frag == 2){	//ステップ２：スピン位置につくまで
 				turn = 0;
 				//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
 				CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
 				if((distance - distance_org) >= 150 && (distance - distance_org) < 170){
-					if(pwm_L<0 || pwm_R<0){
+					if(gyro < 0 &&(pwm_L<0 && pwm_R<0)){
 						leftMotor->reset();
 						rightMotor->reset();
 						step_frag = 3;
@@ -342,7 +417,7 @@ void main_task(intptr_t unused)
 					forward = -10;
 				}
 			}
-			else if(step_frag == 3){
+			else if(step_frag == 3){	//ステップ３：スピン終わるまで
 				leftMotor->setPWM(10);
 				rightMotor->setPWM(-10);
 				CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
@@ -350,7 +425,8 @@ void main_task(intptr_t unused)
 					leftMotor->reset();
 					rightMotor->reset();
 					gyroSensor->reset();
-					balance_init(); /* 倒立振子API初期化 */
+					//balance_init(); /* 倒立振子API初期化 */
+					//lastErr = 0;
 					step_frag = 4;
 					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,direction);
 					//fprintf(bt, "%d\t%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro,tailMotor->getCount());
@@ -359,19 +435,83 @@ void main_task(intptr_t unused)
 				//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,direction);
 				//fprintf(bt, "%d\t%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro,tailMotor->getCount());
 				break;
-			}			
-			else if(step_frag == 4){
-#if 0
-				if(!tail_step){
-					//fprintf(bt, "%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro);
-					tail_step = tail_control(90, eSlow);					
-					fprintf(bt, "%d\t%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro,tailMotor->getCount());
+			}
+//#endif
+//#if 0
+			else if(step_frag == 4){	//尻尾走行開始
+				if(cur_brightness > max_s ){
+					max_s = cur_brightness;
+				}
+				target = (max_s + min)/2;
+				//fprintf(bt, "target:%d\t cur_bri:%d\t max_s:%d\t min:%d\n",target,cur_brightness,max_s,min);
+				if((cur_brightness - target) > 0){
+					leftMotor->setPWM(6);
+					rightMotor->setPWM(3);
+				}
+				else if((cur_brightness - target) < 0){
+					leftMotor->setPWM(3);
+					rightMotor->setPWM(6);
+				}
+				else{
+					leftMotor->setPWM(4);
+					rightMotor->setPWM(4);
+				}
+				fprintf(bt, "%d\n",gyro);
+				//fprintf(bt, "%d\t%d\n",motor_ang_l-motor_ang_l_bak,motor_ang_r-motor_ang_r_bak);
+				if(findStep2(gyro)==true){
+					leftMotor->reset();
+					rightMotor->reset();
+					leftMotor->setPWM(-15);
+					rightMotor->setPWM(-15);
+					step_frag = 5;
+					max = max_s;
+					fprintf(bt, "tail Start OK step....\n");
+					clock->sleep(250);
 					break;
 				}
-				forward = 0;
-				turn = 0;
-#endif
-				//fprintf(bt, "%d\t%d\t%d\t%d\n",motor_ang_l,motor_ang_r,gyro,tailMotor->getCount());
+				clock->sleep(4); /* 4msec周期起動 */
+				break;
+			}
+			else if(step_frag == 5){	//2段目を登るの開始
+				leftMotor->setPWM(30);
+				rightMotor->setPWM(30);
+				CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+				if(distance > 70){
+					float pwm = (float)(70 - tailMotor->getCount()); // 比例制御
+					if (pwm < 0)
+					{
+						tailMotor->setPWM(-30);
+					}
+					else if (pwm > 0)
+					{
+						step_frag = 6;
+						fprintf(bt, "Up2Step1 step....\n");
+						tailMotor->setPWM(30);
+					}
+				}
+				break;
+			}
+			else if(step_frag == 6){	//2段目を登るの開始
+				leftMotor->setPWM(15);
+				rightMotor->setPWM(15);
+				if(!tail_step){
+					//fprintf(bt, "%d\t%d\t%d\t%d\t%d\n",step_frag,motor_ang_l,motor_ang_r,gyro,gyro_ang);
+					tail_step = tail_control(TAIL_ANGLE_STAND_UP, eFast);
+				}
+				
+				CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+				if(distance > 150){
+					leftMotor->reset();
+					rightMotor->reset();
+					tail_step = false;
+					fprintf(bt, "Up2Step2 step....\n");
+					step_frag = 3;
+				}
+				break;
+			}
+//#endif
+#if 0
+			else if(step_frag == 4){	//ステップ４：二輪倒立再開まで
 				float pwm = (float)(TAIL_ANGLE_START - tailMotor->getCount()); // 比例制御
 				if (pwm > 0)
 				{
@@ -385,34 +525,36 @@ void main_task(intptr_t unused)
 					lastErr = 0;
 					forward = 0;
 					turn = 0;
-					fprintf(bt, "%d\t%f\n",cur_brightness,turn);
+					//fprintf(bt, "%d\t%f\n",cur_brightness,turn);
 					fprintf(bt, "tailUP OK step....\n");
 				}
 			}			
-			else if(step_frag == 5){
+			else if(step_frag == 5){	//ステップ５：二輪倒立後、安定するまで
 				turn = 0;
 				forward = 0;
 				count_stable++;
-				if(count_stable > 250){
+				if(count_stable > 200){
 					step_frag = 6;
 					count_stable = 0;
 					fprintf(bt, "RobotStable OK step....\n");
 				}
-				fprintf(bt, "%d\t%f\n",cur_brightness,turn);
+				//fprintf(bt, "%d\t%f\n",cur_brightness,turn);
 			}		
-			else if(step_frag == 6){
-				if(cur_brightness < max_s ){
+			else if(step_frag == 6){	//ステップ６：ラインを発見するまで
+				if(cur_brightness > max_s ){
 					max_s = cur_brightness;
 				}
 				target = (max_s + min)/2;
 				turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward);
-				forward = 5;
+				forward = 10;
 				count_stable++;
-				if(cur_brightness < min +10){
+				if(cur_brightness < (min + 5)){
+					fprintf(bt, "Find Line step....\n");
 					step_frag = 0;
 				}
-				fprintf(bt, "%d\t%f\n",cur_brightness,turn);
+				//fprintf(bt, "%d\t%f\n",cur_brightness,turn);
 			}
+#endif
 				
 			/* 倒立振子制御APIを呼び出し、倒立走行するための */
 			/* 左右モータ出力値を得る */
@@ -441,6 +583,13 @@ void main_task(intptr_t unused)
 	}
 	leftMotor->reset();
 	rightMotor->reset();
+	//ここからデバッグ用(無限ロープ)
+	step_frag = 0;
+	mode = eModeLineTrace;
+	ret = false;
+	clock->sleep(5000);
+	}
+	//ここまでデバッグ用
 	tailMotor->reset();
 
 	/*終了処理*/
