@@ -65,7 +65,7 @@ extern int *arr0, *arr1;
 extern int linenum; // データの行数を数える
 	
 	
-enum runmode {eModeLineTrace, eModeStep, eModeLookUp};
+enum runmode {eModeLineTrace, eModeStep, eModeLookUp, eModeGarage};
 
 /*
  *  関数のプロトタイプ宣言

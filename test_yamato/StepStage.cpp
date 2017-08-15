@@ -53,7 +53,7 @@ bool findStep2(int32_t gyro)
 {
 	bool ret = false;	
 	
-	if(gyro>=15 || gyro<=-15){
+	if(gyro>=40 || gyro<=-40){
 		ret = true;
 	}
 	return ret;
