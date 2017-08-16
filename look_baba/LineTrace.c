@@ -21,7 +21,7 @@ float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int*
 	int integral=0;	//偏差積分
 	float turn;	//旋回角度
 	
-	LineTrace_param(status,forward,&kp,&ki,&kd);
+	//LineTrace_param(status,forward,&kp,&ki,&kd);
 
 	// P制御
 	errParam = currentVal - targetVal;	// 黒線の左側をトレース
