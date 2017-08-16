@@ -32,7 +32,7 @@ float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int*
 
 	// PD制御に基づいた旋回値を算出
 	// I制御の係数、及び、変数は不要だが、コースマップに合わせて含んだ形にする。
-	turn = KP * (float)errParam + KI * (float)integral + KD * diffParam;
+	turn = kp * (float)errParam + ki * (float)integral + kd * diffParam;
 
 	// 旋回角度が範囲内に収まっているか確認
 	if (turn > MAX_TURN_RIGHT) {
