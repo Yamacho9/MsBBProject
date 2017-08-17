@@ -1,4 +1,0 @@
-atest
-keytest
-ty
-testra

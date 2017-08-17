@@ -1,7 +1,0 @@
-GPATH
-GRTAGS
-GTAGS
-*.o
-mdl/mdl_etrobo_2016/
-src/sdk/OBJ/
-/*.xlsx
