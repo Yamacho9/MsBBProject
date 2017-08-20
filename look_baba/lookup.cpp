@@ -1,10 +1,11 @@
-#include "ev3api.h"
-#include "app.h"
 #include "lookup.h"
 
 
 Motor* m_tail;//しっぽ
 GyroSensor* m_gyro;//じゃいろ
+ColorSensor* m_color;//からーせんさ
+Motor* m_leftmotor;//らいと
+Motor* m_rightmotor;//れふと
 
 /*
  * ルックアップゲート用関数
@@ -13,18 +14,26 @@ GyroSensor* m_gyro;//じゃいろ
 
 bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail){
 
+	//必要な定数
+	int8_t forward;      /* 前後進命令 */
+	int8_t hoge;
+	float turn;         /* 旋回命令 */
+	int lastErr=0; //前回偏差
+	int8_t cur_brightness=0;	/* 検出した光センサ値 */
+	bool ret = false;/*しっぽの状態*/
+	int min;
+	int max;
+	getCalibration_pram(&min,&max);
 
 	//必要なインスタンスをappから貰う(残念ながら引数)
 	//gyro,color,leftmotor,rightmotor,tail
 	m_tail = tail;
 	m_gyro = gyro;
+	m_color = color;
+	m_leftmotor = leftmotor;
+	m_rightmotor = rightmotor;
 	
 	//しっぽを下げる（たてるとこまで）
-	//bool result = standuptail();
-	//if(result == false){
-	//	return false;
-	//}
-	bool ret = false;
 	while(1){
 		if(!ret){
 			ret = tail_ctr(TAIL_ANGLE_STAND_UP, eSlow);
@@ -52,7 +61,17 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	}	
 
 	//ラインにそってゲートをくぐる
-	
+	//ライントレース準備
+	forward = 30;
+	//ライントレース
+	for(int i=0;i<1000;i++){
+		int target=0;
+		cur_brightness = m_color->getBrightness();
+        	target = (max + min)/2; 
+		turn = LineTrace(hoge, target, cur_brightness, DELTA_T, &lastErr, &hoge);
+		m_leftmotor->setPWM(forward-turn);
+		m_rightmotor->setPWM(forward+turn);
+	}
 
 	//しっぽをあげる（たてるとこまで）
 	while(1){
@@ -67,8 +86,34 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	}
 
 	//倒立走行OFF，速度0で走る
-
+	//ライントレース準備
+	forward = 0;
+	//ライントレース
+	for(int i=0;i<1000;i++){
+		int target = 0;
+		cur_brightness = m_color->getBrightness();
+        	target = (max + min)/2; 
+		turn = LineTrace(hoge, target, cur_brightness, DELTA_T, &lastErr, &hoge);
+		m_leftmotor->setPWM(forward-turn);
+		m_rightmotor->setPWM(forward+turn);
+	}
+	
 	//しっぽを上げながらライントレースを開始
+	while(1){
+		//しっぽ上げる
+		if(!ret){
+			ret = tail_ctr(TAIL_ANGLE_DRIVE, eSlow);
+		}
+		else{
+			//しっぽを下げたら終わり
+			ret = false;
+			break;
+		}
+	}
+
+	//倒立走行をONにする
+	m_gyro->reset();
+	balance_init();
 
 	return true;//成功
 

@@ -6,6 +6,11 @@
  */
 #include "LineTrace.h"
 
+
+float kp,ki,kd;	//PID制御係数
+int errParam;	//偏差
+float diffParam;	//偏差微分
+
 /**
  * @brief ライントレース制御
  * @param [in] int status ラインの状態(直線/カーブ)

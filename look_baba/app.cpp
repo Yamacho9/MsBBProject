@@ -57,6 +57,8 @@ int param[BUF_COLUMN_SIZE];
 int linenum;
 int *arr0, *arr1;
 
+int max=-255;//キャリブレーションの最大値
+int min=255;//キャリブレーションの最小値
 
 
 /*関数のプロトタイプ宣言*/
@@ -97,8 +99,6 @@ void main_task(intptr_t unused)
 	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
 	int8_t cur_brightness=0;	/* 検出した光センサ値 */
 
-	int max=-255;//キャリブレーションの最大値
-	int min=255;//キャリブレーションの最小値
 	bool ret = false;
 	int section=1; //現在の区間
 	int sonar_count=0;
@@ -221,6 +221,7 @@ void main_task(intptr_t unused)
 			forward = turn = 0; /* 障害物を検知したら停止 */
 			sonar_count++;
 			if(sonar_count > 1000){//一定時間続いたらlookupgateするぜ
+				Message("lookupgate!!");
 				lookup(gyroSensor,colorSensor,leftMotor,rightMotor,tailMotor);
 				sonar_count = 0;//初期化
 			}
@@ -599,6 +600,11 @@ int getlinenum(){
 }
 void setlinenum(int num){
 	linenum = num;
+}
+
+void getCalibration_pram(int *out_min,int *out_max){
+	*out_min = min;
+	*out_max = max;
 }
 
 /*

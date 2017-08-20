@@ -17,8 +17,8 @@
 void LineTrace_param(int status, int8_t* forward, float* kp, float* ki, float* kd){
 	
 	/* forループ用変数 */
-	int i=0;
-	int j=0;
+	//int i=0;
+	//int j=0;
 	
 	/* 配列の要素数計算 */
 	//int buf_size_c = sizeof(buf[0])/sizeof(buf[0][0]);/*4*/

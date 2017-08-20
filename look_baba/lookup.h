@@ -2,7 +2,6 @@
 #define __lookup_h__
 
 #include "ev3api.h"
-#include "app.h"
 #include "balancer.h"
 #include "TouchSensor.h"
 #include "SonarSensor.h"
@@ -10,7 +9,9 @@
 #include "GyroSensor.h"
 #include "Motor.h"
 #include "Clock.h"
+#include "app.h"
 #include "Calibration.h"
+#include "LineTrace.h"
 
 
 using namespace ev3api;

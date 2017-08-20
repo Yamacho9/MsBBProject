@@ -76,6 +76,7 @@ extern int getBufLineSize();
 extern int getBufColumnSize();
 extern int getlinenum();
 extern void setlinenum(int num);
+extern void getCalibration_pram(int *out_min,int *out_max);
 
 #endif /* TOPPERS_MACRO_ONLY */
 
