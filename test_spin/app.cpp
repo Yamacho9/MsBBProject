@@ -103,6 +103,15 @@ void main_task(intptr_t unused)
 	bool ret = false;
 	int section=1; //現在の区間
 
+#ifdef DEBUG
+    int32_t last_motor_ang_l=0, last_motor_ang_r=0;	// 前回の角位置
+    int32_t diff_motor_ang_l=0, diff_motor_ang_r=0;	// 今回の前回の角位置の差分(＝車輪の回転量)
+    int32_t err_motor_ang_l_r=0, last_err_motor_ang_l_r=0, diff_motor_ang_l_r=0;	// 左右車輪の回転量の偏差、前回偏差、微分
+    int8_t correct_pwm=0;	// PWM補正値
+	int32_t first_motor_ang_l=0, first_motor_ang_r=0;	// スピン開始時の角位置
+    int in_spin = 0;	// スピン動作中？（1:スピン動作中、0:スピン開始前）
+#endif
+	
 	/*グローバル変数の初期化*/
 	count = 1;
 	
@@ -190,12 +199,6 @@ void main_task(intptr_t unused)
     	int distance, direction; //走行距離、向き
     	int err;	//偏差
     	float diff;	//偏差微分
-#ifdef DEBUG
-    	int32_t last_motor_ang_l=0, last_motor_ang_r=0;	// 前回の角位置
-    	int32_t diff_motor_ang_l=0, diff_motor_ang_r=0;	// 今回の前回の角位置の差分(＝車輪の回転量)
-    	int32_t err_motor_ang_l_r=0, last_err_motor_ang_l_r=0, diff_motor_ang_l_r=0;	// 左右車輪の回転量の偏差、前回偏差、微分
-    	int8_t correct_pwm=0;
-#endif
     	
     	if (ev3_button_is_pressed(BACK_BUTTON)){
     		//backbuttonが押されると終了
@@ -217,12 +220,14 @@ void main_task(intptr_t unused)
 			Message("finished...");
     		break;
     	}
-    	
+#ifndef DEBUG
         if(!ret){
         	/* バランス走行用角度に制御 */
 			ret = tail_control(TAIL_ANGLE_DRIVE, eFast);
 		}
-
+#else
+    	ret = tail_control(TAIL_ANGLE_STAND_UP, eSlow);
+#endif
         if (sonar_alert() == 1) /* 障害物検知 */
         {
 			forward = turn = 0; /* 障害物を検知したら停止 */
@@ -288,26 +293,43 @@ void main_task(intptr_t unused)
     	1. Motor->getCount() で車輪の角位置を取得する。
     	2. 今回と前回の角位置の差分（＝車輪の回転量）を算出する。
     	3. 左右車輪の回転量の偏差、偏差微分を算出する。偏差は、左輪の回転量を目標値とする。
-    	4. 3で算出した偏差、偏差微分をインプットとして、PWM制御補正値をPD制御で算出する。
+    	4. 3で算出した偏差、偏差微分をインプットとして、PWM制御補正値をPD制御で算出する。ただし、スピン動作開始時は補正値:0．
     	5. 4で算出したPWM制御補正値を、回転量が多い方のPWM制御値から差し引く。
     	6. 5.で算出したPWM制御値をMotor->setPWM()でセットする。
+    	7. 左車輪の回転量が4回転以上であればスピン処理終了
     	*/
         motor_ang_l = leftMotor->getCount();
         motor_ang_r = rightMotor->getCount();
     	
     	diff_motor_ang_l = motor_ang_l - last_motor_ang_l;
-    	diff_motor_ang_r = -(motor_ang_r - last_motor_ang_r);	// 右輪は後退方向のため、回転量算出のために(－)を掛ける
+    	diff_motor_ang_r = -(motor_ang_r - last_motor_ang_r);	// 右輪は後退方向のため、回転量算出のために(マイナス)を掛ける
+    	last_motor_ang_l = motor_ang_l;
+    	last_motor_ang_r = motor_ang_r;    	
     	
     	err_motor_ang_l_r = diff_motor_ang_l - diff_motor_ang_r;
     	diff_motor_ang_l_r = (err_motor_ang_l_r - last_err_motor_ang_l_r) / DELTA_T;
     	
-    	correct_pwm = KP_SPIN * err_motor_ang_l_r + KD_SPIN * diff_motor_ang_l_r;
+    	if (in_spin = 1) {
+    		correct_pwm = KP_SPIN * err_motor_ang_l_r + KD_SPIN * diff_motor_ang_l_r;
+		} else {
+			correct_pwm = 0;
+			first_motor_ang_l = motor_ang_l;
+			first_motor_ang_r = motor_ang_r;
+			in_spin = 1;
+    	}
+
+    	pwm_L = PWM;
+		pwm_R = PWM + correct_pwm;
+
+		leftMotor->setPWM(pwm_L);
+		rightMotor->setPWM(-pwm_R);
     	
-   		pwm_L = PWM;
-   		pwm_R = PWM + correct_pwm;
+    	fprintf(bt, "correct_pwm = %d | pwm_L = %d | pwm_R = %d\n",correct_pwm,pwm_L,pwm_R);
     	
-    	leftMotor->setPWM(pwm_L);
-        rightMotor->setPWM(-pwm_R);
+		if(motor_ang_l - first_motor_ang_l >= 360*4){
+			fprintf(bt, "rotation OK step....\n");
+			break;
+		}
 #endif
         clock->sleep(4); /* 4msec周期起動 */
     }
