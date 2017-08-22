@@ -186,7 +186,7 @@ void main_task(intptr_t unused)
     	while(1)
     	{
     		int32_t motor_ang_l=0, motor_ang_r=0;
-		int32_t gyro, volt=0;
+			int32_t gyro, volt=0;
     		int target=0;
     		int distance, direction; //走行距離、向き
     	
@@ -202,32 +202,32 @@ void main_task(intptr_t unused)
 			break;
 		}
 
-	    	if (gyroSensor->getAnglerVelocity() > FALL_DOWN || -(gyroSensor->getAnglerVelocity()) > FALL_DOWN)
-    		{
-			// 転倒を検知すると終了
-	    		fprintf(bt, "getAnglerVelocity = %d\n", gyroSensor->getAnglerVelocity());
-    			fprintf(bt, "Emergency Stop.\n");
+	    if (gyroSensor->getAnglerVelocity() > FALL_DOWN || -(gyroSensor->getAnglerVelocity()) > FALL_DOWN)
+    	{
+		//転倒を検知すると終了
+	    	fprintf(bt, "getAnglerVelocity = %d\n", gyroSensor->getAnglerVelocity());
+    		fprintf(bt, "Emergency Stop.\n");
 			Message("finished...");
     			break;
-    		}
+    	}
     	
- 	       if(!ret){
+ 	    if(!ret){
         		/* バランス走行用角度に制御 */
 			ret = tail_control(TAIL_ANGLE_DRIVE, eFast);
 		}
 
-       	 	if (sonar_alert() == 1) /* 障害物検知 */
-        	{
+       	if (sonar_alert() == 1) /* 障害物検知 */
+        {
 			forward = turn = 0; /* 障害物を検知したら停止 */
 			sonar_count++;
-			if(sonar_count > 1000){//一定時間続いたらlookupgateするぜ
+			if(sonar_count > 10000){//一定時間続いたらlookupgateするぜ
 				Message("lookupgate!!");
 				lookup(gyroSensor,colorSensor,leftMotor,rightMotor,tailMotor);
 				sonar_count = 0;//初期化
 			}
 		}
-	        else
-        	{
+	    else
+        {
         		/*
         		//3s後に速度が45に到達するように少しずつ加速させる
             		forward = 10 + speed;

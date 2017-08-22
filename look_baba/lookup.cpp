@@ -48,7 +48,7 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	m_gyro->reset();
 	balance_init();
 
-	//‚µ‚Á‚Û‚ð‚®‚®‚ê‚é‚æ‚¤‚É‚ä‚Á‚­‚è‚³‚°‚é
+	//‚µ‚Á‚Û‚ð‚®‚®‚ê‚é‚æ‚¤‚É‚³‚ç‚É‚ä‚Á‚­‚è‚³‚°‚é
 	while(1){
 		if(!ret){
 			ret = tail_ctr(TAIL_ANGLE_LOOKUPGATE, eSlow);
