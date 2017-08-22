@@ -32,6 +32,9 @@ using namespace ev3api;
 
 #ifdef DEBUG
 #define _debug(x) (x)
+#define PWM 10
+#define KP_SPIN 0.74
+#define KD_SPIN 0.03
 #else
 #define _debug(x)
 #endif
@@ -188,9 +191,10 @@ void main_task(intptr_t unused)
     	int err;	//偏差
     	float diff;	//偏差微分
 #ifdef DEBUG
-    	int32_t last_motor_ang_l=0, last_motor_ang_r=0;	//前回の各位置
-    	int32_t diff_motor_ang_l=0, diff_motor_ang_r=0;	// 
-    	int32_t err_motor_ang_l_r=0, diff_motor_ang_l_r=0;
+    	int32_t last_motor_ang_l=0, last_motor_ang_r=0;	// 前回の角位置
+    	int32_t diff_motor_ang_l=0, diff_motor_ang_r=0;	// 今回の前回の角位置の差分(＝車輪の回転量)
+    	int32_t err_motor_ang_l_r=0, last_err_motor_ang_l_r=0, diff_motor_ang_l_r=0;	// 左右車輪の回転量の偏差、前回偏差、微分
+    	int8_t correct_pwm=0;
 #endif
     	
     	if (ev3_button_is_pressed(BACK_BUTTON)){
@@ -225,6 +229,7 @@ void main_task(intptr_t unused)
 		}
         else
         {
+#ifndef DEBUG
         	/*
         	//3s後に速度が45に到達するように少しずつ加速させる
             forward = 10 + speed;
@@ -240,7 +245,6 @@ void main_task(intptr_t unused)
 			cur_brightness = colorSensor->getBrightness();
         	target = (max + min)/2;
         	
-#ifndef DEBUG
         	//turn値とforwardが返り値
 			turn = LineTrace(section, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
 #endif
@@ -281,10 +285,29 @@ void main_task(intptr_t unused)
     	fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d | err = %d | diff = %f\n",distance,direction,section,cur_brightness,turn,forward,err,diff);
 #else
     	/*
-    	0. Motor->setCount() で左右車輪の角位置を0にセットする。（ループ処理に入る前に実施）
-    	1. Motor->getCount() で左右車輪の角位置を取得する。
-    	
+    	1. Motor->getCount() で車輪の角位置を取得する。
+    	2. 今回と前回の角位置の差分（＝車輪の回転量）を算出する。
+    	3. 左右車輪の回転量の偏差、偏差微分を算出する。偏差は、左輪の回転量を目標値とする。
+    	4. 3で算出した偏差、偏差微分をインプットとして、PWM制御補正値をPD制御で算出する。
+    	5. 4で算出したPWM制御補正値を、回転量が多い方のPWM制御値から差し引く。
+    	6. 5.で算出したPWM制御値をMotor->setPWM()でセットする。
     	*/
+        motor_ang_l = leftMotor->getCount();
+        motor_ang_r = rightMotor->getCount();
+    	
+    	diff_motor_ang_l = motor_ang_l - last_motor_ang_l;
+    	diff_motor_ang_r = -(motor_ang_r - last_motor_ang_r);	// 右輪は後退方向のため、回転量算出のために(－)を掛ける
+    	
+    	err_motor_ang_l_r = diff_motor_ang_l - diff_motor_ang_r;
+    	diff_motor_ang_l_r = (err_motor_ang_l_r - last_err_motor_ang_l_r) / DELTA_T;
+    	
+    	correct_pwm = KP_SPIN * err_motor_ang_l_r + KD_SPIN * diff_motor_ang_l_r;
+    	
+   		pwm_L = PWM;
+   		pwm_R = PWM + correct_pwm;
+    	
+    	leftMotor->setPWM(pwm_L);
+        rightMotor->setPWM(-pwm_R);
 #endif
         clock->sleep(4); /* 4msec周期起動 */
     }
