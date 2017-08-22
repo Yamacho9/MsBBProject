@@ -220,9 +220,10 @@ void main_task(intptr_t unused)
         {
 			forward = turn = 0; /* áŠQ•¨‚ğŒŸ’m‚µ‚½‚ç’â~ */
 			sonar_count++;
-			if(sonar_count > 10000){//ˆê’èŠÔ‘±‚¢‚½‚çlookupgate‚·‚é‚º
+			if(sonar_count > 300){//ˆê’èŠÔ‘±‚¢‚½‚çlookupgate‚·‚é‚º
 				Message("lookupgate!!");
-				lookup(gyroSensor,colorSensor,leftMotor,rightMotor,tailMotor);
+				fprintf(bt, "look up gate yaruyo!");
+				lookup(gyroSensor,colorSensor,leftMotor,rightMotor,tailMotor,clock);
 				sonar_count = 0;//‰Šú‰»
 			}
 		}
@@ -259,7 +260,7 @@ void main_task(intptr_t unused)
 	            	(float)forward,
         	    	(float)turn,
             		(float)gyro,
-        		(float)GYRO_OFFSET_PID,
+        			(float)GYRO_OFFSET_PID,
             		(float)motor_ang_l,
             		(float)motor_ang_r,
             		(float)volt,
