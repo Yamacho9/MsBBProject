@@ -25,7 +25,7 @@ int judgeSection(int distance, int degree) {
 	while (1) {
 		
 		if(arr0[linenum-1]<=distance) {
-			return (linenum-1);
+			return (linenum);
 		}
 		if ((arr0[linenum - (flag-1)] + DistMargine) <= distance) { //???I?a?O?O
 			flag--;
@@ -37,7 +37,7 @@ int judgeSection(int distance, int degree) {
 		}
 	}
 
-	printf("‹æŠÔ:%d (distance: %d - %d )\n", (linenum-flag+1), arr0[linenum - flag], arr0[linenum - (flag-1)]);
+	printf("â€¹Ã¦Å Ã”:%d (distance: %d - %d )\n", (linenum-flag+1), arr0[linenum - flag], arr0[linenum - (flag-1)]);
 	
 	return (linenum-flag+1);
 
