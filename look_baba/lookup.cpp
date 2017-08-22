@@ -12,18 +12,10 @@ Motor* m_rightmotor;//れふと
  * 返り値：true成功，false失敗
  */
 
-bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail){
+bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock){
 
-	//必要な定数
-	int8_t forward;      /* 前後進命令 */
-	int8_t hoge;
-	float turn;         /* 旋回命令 */
-	int lastErr=0; //前回偏差
-	int8_t cur_brightness=0;	/* 検出した光センサ値 */
-	bool ret = false;/*しっぽの状態*/
-	int min;
-	int max;
-	getCalibration_pram(&min,&max);
+	//必要な変数
+	bool ret = false;//しっぽの状態
 
 	//必要なインスタンスをappから貰う(残念ながら引数)
 	//gyro,color,leftmotor,rightmotor,tail
@@ -33,6 +25,7 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	m_leftmotor = leftmotor;
 	m_rightmotor = rightmotor;
 	
+	
 	//しっぽを下げる（たてるとこまで）
 	while(1){
 		if(!ret){
@@ -41,14 +34,42 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 		else{
 			//しっぽを下げたら終わり
 			ret = false;
+			//倒立走行OFF
+			//m_gyro->reset();
+			//balance_init();
 			break;
 		}
 	}
-	//倒立走行OFF
-	m_gyro->reset();
-	balance_init();
-
-	//しっぽをぐぐれるようにさらにゆっくりさげる
+	//バックする。（じゃいろがマイナスになるまで）
+	while(1){
+		//しっぽを固定
+		if(!ret){
+			ret = tail_ctr(TAIL_ANGLE_STAND_UP, eFast);
+		}
+		if(m_gyro->getAngle() < 0){//じゃいろがマイナス
+			//倒立走行OFF
+			m_gyro->reset();
+			balance_init();
+			break;
+		}
+		m_leftmotor->setPWM(-5);
+		m_rightmotor->setPWM(-5);
+	}
+	
+	//速度0にする
+	for(int i=0;i<2500;i++){
+		//しっぽを固定
+		if(!ret){
+			ret = tail_ctr(TAIL_ANGLE_STAND_UP, eFast);
+		}
+		
+		m_leftmotor->setPWM(0);
+		m_rightmotor->setPWM(0);
+		
+		clock->sleep(4);
+	}
+	
+	//ぐぐれるところまでしっぽを動かす
 	while(1){
 		if(!ret){
 			ret = tail_ctr(TAIL_ANGLE_LOOKUPGATE, eSlow);
@@ -58,71 +79,32 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			ret = false;
 			break;
 		}
-	}	
-
-	//ラインにそってゲートをくぐる
-	//ライントレース準備
-	forward = 30;
-	//ライントレース
-	for(int i=0;i<1000;i++){
-		int target=0;
-		cur_brightness = m_color->getBrightness();
-        	target = (max + min)/2; 
-		turn = LineTrace(hoge, target, cur_brightness, DELTA_T, &lastErr, &hoge);
-		m_leftmotor->setPWM(forward-turn);
-		m_rightmotor->setPWM(forward+turn);
-	}
-
-	//しっぽをあげる（たてるとこまで）
-	while(1){
-		if(!ret){
-			ret = tail_ctr(TAIL_ANGLE_STAND_UP, eSlow);
-		}
-		else{
-			//しっぽを下げたら終わり
-			ret = false;
-			break;
-		}
-	}
-
-	//倒立走行OFF，速度0で走る
-	//ライントレース準備
-	forward = 0;
-	//ライントレース
-	for(int i=0;i<1000;i++){
-		int target = 0;
-		cur_brightness = m_color->getBrightness();
-        	target = (max + min)/2; 
-		turn = LineTrace(hoge, target, cur_brightness, DELTA_T, &lastErr, &hoge);
-		m_leftmotor->setPWM(forward-turn);
-		m_rightmotor->setPWM(forward+turn);
 	}
 	
-	//しっぽを上げながらライントレースを開始
-	while(1){
-		//しっぽ上げる
+	//速度10で前へ
+	for(int i=0;i<5000;i++){
+		//しっぽを固定
 		if(!ret){
-			ret = tail_ctr(TAIL_ANGLE_DRIVE, eSlow);
+			ret = tail_ctr(TAIL_ANGLE_LOOKUPGATE, eFast);//後で変更
 		}
-		else{
-			//しっぽを下げたら終わり
-			ret = false;
-			break;
+		m_leftmotor->setPWM(10);
+		m_rightmotor->setPWM(10);
+		
+		clock->sleep(4);
+	}
+	//とりあえず無限ループ
+	while(1){
+		if(!ret){
+			ret = tail_ctr(TAIL_ANGLE_LOOKUPGATE, eFast);//後で変更
 		}
+		m_leftmotor->setPWM(0);
+		m_rightmotor->setPWM(0);
+		clock->sleep(4);
 	}
 
-	//倒立走行をONにする
-	m_gyro->reset();
-	balance_init();
 
 	return true;//成功
 
-}
-
-bool standuptail(){
-
-	//しっぽで建てるところまでしっぽを下げる
-	return true;
 }
 
 bool tail_ctr(int32_t angle, tailSpeed sp){
