@@ -4,6 +4,9 @@
  * @author Keishi MURAI
  * @date 2017/06/19
  */
+
+#include "LineTrace_param.h"
+
 #ifndef _LINETRACE_H_INCLUDED
 #define _LINETRACE_H_INCLUDED
 
@@ -18,7 +21,13 @@ extern "C" {
 #define MAX_TURN_RIGHT	100 //‰Eù‰ñÅ‘å’l
 #define MAX_TURN_LEFT	-100 //¶ù‰ñÅ‘å’l
 
-extern float LineTrace(int targetVal, int currentVal, float opePeriod, int errList[], int nextErrIndex);
+extern float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int* lastErr, int8_t* forward);
+extern void GetPID(float* kkp, float* kki, float* kkd);
+extern void GetVar(int* err, float* diff);
+
+float kp,ki,kd;	//PID§ŒäŒW”
+int errParam;	//•Î·
+float diffParam;	//•Î·”÷•ª
 
 #ifdef __cplusplus
 }
