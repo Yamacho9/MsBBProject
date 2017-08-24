@@ -44,8 +44,6 @@ mode GarageIn(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor* 
 	int32_t gyro=0, volt=0;
 	int target=0;
 	int distance, direction; //走行距離、向き
-	int GarageMode = 0;	//0:まだまだだよ～ 1:ガレージに入った！ 2:3点倒立！ 3:
-	int count = 0;
 	
 	while(1)
 	{
@@ -73,103 +71,40 @@ mode GarageIn(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor* 
 			ret = tail_control_garage(TAIL_ANGLE_DRIVE, tailMotor, eFast);
 		}
 
-		if(GarageMode == 0){
-			cur_brightness = colorSensor->getBrightness();
-			target = (max + min)/2;
-			
-			//turn値とforwardが返り値
-			turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
-			
-			/* 倒立振子制御API に渡すパラメータを取得する */
-			motor_ang_l = leftMotor->getCount();
-			motor_ang_r = rightMotor->getCount();
-			gyro = gyroSensor->getAnglerVelocity();
-			volt = ev3_battery_voltage_mV();
-			
-			forward = 20;
+		
+		cur_brightness = colorSensor->getBrightness();
+		target = (max + min)/2;
+		
+		//turn値とforwardが返り値
+		turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
+		
+		/* 倒立振子制御API に渡すパラメータを取得する */
+		motor_ang_l = leftMotor->getCount();
+		motor_ang_r = rightMotor->getCount();
+		gyro = gyroSensor->getAnglerVelocity();
+		volt = ev3_battery_voltage_mV();
+		
+		forward = 20;
 
-			/* 倒立振子制御APIを呼び出し、倒立走行するための */
-			/* 左右モータ出力値を得る */
-			balance_control(
-				(float)forward,
-				(float)turn,
-				(float)gyro,
-				(float)GYRO_OFFSET_PID,
-				(float)motor_ang_l,
-				(float)motor_ang_r,
-				(float)volt,
-				(int8_t *)&pwm_L,
-				(int8_t *)&pwm_R);
+		/* 倒立振子制御APIを呼び出し、倒立走行するための */
+		/* 左右モータ出力値を得る */
+		balance_control(
+			(float)forward,
+			(float)turn,
+			(float)gyro,
+			(float)GYRO_OFFSET_PID,
+			(float)motor_ang_l,
+			(float)motor_ang_r,
+			(float)volt,
+			(int8_t *)&pwm_L,
+			(int8_t *)&pwm_R);
 
-			leftMotor->setPWM(pwm_L);
-			rightMotor->setPWM(pwm_R);
-			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
-			if(ENDGarageL <= distance){
-				GarageMode = 1;
-				ret = false;
-			}
-		}
-		else if(GarageMode == 1){
-			/* 倒立振子制御API に渡すパラメータを取得する */
-			motor_ang_l = leftMotor->getCount();
-			motor_ang_r = rightMotor->getCount();
-			gyro = gyroSensor->getAnglerVelocity();
-			volt = ev3_battery_voltage_mV();
-			if(!ret){	//まず尻尾を下げる
-				ret = tail_control_garage(TAIL_ANGLE_STAND_UP, tailMotor, eSlow);
-				forward = 0;
-				turn = 0;
-			}
-			else{
-				forward = -30;
-				turn = 0;
-				if(count >250){	//バックするよー
-					forward = -30;
-					turn = 0;
-					GarageMode = 2;
-					ret = false;
-					count = 0;
-				}
-				count++;
-			}
-			/* 倒立振子制御APIを呼び出し、倒立走行するための */
-				/* 左右モータ出力値を得る */
-			balance_control(
-				(float)forward,
-				(float)turn,
-				(float)gyro,
-				(float)GYRO_OFFSET_PID,
-				(float)motor_ang_l,
-				(float)motor_ang_r,
-				(float)volt,
-				(int8_t *)&pwm_L,
-				(int8_t *)&pwm_R);
-
-			leftMotor->setPWM(pwm_L);
-			rightMotor->setPWM(pwm_R);
-		}
-		else{
-			if(count<300){
-				leftMotor->setPWM(0);
-				rightMotor->setPWM(0);
-				count++;
-			}else{
-				cur_brightness = colorSensor->getBrightness();
-				target = (max + min)/2;
-				turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
-				pwm_L = turn + 12;	//実測値で最適な値を計算した
-				pwm_R = -turn + 12;
-				leftMotor->setPWM(pwm_L);
-				rightMotor->setPWM(pwm_R);
-				motor_ang_l = leftMotor->getCount();
-				motor_ang_r = rightMotor->getCount();
-				CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
-				
-				if(ENDGarageL <= distance){
-					Ret = eEnd;
-					break;
-				}
-			}
+		leftMotor->setPWM(pwm_L);
+		rightMotor->setPWM(pwm_R);
+		CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+		if(ENDGarageL <= distance){
+			Ret = eEnd;
+			break;
 		}
 		
 		clock->sleep(4); /* 4msec周期起動 */
