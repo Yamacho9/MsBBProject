@@ -68,12 +68,12 @@ mode GarageIn(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor* 
 			break;
 		}
 		
-		if(!ret){
-			/* バランス走行用角度に制御 */
-			ret = tail_control_garage(TAIL_ANGLE_DRIVE, tailMotor, eFast);
-		}
 
 		if(GarageMode == 0){
+			if(!ret){
+				/* バランス走行用角度に制御 */
+				ret = tail_control_garage(TAIL_ANGLE_DRIVE, tailMotor, eFast);
+			}
 			cur_brightness = colorSensor->getBrightness();
 			target = (max + min)/2;
 			
