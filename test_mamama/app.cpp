@@ -239,7 +239,7 @@ void main_task(intptr_t unused)
 			gyro = gyroSensor->getAnglerVelocity();
 			volt = ev3_battery_voltage_mV();
 		
-		
+			forward = 20;
 
 			/* 倒立振子制御APIを呼び出し、倒立走行するための */
 			/* 左右モータ出力値を得る */
@@ -272,11 +272,12 @@ void main_task(intptr_t unused)
 			//fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
 			//現在の走行状況を記録
 			fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d | err = %d | diff = %f\n",distance,direction,section,cur_brightness,turn,forward,err,diff);
-		
 			clock->sleep(4); /* 4msec周期起動 */
 			break;
 		case (eStepStage):
+			fprintf(bt,"### StepStage Star ###\n");
 			CurMode = StepStage(min, max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
+			fprintf(bt,"### StepStage End ### NextMode = %d\n", CurMode);
 			break;
 		case (eLookUpGate):
 			//turn値とforwardが返り値
@@ -300,25 +301,9 @@ void main_task(intptr_t unused)
 			clock->sleep(4); /* 4msec周期起動 */
 			break;
 		case (eGarageIn):
-			//turn値とforwardが返り値
-			turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
-			/* 倒立振子制御APIを呼び出し、倒立走行するための */
-			/* 左右モータ出力値を得る */
-			balance_control(
-				(float)forward,
-				(float)turn,
-				(float)gyro,
-				(float)GYRO_OFFSET_PID,
-				(float)motor_ang_l,
-				(float)motor_ang_r,
-				(float)volt,
-				(int8_t *)&pwm_L,
-				(int8_t *)&pwm_R);
-
-			leftMotor->setPWM(pwm_L);
-			rightMotor->setPWM(pwm_R);
-			
-			clock->sleep(4); /* 4msec周期起動 */
+			fprintf(bt,"### GarageIn Star ###\n");
+			CurMode = GarageIn(min, max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
+			fprintf(bt,"### GarageIn End ### NextMode = %d\n", CurMode);
 			break;
 		case (eEnd):
 			leftMotor->reset();
@@ -333,6 +318,7 @@ void main_task(intptr_t unused)
 			ext_tsk();
 			return;
 		}
+		
 	}
 }
 

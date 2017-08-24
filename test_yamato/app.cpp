@@ -231,14 +231,13 @@ void main_task(intptr_t unused)
 			
 			//turn値とforwardが返り値
 			turn = LineTrace(section, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
+			forward = 20;
 			
 			/* 倒立振子制御API に渡すパラメータを取得する */
 			motor_ang_l = leftMotor->getCount();
 			motor_ang_r = rightMotor->getCount();
 			gyro = gyroSensor->getAnglerVelocity();
 			volt = ev3_battery_voltage_mV();
-		
-		
 
 			/* 倒立振子制御APIを呼び出し、倒立走行するための */
 			/* 左右モータ出力値を得る */
@@ -275,9 +274,9 @@ void main_task(intptr_t unused)
 			clock->sleep(4); /* 4msec周期起動 */
 			break;
 		case (eStepStage):
-			fprintf(bt,"### StepStage Star ###");
+			fprintf(bt,"### StepStage Star ###\n");
 			CurMode = StepStage(min, max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
-			fprintf(bt,"### StepStage End ###");
+			fprintf(bt,"### StepStage End ### NextMode = %d\n", CurMode);
 			break;
 		case (eLookUpGate):
 			//turn値とforwardが返り値
