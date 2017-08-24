@@ -275,7 +275,9 @@ void main_task(intptr_t unused)
 			clock->sleep(4); /* 4msec周期起動 */
 			break;
 		case (eStepStage):
+			fprintf(bt,"### StepStage Star ###");
 			CurMode = StepStage(min, max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
+			fprintf(bt,"### StepStage End ###");
 			break;
 		case (eLookUpGate):
 			//turn値とforwardが返り値
@@ -301,6 +303,7 @@ void main_task(intptr_t unused)
 		case (eGarageIn):
 			//turn値とforwardが返り値
 			turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
+			forward = 30;
 			/* 倒立振子制御APIを呼び出し、倒立走行するための */
 			/* 左右モータ出力値を得る */
 			balance_control(
