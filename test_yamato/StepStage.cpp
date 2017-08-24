@@ -323,7 +323,7 @@ mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor*
 			}
 		}
 		else if(step_mode == 12){	//ステップ１２：安定するまで待とう
-			if( count_stable < 125){
+			if( count_stable < 250){
 				turn = 0;
 				forward = 20;
 			}else if( count_stable < 750 ){
