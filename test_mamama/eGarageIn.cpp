@@ -1,8 +1,8 @@
 /**
  ******************************************************************************
- ** ファイル名 : StepStage.cpp
+ ** ファイル名 : 
  **
- ** 概要 : 階段通過攻略用のプログラム
+ ** 概要 : のプログラム
  **
  ** 注記 : 結合作業
  ******************************************************************************
@@ -11,7 +11,7 @@
 
 #include "ev3api.h"
 #include "app.h"
-#include "StepStage.h"
+#include "GarageIn.h"
 #include "balancer.h"
 #include "TouchSensor.h"
 #include "SonarSensor.h"
@@ -22,7 +22,7 @@
 #include "LineTrace.h"
 #include "CalcDistanceAndDirection.h"
 
-bool tail_control_step(int32_t angle, Motor* tail, tailSpeed sp);
+bool tail_control_garage(int32_t angle, Motor* tail, tailSpeed sp);
 
 using namespace ev3api;
 
@@ -38,15 +38,6 @@ mode GarageIn(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor* 
 
 	bool ret = false;
 	
-	int step_mode = 0;
-	bool tail_step = false;
-	int32_t motor_ang_l_bak = 0, motor_ang_r_bak = 0;
-	int distance_org = 0; //走行距離
-	int count_stable = 0;
-	int max_s = 25;
-	bool spin_frag = false;
-	bool step_frag = false;
-	
 	int err;	//偏差
 	float diff;	//偏差微分
 	int32_t motor_ang_l=0, motor_ang_r=0;
@@ -58,32 +49,26 @@ mode GarageIn(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor* 
 	{
 		
 			if (ev3_button_is_pressed(BACK_BUTTON)){
-				//backbuttonが押されると終了
-				Message("finished...");
-				CurMode = eEnd;
+				Ret = eEnd;
 				break;
 			}
 			if (touchSensor->isPressed())
 			{ 
 				// タッチセンサが押されると終了
-				Message("finished...");
-				CurMode = eEnd;
+				Ret = eEnd;
 				break;
 			}
 
 			if (gyroSensor->getAnglerVelocity() > FALL_DOWN || -(gyroSensor->getAnglerVelocity()) > FALL_DOWN)
 			{
 				// 転倒を検知すると終了
-				fprintf(bt, "getAnglerVelocity = %d\n", gyroSensor->getAnglerVelocity());
-				fprintf(bt, "Emergency Stop.\n");
-				Message("finished...");
-				CurMode = eEnd;
+				Ret = eEnd;
 				break;
 			}
 			
 			if(!ret){
 				/* バランス走行用角度に制御 */
-				ret = tail_control(TAIL_ANGLE_DRIVE, eFast);
+				ret = tail_control_garage(TAIL_ANGLE_DRIVE, tailMotor, eFast);
 			}
 
 		   
@@ -91,7 +76,7 @@ mode GarageIn(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor* 
 			target = (max + min)/2;
 			
 			//turn値とforwardが返り値
-			turn = LineTrace(section, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
+			turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
 			
 			/* 倒立振子制御API に渡すパラメータを取得する */
 			motor_ang_l = leftMotor->getCount();
@@ -99,7 +84,7 @@ mode GarageIn(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor* 
 			gyro = gyroSensor->getAnglerVelocity();
 			volt = ev3_battery_voltage_mV();
 		
-			foward = 20;
+			forward = 20;
 
 			/* 倒立振子制御APIを呼び出し、倒立走行するための */
 			/* 左右モータ出力値を得る */
@@ -125,41 +110,13 @@ mode GarageIn(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor* 
 	return Ret;
 }
 
-/*
-**! @note 
-**! @param 
-**! @return Ture:階段発見 False:階段見つかっていない
-*/
-bool findStep(int32_t motor_ang_l,int32_t motor_ang_r,int32_t motor_ang_l_bak,int32_t motor_ang_r_bak,int32_t gyro)
-{
-	bool ret = false;	
-	
-	if(((motor_ang_r - motor_ang_r_bak) < 0) && ((motor_ang_l - motor_ang_l_bak) < 0)){
-		//ret_motor = true;
-		ret = true;
-	}
-	/*if(gyro > 150){
-		ret_gyro = true;
-	}
-	
-	if(ret_motor && ret_gyro){
-		ret = true;
-		ret_motor = false;
-		ret_gyro = false;
-	}*/
-	
-	return ret;
-}
-
-
-
 //*****************************************************************************
 // 関数名 : tail_control_step
 // 引数 : angle (モータ目標角度[度])
 // 返り値 : 無し
 // 概要 : 走行体完全停止用モータの角度制御
 //*****************************************************************************
-bool tail_control_step(int32_t angle, Motor* tail, tailSpeed sp)
+bool tail_control_garage(int32_t angle, Motor* tail, tailSpeed sp)
 {
 	float pwm_max;
 	float pwm = (float)(angle - tail->getCount()) * P_GAIN; // 比例制御

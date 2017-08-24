@@ -26,6 +26,7 @@
 #include "judgeSection.h"
 #include "CalcDistanceAndDirection.h"
 #include "StepStage.h"
+#include "GarageIn.h"
 
 using namespace ev3api;
 
@@ -281,7 +282,6 @@ void main_task(intptr_t unused)
 			//turn値とforwardが返り値
 			turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
 			/* 倒立振子制御APIを呼び出し、倒立走行するための */
-			forward=20;
 			/* 左右モータ出力値を得る */
 			balance_control(
 				(float)forward,
