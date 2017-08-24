@@ -44,6 +44,14 @@ extern "C" {
 #define TARGET				35	 //ライントレース制御 光量ターゲット値
 #define DELTA_T				0.004 //処理周期（s）
 #define INT_NUM				250	//積分する偏差数(1s分)
+
+
+#define TAIL_ANGLE_STAND_UP  80  /* 完全停止時の角度[度] */
+#define TAIL_ANGLE_START	90  /* スタート時の角度[度] */
+#define TAIL_ANGLE_DRIVE      3  /* バランス走行時の角度[度] */
+#define TAIL_ANGLE_INIT       0  /* 0度 */
+#define PWM_ABS_MAX_FAST	60  /* 完全停止用モータ制御PWM絶対最大値 */
+#define PWM_ABS_MAX_SLOW	30  /* 完全停止用モータ制御PWM絶対最大値 */
 #define GYRO_OFFSET_PID 3  //PID制御時のジャイロセンサのオフセット値
 #define FALL_DOWN	400	//転倒検知の閾値
 	
@@ -63,10 +71,10 @@ extern int param[BUF_COLUMN_SIZE];
 /* map data */
 extern int *arr0, *arr1;
 extern int linenum; // データの行数を数える
-	
-	
-enum runmode {eModeLineTrace, eModeStep, eModeLookUp, eModeGarage};
 
+
+enum mode {eLineTrace, eStepStage, eLookUpGate, eGarageIn, eEnd};
+enum tailSpeed {eFast, eSlow};
 /*
  *  関数のプロトタイプ宣言
  */
