@@ -28,11 +28,18 @@ using namespace ev3api;
 //#define GYRO_OFFSET_CALIBRATION   0  /*キャリブレーション時のジャイロオフセット値*/
 //enum speed {eFast, eSlow};
 
-#define TAIL_ANGLE_LOOKUPGATE 58
+#define TAIL_ANGLE_LOOKUPGATE 50
+#define TAIL_ANGLE_MIDLE 68
+#define PWM_ABS_MAX_SLOW_LOOK	3
 
 extern bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock);
 
 bool tail_ctr(int32_t angle, tailSpeed sp);
+
+enum mode_lookup{
+	TAIL_STANDUP,
+	BACK,
+};
 
 /*lookup_h*/
 #endif
