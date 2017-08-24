@@ -31,7 +31,7 @@ float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int*
 #if DEBUG
 	LineTrace_param(status,forward,&kp,&ki,&kd);
 #else
-	*forward = 30;	// 試走会2では"100"をセット
+	*forward = 10;	// 試走会2では"100"をセット
 #endif
 	
 	// P制御
