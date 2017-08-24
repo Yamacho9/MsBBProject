@@ -28,7 +28,7 @@ using namespace ev3api;
 //#define GYRO_OFFSET_CALIBRATION   0  /*キャリブレーション時のジャイロオフセット値*/
 //enum speed {eFast, eSlow};
 
-#define TAIL_ANGLE_LOOKUPGATE 48
+#define TAIL_ANGLE_LOOKUPGATE 45
 #define TAIL_ANGLE_MIDLE2 55
 #define TAIL_ANGLE_MIDLE 68
 #define PWM_ABS_MAX_SLOW_LOOK	3

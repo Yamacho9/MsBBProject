@@ -110,7 +110,7 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	//’†ŠÔ‚ÌŠp“x2
 	while(1){
 		if(!ret){
-			ret = tail_ctr(TAIL_ANGLE_MIDLE, eSlow);
+			ret = tail_ctr(TAIL_ANGLE_MIDLE2, eSlow);
 		}
 		m_leftmotor->setPWM(5);
 		m_rightmotor->setPWM(5);
