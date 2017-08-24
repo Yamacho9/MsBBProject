@@ -25,6 +25,7 @@
 #include "Calibration.h"
 #include "judgeSection.h"
 #include "CalcDistanceAndDirection.h"
+#include "StepStage.h"
 
 using namespace ev3api;
 
@@ -85,15 +86,6 @@ Motor*          leftMotor;
 Motor*          rightMotor;
 Motor*          tailMotor;
 Clock*          clock;
-
-/* 走行モード */
-typedef enum Mode {
-	eLineTrace,		// ライントレース
-	eStepStage,		// 階段
-	eLookUpGate,	// ルックアップゲート
-	eGarageIn,		// ガレージ
-	eEnd			// 終了
-} Mode;
 
 /* メインタスク */
 void main_task(intptr_t unused)
@@ -194,7 +186,8 @@ void main_task(intptr_t unused)
     	int32_t motor_ang_l=0, motor_ang_r=0;
 		int32_t gyro, volt=0;
     	int target=0;
-    	int distance=0, direction=0; //走行距離、向き
+    	int distance=0;
+    	int direction=0; //走行距離、向き
     	int err;	//偏差
     	float diff;	//偏差微分
     	
@@ -265,9 +258,12 @@ void main_task(intptr_t unused)
     		
 	    	/* 走行距離・旋回角度計測 */
 			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
-    		
-    		if(distance == GOAL_DISTANCE) mode = eStepStage;
-    		
+#ifndef DEBUG
+    		if(distance >= GOAL_DISTANCE) mode = eStepStage;
+#else
+    		distance = distance + START_DEBUG;
+    		if(distance >= GOAL_DEBUG) mode = eStepStage;
+#endif
 	    	//現在の区間を取得する
 	    	//section = judgeSection(distance,direction);
 	    	//fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
@@ -278,7 +274,7 @@ void main_task(intptr_t unused)
     		break;
     	case eStepStage:
     		fprintf(bt, "case eStepStage:\n");
-    		mode = eLookUpGate;
+    		mode = StepStage(min, max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
     		break;
     	case eLookUpGate:
     		fprintf(bt, "case eLookUpGate:\n");

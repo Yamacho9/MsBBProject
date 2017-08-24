@@ -47,7 +47,31 @@ extern "C" {
 #define INT_NUM				250	//積分する偏差数(1s分)
 #define GYRO_OFFSET_PID 3  //PID制御時のジャイロセンサのオフセット値
 #define FALL_DOWN	400	//転倒検知の閾値
-#define GOAL_DISTANCE	1000	// ゴール距離
+#define GOAL_DISTANCE	10000	// ゴール距離
+
+#define TAIL_ANGLE_STAND_UP  80  /* 完全停止時の角度[度] */
+#define TAIL_ANGLE_START	90  /* 完全停止時の角度[度] */
+#define TAIL_ANGLE_DRIVE      3  /* バランス走行時の角度[度] */
+#define TAIL_ANGLE_INIT       0  /* 0度 */
+//#define PWM_ABS_MAX          60  /* 完全停止用モータ制御PWM絶対最大値 */
+#define PWM_ABS_MAX_FAST	60  /* 完全停止用モータ制御PWM絶対最大値 */
+#define PWM_ABS_MAX_SLOW	30  /* 完全停止用モータ制御PWM絶対最大値 */
+
+// 尻尾角度
+enum tailSpeed {eFast, eSlow};
+
+/* 走行モード */
+typedef enum Mode {
+	eLineTrace,		// ライントレース
+	eStepStage,		// 階段
+	eLookUpGate,	// ルックアップゲート
+	eGarageIn,		// ガレージ
+	eEnd			// 終了
+} Mode;
+
+/* デバッグ用 */
+#define START_DEBUG	9900	// スタート時の距離を加算（オフセット）
+#define GOAL_DEBUG	10000	// ゴール距離
 
 /* LCDフォントサイズ */
 #define CALIB_FONT (EV3_FONT_SMALL)
