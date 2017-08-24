@@ -86,6 +86,14 @@ Motor*          rightMotor;
 Motor*          tailMotor;
 Clock*          clock;
 
+/* 走行モード */
+typedef enum Mode {
+	eLineTrace,		// ライントレース
+	eStepStage,		// 階段
+	eLookUpGate,	// ルックアップゲート
+	eGarageIn,		// ガレージ
+	eEnd			// 終了
+} Mode;
 
 /* メインタスク */
 void main_task(intptr_t unused)
@@ -100,6 +108,8 @@ void main_task(intptr_t unused)
 	bool ret = false;
 	int section=1; //現在の区間
 
+	Mode mode = eLineTrace;	// 最初の走行モードは、ライントレースにセット
+	
 	/*グローバル変数の初期化*/
 	count = 1;
 	
@@ -184,18 +194,20 @@ void main_task(intptr_t unused)
     	int32_t motor_ang_l=0, motor_ang_r=0;
 		int32_t gyro, volt=0;
     	int target=0;
-    	int distance, direction; //走行距離、向き
+    	int distance=0, direction=0; //走行距離、向き
     	int err;	//偏差
     	float diff;	//偏差微分
     	
     	if (ev3_button_is_pressed(BACK_BUTTON)){
     		//backbuttonが押されると終了
+    		Message("back button is pressed");
     		Message("finished...");
     		break;
     	}
 		if (touchSensor->isPressed())
 		{ 
 			// タッチセンサが押されると終了
+    		Message("touch sensor is pressed");
 			Message("finished...");
 			break;
 		}
@@ -204,7 +216,7 @@ void main_task(intptr_t unused)
     	{
 			// 転倒を検知すると終了
 	    	fprintf(bt, "getAnglerVelocity = %d\n", gyroSensor->getAnglerVelocity());
-    		fprintf(bt, "Emergency Stop.\n");
+    		Message("Emergency Stop");
 			Message("finished...");
     		break;
     	}
@@ -214,52 +226,78 @@ void main_task(intptr_t unused)
 			ret = tail_control(TAIL_ANGLE_DRIVE, eFast);
 		}
 
-        if (sonar_alert() == 1) /* 障害物検知 */
-        {
-			forward = turn = 0; /* 障害物を検知したら停止 */
-		}
-        else
-        {
-			cur_brightness = colorSensor->getBrightness();
-        	target = (max + min)/2;
+    	switch (mode) {
+    	case eLineTrace:
+        	if (sonar_alert() == 1) /* 障害物検知 */
+        	{
+				forward = turn = 0; /* 障害物を検知したら停止 */
+			}
+        	else
+        	{
+				cur_brightness = colorSensor->getBrightness();
+        		target = (max + min)/2;
 
-        	//turn値とforwardが返り値
-			turn = LineTrace(section, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
-		}
+        		//turn値とforwardが返り値
+				turn = LineTrace(section, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
+			}
 
-        /* 倒立振子制御API に渡すパラメータを取得する */
-        motor_ang_l = leftMotor->getCount();
-        motor_ang_r = rightMotor->getCount();
-        gyro = gyroSensor->getAnglerVelocity();
-        volt = ev3_battery_voltage_mV();
+        	/* 倒立振子制御API に渡すパラメータを取得する */
+        	motor_ang_l = leftMotor->getCount();
+        	motor_ang_r = rightMotor->getCount();
+        	gyro = gyroSensor->getAnglerVelocity();
+        	volt = ev3_battery_voltage_mV();
 
-        /* 倒立振子制御APIを呼び出し、倒立走行するための */
-        /* 左右モータ出力値を得る */
-        balance_control(
-            (float)forward,
-            (float)turn,
-            (float)gyro,
-        	(float)GYRO_OFFSET_PID,
-            (float)motor_ang_l,
-            (float)motor_ang_r,
-            (float)volt,
-            (int8_t *)&pwm_L,
-            (int8_t *)&pwm_R);
+        	/* 倒立振子制御APIを呼び出し、倒立走行するための */
+        	/* 左右モータ出力値を得る */
+        	balance_control(
+        	    (float)forward,
+        	    (float)turn,
+        	    (float)gyro,
+        		(float)GYRO_OFFSET_PID,
+        	    (float)motor_ang_l,
+        	    (float)motor_ang_r,
+        	    (float)volt,
+        	    (int8_t *)&pwm_L,
+        	    (int8_t *)&pwm_R);
 
-        leftMotor->setPWM(pwm_L);
-        rightMotor->setPWM(pwm_R);
+        	leftMotor->setPWM(pwm_L);
+        	rightMotor->setPWM(pwm_R);
+    		
+	    	/* 走行距離・旋回角度計測 */
+			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+    		
+    		if(distance == GOAL_DISTANCE) mode = eStepStage;
+    		
+	    	//現在の区間を取得する
+	    	//section = judgeSection(distance,direction);
+	    	//fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
+	    	//fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
+	    	//現在の走行状況を記録
+	    	fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d | err = %d | diff = %f\n",distance,direction,section,cur_brightness,turn,forward,err,diff);
 
-    	/* 距離・角度計測 */
-    	distance = 0;
-    	direction = 0;
-		CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+    		break;
+    	case eStepStage:
+    		fprintf(bt, "case eStepStage:\n");
+    		mode = eLookUpGate;
+    		break;
+    	case eLookUpGate:
+    		fprintf(bt, "case eLookUpGate:\n");
+    		mode = eGarageIn;
+    		break;
+    	case eGarageIn:
+    		fprintf(bt, "case eGarageIn:\n");
+    		mode = eEnd;
+    		break;
+    	case eEnd:
+    		fprintf(bt, "case eEnd:\n");
+    		break;
+    	}
 
-    	//現在の区間を取得する
-    	//section = judgeSection(distance,direction);
-    	//fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
-    	//fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
-    	//現在の走行状況を記録
-    	fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d | err = %d | diff = %f\n",distance,direction,section,cur_brightness,turn,forward,err,diff);
+    	if (mode == eEnd) {
+    		Message("mode = eEnd");
+			Message("finished...");
+    		break;
+    	}
     	
         clock->sleep(4); /* 4msec周期起動 */
     }
