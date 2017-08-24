@@ -31,7 +31,7 @@ float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int*
 #if DEBUG
 	LineTrace_param(status,forward,&kp,&ki,&kd);
 #else
-	*forward = 100;
+	*forward = 45;	// ‘–‰ï2‚Å‚Í"100"‚ğƒZƒbƒg
 #endif
 	
 	// P§Œä

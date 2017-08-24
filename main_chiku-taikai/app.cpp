@@ -220,18 +220,6 @@ void main_task(intptr_t unused)
 		}
         else
         {
-        	/*
-        	//3s後に速度が45に到達するように少しずつ加速させる
-            forward = 10 + speed;
-        	speed_count = speed_count + 464;
-        	if(speed_count > 10000){
-        		if(speed < 35){
-        			speed++;
-        		}
-        		speed_count = speed_count - 10000;
-        	}
-        	*/
-        	//forward = 10; /* 前進命令 */
 			cur_brightness = colorSensor->getBrightness();
         	target = (max + min)/2;
 
