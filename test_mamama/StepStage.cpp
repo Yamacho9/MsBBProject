@@ -26,9 +26,7 @@
 bool findStep(int32_t motor_ang_l,int32_t motor_ang_r,int32_t motor_ang_l_bak,int32_t motor_ang_r_bak,int32_t gyro);
 bool findStep2(int32_t gyro);
 bool clearStep(int32_t motor_ang_l,int32_t motor_ang_r,int32_t motor_ang_l_bak,int32_t motor_ang_r_bak);
-bool fallStep(int distance, int32_t gyro);
 bool tail_control_step(int32_t angle, Motor* tail, tailSpeed sp);
-
 
 using namespace ev3api;
 
@@ -309,30 +307,16 @@ mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor*
 			}
 
 		}
-		else if(step_mode == 11){	//ƒXƒeƒbƒv‚P‚PF’i·‚ð‰º‚è‚é‚Ü‚Å
+		else if(step_mode == 11){	//ƒXƒeƒbƒv‚P‚PF2•bŠÔA‘O‚Éi‚Ý‚Ü‚·
 			turn = 0;
 			forward = 20;
-			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
-			if(fallStep(distance, gyro)){
-				
-				leftMotor->reset();
-				rightMotor->reset();
-				step_mode = 12;
-				err = 0;
-				diff = 0;
-			}
-		}
-		else if(step_mode == 12){	//ƒXƒeƒbƒv‚P‚QFˆÀ’è‚·‚é‚Ü‚Å‘Ò‚Æ‚¤
-			turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
-			forward = 10;			
 			count_stable++;
-			if( count_stable > 500){
+			if(count_stable > 500){
 				count_stable = 0;
 				Ret = eGarageIn;
 				break;
 			}
 		}
-			
 
 		if(step_mode == 0 || step_mode == 1 || step_mode == 2 || step_mode == 2 || step_mode == 11){
 			/* “|—§UŽq§ŒäAPI‚ðŒÄ‚Ño‚µA“|—§‘–s‚·‚é‚½‚ß‚Ì */
@@ -357,7 +341,7 @@ mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor*
 }
 
 /*
-**! @note 1’i–Ú‚É‚Ô‚Â‚©‚Á‚½‚©‚Ç‚¤‚©
+**! @note 
 **! @param 
 **! @return Ture:ŠK’i”­Œ© False:ŠK’iŒ©‚Â‚©‚Á‚Ä‚¢‚È‚¢
 */
@@ -398,7 +382,7 @@ bool findStep2(int32_t gyro)
 	return ret;
 }
 /*
-**! @note 2’i–Ú‚É‚Ô‚Â‚©‚Á‚½‚©‚Ç‚¤‚©
+**! @note 
 **! @param 
 **! @return Ture:ŠK’iƒNƒŠƒA False:ŠK’iƒNƒŠƒA‚µ‚Ä‚¢‚È‚¢
 */
@@ -422,23 +406,6 @@ bool clearStep(int32_t motor_ang_l,int32_t motor_ang_r,int32_t motor_ang_l_bak,i
 	
 	return ret;
 }
-
-/*
-**! @note ŠK’i‚ð‰º‚è‚½‚©‚Ç‚¤‚©
-**! @param 
-**! @return Ture:ŠK’i‚©‚ç~‚è‚½ False:ŠK’i‚©‚ç~‚è‚Ä‚¢‚È‚¢
-*/
-bool fallStep(int distance, int32_t gyro)
-{	
-	bool ret = false;
-	if(distance >= 100 && (gyro > 50 ||  gyro < -50)){
-		ret = true;
-	}
-	
-	return ret;
-}
-
-
 
 //*****************************************************************************
 // ŠÖ”–¼ : tail_control_step

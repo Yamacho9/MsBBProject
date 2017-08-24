@@ -26,14 +26,14 @@ float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int*
 	int integral=0;	//偏差積分
 	float diff=0.0;	//偏差微分
 	float turn;	//旋回角度
-	//float kp,ki,kd;
+	float kp,ki,kd;
 	
 #if DEBUG
 	LineTrace_param(status,forward,&kp,&ki,&kd);
 #else
-	*forward = 100;
+	*forward = 30;	// 試走会2では"100"をセット
 #endif
-
+	
 	// P制御
 	err = currentVal - targetVal;	// 黒線の左側をトレース
 

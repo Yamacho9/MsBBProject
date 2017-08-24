@@ -41,12 +41,14 @@ extern "C" {
 #define SONAR_ALERT_DISTANCE 30  //超音波センサによる障害物検知距離[cm]
 #define P_GAIN             2.5F  //完全停止用モータ制御比例係数
 #define CMD_START         '1'    //リモートスタートコマンド
+/* 追加部分 */
 #define TARGET				35	 //ライントレース制御 光量ターゲット値
 #define DELTA_T				0.004 //処理周期（s）
 #define INT_NUM				250	//積分する偏差数(1s分)
 #define GYRO_OFFSET_PID 3  //PID制御時のジャイロセンサのオフセット値
 #define FALL_DOWN	400	//転倒検知の閾値
-	
+#define GOAL_DISTANCE	1000	// ゴール距離
+
 /* LCDフォントサイズ */
 #define CALIB_FONT (EV3_FONT_SMALL)
 #define CALIB_FONT_WIDTH (6/*TODO: magic number*/)
@@ -63,9 +65,6 @@ extern int param[BUF_COLUMN_SIZE];
 /* map data */
 extern int *arr0, *arr1;
 extern int linenum; // データの行数を数える
-	
-	
-enum runmode {eModeLineTrace, eModeStep, eModeLookUp, eModeGarage};
 
 /*
  *  関数のプロトタイプ宣言

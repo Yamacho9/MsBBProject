@@ -32,10 +32,6 @@ using namespace ev3api;
 
 #ifdef DEBUG
 #define _debug(x) (x)
-#define PWM 10
-#define KP_SPIN 0/*0.74*/
-#define KD_SPIN 0/*0.03*/
-#define SPIN_ROTATE (180*4)	// 1/4回転 = 180 ※左車輪1/2回転、右車輪-1/2回転で、本体は90度旋回するため
 #else
 #define _debug(x)
 #endif
@@ -90,6 +86,14 @@ Motor*          rightMotor;
 Motor*          tailMotor;
 Clock*          clock;
 
+/* 走行モード */
+typedef enum Mode {
+	eLineTrace,		// ライントレース
+	eStepStage,		// 階段
+	eLookUpGate,	// ルックアップゲート
+	eGarageIn,		// ガレージ
+	eEnd			// 終了
+} Mode;
 
 /* メインタスク */
 void main_task(intptr_t unused)
@@ -104,14 +108,7 @@ void main_task(intptr_t unused)
 	bool ret = false;
 	int section=1; //現在の区間
 
-#ifdef DEBUG
-    int32_t last_motor_ang_l=0, last_motor_ang_r=0;	// 前回の角位置
-    int32_t diff_motor_ang_l=0, diff_motor_ang_r=0;	// 今回の前回の角位置の差分(＝車輪の回転量)
-    int32_t err_motor_ang_l_r=0, last_err_motor_ang_l_r=0, diff_motor_ang_l_r=0;	// 左右車輪の回転量の偏差、前回偏差、微分
-    int8_t correct_pwm=0;	// PWM補正値
-	int32_t first_motor_ang_l=0, first_motor_ang_r=0;	// スピン開始時の角位置
-    int in_spin = 0;	// スピン動作中？（1:スピン動作中、0:スピン開始前）
-#endif
+	Mode mode = eLineTrace;	// 最初の走行モードは、ライントレースにセット
 	
 	/*グローバル変数の初期化*/
 	count = 1;
@@ -197,19 +194,20 @@ void main_task(intptr_t unused)
     	int32_t motor_ang_l=0, motor_ang_r=0;
 		int32_t gyro, volt=0;
     	int target=0;
-    	int distance, direction; //走行距離、向き
+    	int distance=0, direction=0; //走行距離、向き
     	int err;	//偏差
     	float diff;	//偏差微分
     	
     	if (ev3_button_is_pressed(BACK_BUTTON)){
     		//backbuttonが押されると終了
+    		Message("back button is pressed");
     		Message("finished...");
     		break;
     	}
 		if (touchSensor->isPressed())
 		{ 
 			// タッチセンサが押されると終了
-	    	Message("touchSensor->isPressed()");			
+    		Message("touch sensor is pressed");
 			Message("finished...");
 			break;
 		}
@@ -222,118 +220,85 @@ void main_task(intptr_t unused)
 			Message("finished...");
     		break;
     	}
+    	
         if(!ret){
-#ifndef DEBUG
         	/* バランス走行用角度に制御 */
 			ret = tail_control(TAIL_ANGLE_DRIVE, eFast);
-#else
-        	/* バランス走行用角度に制御 */
-			ret = tail_control(TAIL_ANGLE_STAND_UP, eSlow);
-#endif
 		}
-        if (sonar_alert() == 1) /* 障害物検知 */
-        {
-			forward = turn = 0; /* 障害物を検知したら停止 */
-		}
-        else
-        {
-#ifndef DEBUG
-        	/*
-        	//3s後に速度が45に到達するように少しずつ加速させる
-            forward = 10 + speed;
-        	speed_count = speed_count + 464;
-        	if(speed_count > 10000){
-        		if(speed < 35){
-        			speed++;
-        		}
-        		speed_count = speed_count - 10000;
-        	}
-        	*/
-        	//forward = 10; /* 前進命令 */
-			cur_brightness = colorSensor->getBrightness();
-        	target = (max + min)/2;
-        	
-        	//turn値とforwardが返り値
-			turn = LineTrace(section, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
-#endif
-		}
-#ifndef DEBUG
-        /* 倒立振子制御API に渡すパラメータを取得する */
-        motor_ang_l = leftMotor->getCount();
-        motor_ang_r = rightMotor->getCount();
-        gyro = gyroSensor->getAnglerVelocity();
-        volt = ev3_battery_voltage_mV();
 
-        /* 倒立振子制御APIを呼び出し、倒立走行するための */
-        /* 左右モータ出力値を得る */
-        balance_control(
-            (float)forward,
-            (float)turn,
-            (float)gyro,
-        	(float)GYRO_OFFSET_PID,
-            (float)motor_ang_l,
-            (float)motor_ang_r,
-            (float)volt,
-            (int8_t *)&pwm_L,
-            (int8_t *)&pwm_R);
+    	switch (mode) {
+    	case eLineTrace:
+        	if (sonar_alert() == 1) /* 障害物検知 */
+        	{
+				forward = turn = 0; /* 障害物を検知したら停止 */
+			}
+        	else
+        	{
+				cur_brightness = colorSensor->getBrightness();
+        		target = (max + min)/2;
 
-        leftMotor->setPWM(pwm_L);
-        rightMotor->setPWM(pwm_R);
+        		//turn値とforwardが返り値
+				turn = LineTrace(section, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
+			}
 
-    	/* 距離・角度計測 */
-    	distance = 0;
-    	direction = 0;
-		CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+        	/* 倒立振子制御API に渡すパラメータを取得する */
+        	motor_ang_l = leftMotor->getCount();
+        	motor_ang_r = rightMotor->getCount();
+        	gyro = gyroSensor->getAnglerVelocity();
+        	volt = ev3_battery_voltage_mV();
 
-    	//現在の区間を取得する
-    	//section = judgeSection(distance,direction);
-    	//fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
-    	//fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
-    	//現在の走行状況を記録
-    	fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d | err = %d | diff = %f\n",distance,direction,section,cur_brightness,turn,forward,err,diff);
-#else
-    	/*
-    	1. Motor->getCount() で車輪の角位置を取得する。
-    	2. 今回と前回の角位置の差分（＝車輪の回転量）を算出する。
-    	3. 左右車輪の回転量の偏差、偏差微分を算出する。偏差は、左輪の回転量を目標値とする。
-    	4. 3で算出した偏差、偏差微分をインプットとして、PWM制御補正値をPD制御で算出する。ただし、スピン動作開始時は補正値:0．
-    	5. 4で算出したPWM制御補正値を、回転量が多い方のPWM制御値から差し引く。
-    	6. 5.で算出したPWM制御値をMotor->setPWM()でセットする。
-    	7. 左車輪の回転量が4回転以上であればスピン処理終了
-    	*/
-        motor_ang_l = leftMotor->getCount();
-        motor_ang_r = rightMotor->getCount();
-    	
-    	diff_motor_ang_l = motor_ang_l - last_motor_ang_l;
-    	diff_motor_ang_r = -(motor_ang_r - last_motor_ang_r);	// 右輪は後退方向のため、回転量算出のために(マイナス)を掛ける
-    	last_motor_ang_l = motor_ang_l;
-    	last_motor_ang_r = motor_ang_r;    	
-    	
-    	err_motor_ang_l_r = diff_motor_ang_l - diff_motor_ang_r;
-    	diff_motor_ang_l_r = (err_motor_ang_l_r - last_err_motor_ang_l_r) / DELTA_T;
-    	
-    	if (in_spin = 1) {
-    		correct_pwm = KP_SPIN * err_motor_ang_l_r + KD_SPIN * diff_motor_ang_l_r;
-		} else {
-			correct_pwm = 0;
-			first_motor_ang_l = motor_ang_l;
-			first_motor_ang_r = motor_ang_r;
-			in_spin = 1;
+        	/* 倒立振子制御APIを呼び出し、倒立走行するための */
+        	/* 左右モータ出力値を得る */
+        	balance_control(
+        	    (float)forward,
+        	    (float)turn,
+        	    (float)gyro,
+        		(float)GYRO_OFFSET_PID,
+        	    (float)motor_ang_l,
+        	    (float)motor_ang_r,
+        	    (float)volt,
+        	    (int8_t *)&pwm_L,
+        	    (int8_t *)&pwm_R);
+
+        	leftMotor->setPWM(pwm_L);
+        	rightMotor->setPWM(pwm_R);
+    		
+	    	/* 走行距離・旋回角度計測 */
+			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+    		
+    		if(distance == GOAL_DISTANCE) mode = eStepStage;
+    		
+	    	//現在の区間を取得する
+	    	//section = judgeSection(distance,direction);
+	    	//fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
+	    	//fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
+	    	//現在の走行状況を記録
+	    	fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d | err = %d | diff = %f\n",distance,direction,section,cur_brightness,turn,forward,err,diff);
+
+    		break;
+    	case eStepStage:
+    		fprintf(bt, "case eStepStage:\n");
+    		mode = eLookUpGate;
+    		break;
+    	case eLookUpGate:
+    		fprintf(bt, "case eLookUpGate:\n");
+    		mode = eGarageIn;
+    		break;
+    	case eGarageIn:
+    		fprintf(bt, "case eGarageIn:\n");
+    		mode = eEnd;
+    		break;
+    	case eEnd:
+    		fprintf(bt, "case eEnd:\n");
+    		break;
     	}
 
-    	pwm_L = PWM;
-		pwm_R = PWM + correct_pwm;
-
-		leftMotor->setPWM(pwm_L);
-		rightMotor->setPWM(-pwm_R);
+    	if (mode == eEnd) {
+    		Message("mode = eEnd");
+			Message("finished...");
+    		break;
+    	}
     	
-    	fprintf(bt, "correct_pwm = %d | pwm_L = %d | pwm_R = %d\n",correct_pwm,pwm_L,pwm_R);
-    	
-		if(motor_ang_l - first_motor_ang_l >= SPIN_ROTATE){
-			fprintf(bt, "rotation OK step....\n");
-			break;
-		}
-#endif
         clock->sleep(4); /* 4msec周期起動 */
     }
     leftMotor->reset();
