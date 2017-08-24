@@ -12,7 +12,7 @@ void split(char* s, const std::string& delim);
 bool JudgingOnLine(int, int);
 
 int *arr0, *arr1;
-int linenum = 0; // ƒf[ƒ^‚Ìs”‚ğ”‚¦‚é
+int linenum = 0; // ãƒ‡ãƒ¼ã‚¿ã®è¡Œæ•°ã‚’æ•°ãˆã‚‹
 
 int main()
 {
@@ -32,30 +32,30 @@ void reading() {
 
 	std::cerr << "reading" << std::endl;
 
-	std::ifstream ifs;  // ƒtƒ@ƒCƒ‹“Ç‚İæ‚è—pƒXƒgƒŠ[ƒ€
-	ifs.open("sumL.txt");	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“
+	std::ifstream ifs;  // ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿å–ã‚Šç”¨ã‚¹ãƒˆãƒªãƒ¼ãƒ 
+	ifs.open("sumL.txt");	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³
 
-	if (ifs.fail()) {	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“‚É¸”s‚µ‚½‚ç‚»‚±‚ÅI—¹
-		std::cerr << "ƒtƒ@ƒCƒ‹‚ğŠJ‚¯‚Ü‚¹‚ñ\n";
+	if (ifs.fail()) {	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ã«å¤±æ•—ã—ãŸã‚‰ãã“ã§çµ‚äº†
+		std::cerr << "ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ã¾ã›ã‚“\n";
 		exit(1);
 	}
 
-	char buf[256];	// ƒf[ƒ^ˆê•ÛŠÇ—p”z—ñ
+	char buf[256];	// ãƒ‡ãƒ¼ã‚¿ä¸€æ™‚ä¿ç®¡ç”¨é…åˆ—
 
-	while (ifs.getline(buf, sizeof(buf))) {	// ƒtƒ@ƒCƒ‹‚©‚ç1s‚¸‚Â“Ç‚İ‚Ş
-		linenum++;	// s”‚ğƒJƒEƒ“ƒg‚µ‚Ä‚¢‚é
+	while (ifs.getline(buf, sizeof(buf))) {	// ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰1è¡Œãšã¤èª­ã¿è¾¼ã‚€
+		linenum++;	// è¡Œæ•°ã‚’ã‚«ã‚¦ãƒ³ãƒˆã—ã¦ã„ã‚‹
 	}
 
-	std::cerr << "“Ç‚İ‚ñ‚¾s” = " << linenum << "\n";
-
-	ifs.clear(); // ƒtƒ@ƒCƒ‹––”ö‚É“’B‚Æ‚¢‚¤ƒtƒ‰ƒO‚ğƒNƒŠƒA
-	ifs.seekg(0, std::ios::beg);	// ƒtƒ@ƒCƒ‹æ“ª‚É–ß‚é
+	std::cerr << "èª­ã¿è¾¼ã‚“ã è¡Œæ•° = " << linenum << "\n";
+	//
+	ifs.clear(); // ãƒ•ã‚¡ã‚¤ãƒ«æœ«å°¾ã«åˆ°é”ã¨ã„ã†ãƒ•ãƒ©ã‚°ã‚’ã‚¯ãƒªã‚¢
+	ifs.seekg(0, std::ios::beg);	// ãƒ•ã‚¡ã‚¤ãƒ«å…ˆé ­ã«æˆ»ã‚‹
 
 	arr0 = (int *)malloc(linenum * sizeof(int));
 	arr1 = (int *)malloc(linenum * sizeof(int));
 
 	for (i = 0; i<linenum; i++) {
-		ifs.getline(buf, sizeof(buf));	// ˆês“Ç
+		ifs.getline(buf, sizeof(buf));	// ä¸€è¡Œèª­è¾¼
 		split(buf, ",");
 		std::cout << i << " = " << arr0[i] << ", " << arr1[i] << std::endl;
 	}
@@ -79,7 +79,7 @@ void split(char* s, const std::string& delim)
 		else {
 			arr1[i] = atoi(tok);
 		}
-		tok = strtok(NULL, delim.c_str());  /* 2‰ñ–ÚˆÈ~ */
+		tok = strtok(NULL, delim.c_str());  /* 2å›ç›®ä»¥é™ */
 		count++;
 	}
 	//printf("i=%d, count=%d, arr0=%d, arr1=%d\n", i, count, arr0[i], arr1[i]);
@@ -95,7 +95,7 @@ bool JudgingOnLine(int distance, int degree) {
 
 	//distance range check
 	while (1) {
-		if ((arr0[linenum - (flag-1)] + DistMargine) <= distance) { //Ÿ‚Ì‹æŠÔ‚Ö
+		if ((arr0[linenum - (flag-1)] + DistMargine) <= distance) { //æ¬¡ã®åŒºé–“ã¸
 			flag--;
 			printf("callednum=%d, arr0[]=%d\n", linenum-flag, arr0[linenum - flag]);
 		}
@@ -105,7 +105,7 @@ bool JudgingOnLine(int distance, int degree) {
 		}
 	}
 
-	printf("‹æŠÔ:%d (distance: %d - %d )\n", (linenum-flag+1), arr0[linenum - flag], arr0[linenum - (flag-1)]);
+	printf("åŒºé–“:%d (distance: %d - %d )\n", (linenum-flag+1), arr0[linenum - flag], arr0[linenum - (flag-1)]);
 	
 	return (linenum-flag+1);
 
