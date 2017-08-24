@@ -33,8 +33,9 @@ using namespace ev3api;
 #ifdef DEBUG
 #define _debug(x) (x)
 #define PWM 10
-#define KP_SPIN 0.74
-#define KD_SPIN 0.03
+#define KP_SPIN 0/*0.74*/
+#define KD_SPIN 0/*0.03*/
+#define SPIN_ROTATE (180*4)	// 1/4回転 = 180 ※左車輪1/2回転、右車輪-1/2回転で、本体は90度旋回するため
 #else
 #define _debug(x)
 #endif
@@ -208,6 +209,7 @@ void main_task(intptr_t unused)
 		if (touchSensor->isPressed())
 		{ 
 			// タッチセンサが押されると終了
+	    	Message("touchSensor->isPressed()");			
 			Message("finished...");
 			break;
 		}
@@ -216,18 +218,19 @@ void main_task(intptr_t unused)
     	{
 			// 転倒を検知すると終了
 	    	fprintf(bt, "getAnglerVelocity = %d\n", gyroSensor->getAnglerVelocity());
-    		fprintf(bt, "Emergency Stop.\n");
+    		Message("Emergency Stop");
 			Message("finished...");
     		break;
     	}
-#ifndef DEBUG
         if(!ret){
+#ifndef DEBUG
         	/* バランス走行用角度に制御 */
 			ret = tail_control(TAIL_ANGLE_DRIVE, eFast);
-		}
 #else
-    	ret = tail_control(TAIL_ANGLE_STAND_UP, eSlow);
+        	/* バランス走行用角度に制御 */
+			ret = tail_control(TAIL_ANGLE_STAND_UP, eSlow);
 #endif
+		}
         if (sonar_alert() == 1) /* 障害物検知 */
         {
 			forward = turn = 0; /* 障害物を検知したら停止 */
@@ -326,7 +329,7 @@ void main_task(intptr_t unused)
     	
     	fprintf(bt, "correct_pwm = %d | pwm_L = %d | pwm_R = %d\n",correct_pwm,pwm_L,pwm_R);
     	
-		if(motor_ang_l - first_motor_ang_l >= 360*4){
+		if(motor_ang_l - first_motor_ang_l >= SPIN_ROTATE){
 			fprintf(bt, "rotation OK step....\n");
 			break;
 		}
