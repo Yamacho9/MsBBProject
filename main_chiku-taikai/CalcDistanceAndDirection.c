@@ -28,6 +28,8 @@ void CalcDistanceAndDirection (int leftCnt, int rightCnt, int* distance, int* di
 	dir = (leftCnt % (360 * 4) - rightCnt % (360 * 4)) / 4;
 	if (dir < 0) {
 		dir = dir + 360;
+	}else if (dir > 360){
+		dir = dir - 360;
 	}
 	*direction = dir;
 	

@@ -102,6 +102,14 @@ void main_task(intptr_t unused)
 
 	Mode mode = eLineTrace;	// 最初の走行モードは、ライントレースにセット
 	
+	int32_t motor_ang_l, motor_ang_r;	// 左右車輪の回転量（deg.）
+	int32_t gyro, volt;	// 振子倒立制御に使用
+   	int target;	// ライントレースの光量目標値
+   	int distance;	// 走行距離
+   	int direction; //	旋回角度
+   	int err;	// ライントレース用PD制御の偏差
+   	float diff;	// ライントレース用PD制御の微分
+	
 	/*グローバル変数の初期化*/
 	count = 1;
 	
@@ -183,13 +191,12 @@ void main_task(intptr_t unused)
     */
     while(1)
     {
-    	int32_t motor_ang_l=0, motor_ang_r=0;
-		int32_t gyro, volt=0;
-    	int target=0;
-    	int distance=0;
-    	int direction=0; //走行距離、向き
-    	int err;	//偏差
-    	float diff;	//偏差微分
+    	// 初期化（両車輪の回転量、本体バッテリーの電圧、本体の加速度、走行距離、旋回角度）
+    	motor_ang_l=0, motor_ang_r=0;
+		volt=0, gyro =0;
+    	target=0;
+    	distance=0;
+    	direction=0;
     	
     	if (ev3_button_is_pressed(BACK_BUTTON)){
     		//backbuttonが押されると終了

@@ -74,14 +74,7 @@ Mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor*
 			Ret = eEnd;
 			break;
 		}
-
-		if (gyroSensor->getAnglerVelocity() > FALL_DOWN || -(gyroSensor->getAnglerVelocity()) > FALL_DOWN)
-		{
-			// “]“|‚ğŒŸ’m‚·‚é‚ÆI—¹
-			Ret = eEnd;
-			break;
-		}
-		
+	
 		if(!ret){
 			/* ƒoƒ‰ƒ“ƒX‘–s—pŠp“x‚É§Œä */
 			ret = tail_control_step(TAIL_ANGLE_DRIVE, tailMotor, eFast);
@@ -314,7 +307,7 @@ Mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor*
 			forward = 20;
 			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
 			if(fallStep(distance, gyro)){
-				
+				balance_init(); /* “|—§UqAPI‰Šú‰»(‚±‚ê‚ğ‚â‚ç‚È‚¢‚Æ–\‘–‚·‚éH) */
 				leftMotor->reset();
 				rightMotor->reset();
 				step_mode = 12;
@@ -323,18 +316,22 @@ Mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor*
 			}
 		}
 		else if(step_mode == 12){	//ƒXƒeƒbƒv‚P‚QFˆÀ’è‚·‚é‚Ü‚Å‘Ò‚Æ‚¤
-			turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
-			forward = 10;			
-			count_stable++;
-			if( count_stable > 500){
+			if( count_stable < 250){
+				turn = 0;
+				forward = 20;
+			}else if( count_stable < 750 ){
+				turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
+				forward = 20;	
+			}else{
 				count_stable = 0;
 				Ret = eGarageIn;
 				break;
-			}
+			}		
+			count_stable++;
 		}
 			
 
-		if(step_mode == 0 || step_mode == 1 || step_mode == 2 || step_mode == 2 || step_mode == 11){
+		if(step_mode == 0 || step_mode == 1 || step_mode == 2 || step_mode == 11 || step_mode == 12){
 			/* “|—§Uq§ŒäAPI‚ğŒÄ‚Ño‚µA“|—§‘–s‚·‚é‚½‚ß‚Ì */
 			/* ¶‰Eƒ‚[ƒ^o—Í’l‚ğ“¾‚é */
 			balance_control(
