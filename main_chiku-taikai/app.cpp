@@ -104,7 +104,7 @@ void main_task(intptr_t unused)
 	
 	int32_t motor_ang_l, motor_ang_r;	// 左右車輪の回転量（deg.）
 	int32_t gyro, volt;	// 振子倒立制御に使用
-   	int target;	// ライントレースの光量目標値
+   	int target;	// ライントレースの光センサ目標値
    	int distance;	// 走行距離
    	int direction; //	旋回角度
    	int err;	// ライントレース用PD制御の偏差
@@ -139,6 +139,7 @@ void main_task(intptr_t unused)
 	Message("push touch sensor : do calibration");
 	Message("push back button : don't calibration");
 	Calibration(&min, &max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
+	target = (max + min)/2;		// 目標値決定
 	fprintf(bt,"Calibration result\nmax:%d min:%d",max,min);
 	
     ev3_led_set_color(LED_GREEN); /* スタート通知 */
@@ -194,7 +195,6 @@ void main_task(intptr_t unused)
     	// 初期化（両車輪の回転量、本体バッテリーの電圧、本体の加速度、走行距離、旋回角度）
     	motor_ang_l=0, motor_ang_r=0;
 		volt=0, gyro =0;
-    	target=0;
     	distance=0;
     	direction=0;
     	
@@ -228,19 +228,12 @@ void main_task(intptr_t unused)
 
     	switch (mode) {
     	case eLineTrace:
-        	if (sonar_alert() == 1) /* 障害物検知 */
-        	{
-				forward = turn = 0; /* 障害物を検知したら停止 */
-			}
-        	else
-        	{
-				cur_brightness = colorSensor->getBrightness();
-        		target = (max + min)/2;
-
-        		//turn値とforwardが返り値
-				turn = LineTrace(section, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
-			}
-
+			// 現在の光センサ値取得
+    		cur_brightness = colorSensor->getBrightness();
+    		
+    		//turn値とforwardが返り値
+			turn = LineTrace(section, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
+    		
         	/* 倒立振子制御API に渡すパラメータを取得する */
         	motor_ang_l = leftMotor->getCount();
         	motor_ang_r = rightMotor->getCount();
