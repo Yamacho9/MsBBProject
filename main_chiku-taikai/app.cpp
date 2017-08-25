@@ -76,6 +76,11 @@ void readMapdata();
 void readPIDdata();
 //
 void split(char* s, const std::string& delim,int i);
+// タッチセンサ押下検知関数
+int bPressTouchSensor(void);
+
+//タッチセンサフラグ
+int bTouchSensor = 0;	// 0:OFF、1:ON
 
 /* オブジェクトへのポインタ定義 */
 TouchSensor*    touchSensor;
@@ -155,7 +160,7 @@ void main_task(intptr_t unused)
 			fprintf(bt,"bluetooth start");
     		break;
     	}
-		if (touchSensor->isPressed())
+		if (bPressTouchSensor())
         {
 		 	Message("touch sensor start");
             break; /* タッチセンサが押された */
@@ -204,7 +209,7 @@ void main_task(intptr_t unused)
     		Message("finished...");
     		break;
     	}
-		if (touchSensor->isPressed())
+		if (bPressTouchSensor())
 		{ 
 			// タッチセンサが押されると終了
     		Message("touch sensor is pressed");
@@ -554,6 +559,30 @@ void split(char* s, const std::string& delim,int i)
 		count++;
 	}
 	//printf("i=%d, count=%d, arr0=%d, arr1=%d\n", i, count, arr0[i], arr1[i]);
+}
+
+//*****************************************************************************
+// 関数名 : bPressTouchSensor()
+// 引数 : 無し
+// 返り値 : 1(押下検知)/0(押下未検知)
+// 概要 : タッチセンサ押下検知（チャタリング防止処理含む）
+//*****************************************************************************
+int bPressTouchSensor(void)
+{
+	// 初期化
+    int now = 0;
+    int before = 0;
+	int bPress = 0;
+	
+	now = touchSensor->isPressed();	// 現在のタッチセンサ状態
+	before = bTouchSensor;	//前回のタッチセンサ状態
+	
+	if (now == 1 && before == 0){	// タッチセンサ押下検知
+		bPress = 1;
+	}
+	bTouchSensor = now;	// 現在のタッチセンサ状態を保存
+
+    return bPress;
 }
 
 //*******************************************************************
