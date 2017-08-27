@@ -9,22 +9,27 @@ Motor* m_rightmotor;//れふと
 
 mode_lookup nowMode;
 bool ret;//しっぽの状態
+int32_t angle;//しっぽの角度
+int time_count;//カウント関数
+bool stand;//ture :倒立走行ON | false :倒立走行OFF
+bool time;//ture : 最初　false:最後
 
 /*
  * ルックアップゲート用関数
  * 返り値：true成功，false失敗
  */
-
 bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock){
 
 	//モードの初期化
-	nowMode = TAIL_STANDUP;
+	nowMode = INIT;
 	//必要な変数
 	ret = false;
 	int32_t motor_ang_l=0, motor_ang_r=0;
 	int32_t gyro_angle, volt=0;
 	int8_t pwm_L, pwm_R;
-	int count = 0;
+	int time_count = 0;
+	static float forward = 0;
+	static float turn = 0;
 
 	//必要なインスタンスをappから貰う(残念ながら引数)
 	//gyro,color,leftmotor,rightmotor,tail
@@ -34,156 +39,219 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	m_leftmotor = leftmotor;
 	m_rightmotor = rightmotor;
 	
+
 	//モータリセット
 	//m_leftmotor->reset();
 	//m_rightmotor->reset();
 	
-	static float forward = 0;
-	static float turn = 0;
-	//しっぽを下げる
+	//初期化
+	init_lookup();
+	angle = TAIL_ANGLE_STAND_UP;
+	stand = true;
+	time = true;
+
 	while(1){
-		if(!ret){
-			ret = tail_ctr(TAIL_ANGLE_STAND_UP, eSlow);
+
+		//モードごとの制御
+		if(nowMode == INIT){
+			nowMode = TAIL_STANDUP;
 		}
-		
-		motor_ang_l = m_leftmotor->getCount();
-        motor_ang_r = m_rightmotor->getCount();
-        gyro_angle = m_gyro->getAnglerVelocity();
-        volt = ev3_battery_voltage_mV();
-		balance_control(
-	         	forward,
-			    turn,
-            	(float)gyro_angle,
-        		(float)GYRO_OFFSET_PID,
-            	(float)motor_ang_l,
-            	(float)motor_ang_r,
-            	(float)volt,
-            	(int8_t *)&pwm_L,
-            	(int8_t *)&pwm_R);
-		
-		if(ret){
-			if(count < 250){
-				forward = -10;
-				turn = 0;
-				count++;
-			}
-			else if(pwm_L < 0 && pwm_R < 0 && gyro_angle < 0){
-				m_leftmotor->setPWM(0);
-				m_rightmotor->setPWM(0);
-				m_gyro->reset();
-				balance_init();
-				ret = false;
-				clock->sleep(1200);
-				count = 0;
-				
-				break;
-			}
-		}else{
+		else if(nowMode == TAIL_STANDUP){//しっぽを途中(STANDUP)まで動かす
+			angle = TAIL_ANGLE_STAND_UP;
+			//しっぽを動かしている途中はLinetraceする
 			forward = 0;
 			turn = 0;
+			stand = true;
+			if(ret){//しっぽを動かし終わった
+				if(time_count < 250){
+					forward = -10;
+					turn = 0;
+					time_count++;
+				}
+				else if(pwm_L < 0 && pwm_R < 0 && gyro_angle < 0){
+					//一定時間たつと倒立走行をやめる
+					stand = false;
+					m_leftmotor->setPWM(0);
+					m_rightmotor->setPWM(0);
+					clock->sleep(1400);
+					init_lookup();
+					//モードを変更
+					nowMode = TAIL_MIDDLE;
+				}
+			}
 		}
-		
-		m_leftmotor->setPWM(pwm_L);
-        m_rightmotor->setPWM(pwm_R);
-		clock->sleep(4);
-		
-	}
-	
-	count = 0;
-	
-	//中間の角度
-	while(1){
-		if(!ret){
-			ret = tail_ctr(TAIL_ANGLE_MIDLE, eSlow);
+		else if(nowMode == TAIL_MIDDLE){//しっぽを途中(MIDDLE)まで動かす
+			angle = TAIL_ANGLE_MIDLE;
+			m_leftmotor->setPWM(1);
+			m_rightmotor->setPWM(1);
+			time_count++;
+			if(ret && time_count > 250){
+				//一定時間経った，かつしっぽを動かし終わった
+				init_lookup();
+				//モードを変更
+				nowMode = TAIL_MIDDLE2;
+			}
 		}
-		m_leftmotor->setPWM(5);
-		m_rightmotor->setPWM(5);
-		clock->sleep(4);
-		count++;
-		
-		if(count > 1000){
-			break;
+		else if(nowMode == TAIL_MIDDLE2){//しっぽを途中(MIDDLE2)まで動かす
+			angle = TAIL_ANGLE_MIDLE2;
+			m_leftmotor->setPWM(1);
+			m_rightmotor->setPWM(1);
+			time_count++;
+			if(ret && time_count > 250){
+				//一定時間経った，かつしっぽを動かし終わった
+				init_lookup();
+				//モードを変更
+				nowMode = TAIL_LOOKUP;
+			}
 		}
-	}
-	count = 0;
+		else if(nowMode == TAIL_LOOKUP){//しっぽを(LOOKUP)まで動かす
+			angle = TAIL_ANGLE_LOOKUPGATE;
+			m_leftmotor->setPWM(1);
+			m_rightmotor->setPWM(1);
+			time_count++;
+			if(ret && time_count > 250){
+				//一定時間経った，かつしっぽを動かし終わった
+				init_lookup();
+				//モードを変更
+				nowMode = ADVANCE;
+			}
+		}
+		else if(nowMode == ADVANCE){//前進する
+			angle = TAIL_ANGLE_LOOKUPGATE;
+			m_leftmotor->setPWM(10);
+			m_rightmotor->setPWM(10);
+			time_count++;
+			if(ret && time_count > 1000){//一定時間経った
+				init_lookup();
+				//モードを変更
+				nowMode = BACK;
+			}
+		}
+		else if(nowMode == BACK){//バックする
+			angle = TAIL_ANGLE_LOOKUPGATE;
+			//m_leftmotor->setPWM(-10);
+			//m_rightmotor->setPWM(-10);
+			time_count++;
+			//if(ret && time_count > 500){//一定時間経った
+				init_lookup();
+				//モードを変更
+				nowMode = ADVANCE2;
+			//}
+		}
+		else if(nowMode == ADVANCE2){//前進する
+			angle = TAIL_ANGLE_LOOKUPGATE;
+			//m_leftmotor->setPWM(10);
+			//m_rightmotor->setPWM(10);
+			time_count++;
+			//if(ret && time_count > 1000){//一定時間経った
+				init_lookup();
+				//モードを変更
+				nowMode = TAIL_MIDDLE2_2;
+			//}
+		}
+		else if(nowMode == TAIL_MIDDLE2_2){//しっぽを途中(MIDDLE2)まで動かす
+			angle = TAIL_ANGLE_MIDLE2;
+			m_leftmotor->setPWM(1);
+			m_rightmotor->setPWM(1);
+			time_count++;
+			time = true;
+			if(ret && time_count > 250){
+				//一定時間経った，かつしっぽを動かし終わった
+				init_lookup();
+				//モードを変更
+				nowMode = TAIL_MIDDLE_2;
+			}
+		}
+		else if(nowMode == TAIL_MIDDLE_2){//しっぽを途中(MIDDLE)まで動かす
+			angle = TAIL_ANGLE_MIDLE;
+			m_leftmotor->setPWM(1);
+			m_rightmotor->setPWM(1);
+			time_count++;
+			time = true;
+			if(ret && time_count > 250){
+				//一定時間経った，かつしっぽを動かし終わった
+				init_lookup();
+				//モードを変更
+				nowMode = TAIL_STANDUP_2;
+			}
+		}
+		else if(nowMode == TAIL_STANDUP_2){//しっぽをSTANDまで動かす
+			angle = TAIL_ANGLE_STAND_UP;
+			m_leftmotor->setPWM(1);
+			m_rightmotor->setPWM(1);
+			time_count++;
+			time = true;
+			if(ret && time_count > 250){
+				//一定時間経った，かつしっぽを動かし終わった
+				init_lookup();
+				//モードを変更
+				nowMode = STANDUP;
+			}
+		}
+		else if(nowMode == STANDUP){//倒立走行
+			//倒立走行ONにする
+			stand = true;
+			time = true;
+			forward = 0;
+			turn = 0;
+			time_count++;
+			if(time_count > 200){//一定時間経ったら，次のモードへ
+				init_lookup();
+				nowMode = END;
+			}
+		}
+		else if(nowMode == END){
+			//しっぽをバランス走行時に戻す
+			angle = TAIL_ANGLE_DRIVE;
+			time = true;
+			if(ret && time_count > 250){
+				init_lookup();
+				break;//ループから抜ける
+			}
+		}
+		else{//不正な値は終了
+			return false;
+		}
 
-	//すすむ
-	while(1){
+		/*以下はモードにかかわらず必ず通る*/
+
+		//しっぽの操作
 		if(!ret){
-			ret = tail_ctr(TAIL_ANGLE_LOOKUPGATE, eSlow);
+			if(!time){//最後のしっぽを下げる動作は早く
+				ret = tail_ctr(angle, eFast);
+			}
+			else{//最初の上げる動作は遅く
+				ret = tail_ctr(angle, eSlow);
+			}
+			
 		}
-		m_leftmotor->setPWM(5);
-		m_rightmotor->setPWM(5);
-		clock->sleep(4);
-		count++;
+		//モータ
+		if(stand){//倒立走行する
+			motor_ang_l = m_leftmotor->getCount();
+			motor_ang_r = m_rightmotor->getCount();
+			gyro_angle = m_gyro->getAnglerVelocity();
+			volt = ev3_battery_voltage_mV();
+			balance_control(forward,turn,(float)gyro_angle,(float)GYRO_OFFSET_PID,
+			(float)motor_ang_l,(float)motor_ang_r,(float)volt,(int8_t *)&pwm_L,(int8_t *)&pwm_R);
+			
+			m_leftmotor->setPWM(pwm_L);
+			m_rightmotor->setPWM(pwm_R);
+
+		}
+		else{//倒立走行しない
+		}
 		
-		if(count > 1000){
-			break;
-		}
-	}
-	count = 0;
-	
-	//中間の角度
-	while(1){
-		if(!ret){
-			ret = tail_ctr(TAIL_ANGLE_MIDLE, eSlow);
-		}
-		m_leftmotor->setPWM(0);
-		m_rightmotor->setPWM(0);
-		clock->sleep(4);
-		count++;
 		
-		if(count > 1000){
-			break;
-		}
+		clock->sleep(4);//4ms周期
+
 	}
-	count = 0;
-	
-	while(1){
-		if(!ret){
-			ret = tail_ctr(TAIL_ANGLE_STAND_UP, eSlow);
-		}
-		m_leftmotor->setPWM(0);
-		m_rightmotor->setPWM(0);
-		clock->sleep(4);
-		count++;
-		
-		if(count > 1000){
-			break;
-		}
-	}
-	count = 0;
-	
-	
-	
-	//モータリセット
-	//m_leftmotor->reset();
-	//m_rightmotor->reset();
-	//ジャイロリセット
-	//m_gyro->reset();
-	//balance_init();
-	//ライントレース
-	motor_ang_l = m_leftmotor->getCount();
-	motor_ang_r = m_rightmotor->getCount();
-	gyro_angle = m_gyro->getAnglerVelocity();
-	volt = ev3_battery_voltage_mV();
-	balance_control(
-	         	forward,
-			    turn,
-            	(float)gyro_angle,
-        		(float)GYRO_OFFSET_PID,
-            	(float)motor_ang_l,
-            	(float)motor_ang_r,
-            	(float)volt,
-            	(int8_t *)&pwm_L,
-            	(int8_t *)&pwm_R);
-	
+
 	return true;//成功
 	
 
 }
 
-
+//しっぽコントロール
 bool tail_ctr(int32_t angle, tailSpeed sp){
 	
 	float pwm_max;
@@ -219,6 +287,10 @@ bool tail_ctr(int32_t angle, tailSpeed sp){
 	}
 }
 
-
+//グローバル変数を初期化する関数
+void init_lookup(){
+	ret = false;
+	time_count = 0;
+}
 
 
