@@ -6,6 +6,8 @@ GyroSensor* m_gyro;//じゃいろ
 ColorSensor* m_color;//からーせんさ
 Motor* m_leftmotor;//らいと
 Motor* m_rightmotor;//れふと
+TouchSensor* m_touch;
+SonarSensor* m_sonar;
 
 mode_lookup nowMode;
 bool ret;//しっぽの状態
@@ -18,7 +20,7 @@ bool time;//ture : 最初　false:最後
  * ルックアップゲート用関数
  * 返り値：true成功，false失敗
  */
-bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock){
+Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock,TouchSensor* touch, SonarSensor* sonar){
 
 	//モードの初期化
 	nowMode = INIT;
@@ -28,8 +30,9 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	int32_t gyro_angle, volt=0;
 	int8_t pwm_L, pwm_R;
 	int time_count = 0;
-	static float forward = 0;
+	static float forward = 30;
 	static float turn = 0;
+	Mode Main_mode;
 
 	//必要なインスタンスをappから貰う(残念ながら引数)
 	//gyro,color,leftmotor,rightmotor,tail
@@ -38,7 +41,8 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	m_color = color;
 	m_leftmotor = leftmotor;
 	m_rightmotor = rightmotor;
-	
+	m_touch = touch;
+	m_sonar = sonar;
 
 	//モータリセット
 	//m_leftmotor->reset();
@@ -46,15 +50,24 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	
 	//初期化
 	init_lookup();
-	angle = TAIL_ANGLE_STAND_UP;
+	angle = TAIL_ANGLE_DRIVE;
 	stand = true;
 	time = true;
 
 	while(1){
 
 		//モードごとの制御
-		if(nowMode == INIT){
-			nowMode = TAIL_STANDUP;
+		if(nowMode == INIT){//超音波センサから検出されるまでINIT
+			if(sonar_alert() == 1){//障害物検知
+				angle = TAIL_ANGLE_DRIVE;
+				forward = 0;
+				turn = 0;
+				time_count++;
+				if(time_count > 300){//一定時間経ったら次のモードへ
+					nowMode = TAIL_STANDUP;
+					init_lookup;
+				}
+			}
 		}
 		else if(nowMode == TAIL_STANDUP){//しっぽを途中(STANDUP)まで動かす
 			angle = TAIL_ANGLE_STAND_UP;
@@ -130,8 +143,8 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 		}
 		else if(nowMode == BACK){//バックする
 			angle = TAIL_ANGLE_LOOKUPGATE;
-			m_leftmotor->setPWM(-10);
-			m_rightmotor->setPWM(-10);
+			//m_leftmotor->setPWM(-10);
+			//m_rightmotor->setPWM(-10);
 			/*
 			motor_ang_l = m_leftmotor->getCount();
 			motor_ang_r = m_rightmotor->getCount();
@@ -143,22 +156,22 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			}
 			*/
 			time_count++;
-			if(ret && time_count > 2000){//一定時間経った
+			//if(ret && time_count > 2000){//一定時間経った
 				init_lookup();
 				//モードを変更
 				nowMode = ADVANCE2;
-			}
+			//}
 		}
 		else if(nowMode == ADVANCE2){//前進する
 			angle = TAIL_ANGLE_LOOKUPGATE;
-			m_leftmotor->setPWM(10);
-			m_rightmotor->setPWM(10);
+			//m_leftmotor->setPWM(10);
+			//m_rightmotor->setPWM(10);
 			time_count++;
-			if(ret && time_count > 2000){//一定時間経った
+			//if(ret && time_count > 2000){//一定時間経った
 				init_lookup();
 				//モードを変更
 				nowMode = TAIL_MIDDLE2_2;
-			}
+			//}
 		}
 		else if(nowMode == TAIL_MIDDLE2_2){//しっぽを途中(MIDDLE2)まで動かす
 			angle = TAIL_ANGLE_MIDLE2;
@@ -221,11 +234,13 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			time_count++;
 			if(ret && time_count > 300){
 				init_lookup();
+				Main_mode = eGarageIn;
 				break;//ループから抜ける
 			}
 		}
 		else{//不正な値は終了
-			return false;
+			Main_mode = eEnd;
+			break;
 		}
 
 		/*以下はモードにかかわらず必ず通る*/
@@ -256,12 +271,20 @@ bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 		else{//倒立走行しない
 		}
 		
+		if(m_touch->isPressed()){
+			Main_mode = eEnd;
+			break;
+		}
+		if(ev3_button_is_pressed(BACK_BUTTON)){
+			Main_mode = eEnd;
+			break;
+		}
 		
 		clock->sleep(4);//4ms周期
 
 	}
 
-	return true;//成功
+	return Main_mode;
 	
 
 }
@@ -309,3 +332,37 @@ void init_lookup(){
 }
 
 
+//*****************************************************************************
+// 関数名 : sonar_alert
+// 引数 : 無し
+// 返り値 : 1(障害物あり)/0(障害物無し)
+// 概要 : 超音波センサによる障害物検知
+//*****************************************************************************
+static int32_t sonar_alert(void)
+{
+    static uint32_t counter = 0;
+    static int32_t alert = 0;
+
+    int32_t distance;
+
+    if (++counter == 40/4) /* 約40msec周期毎に障害物検知  */
+    {
+        /*
+         * 超音波センサによる距離測定周期は、超音波の減衰特性に依存します。
+         * NXTの場合は、40msec周期程度が経験上の最短測定周期です。
+         * EV3の場合は、要確認
+         */
+        distance = m_sonar->getDistance();
+        if ((distance <= SONAR_ALERT_DISTANCE) && (distance >= 0))
+        {
+            alert = 1; /* 障害物を検知 */
+        }
+        else
+        {
+            alert = 0; /* 障害物無し */
+        }
+        counter = 0;
+    }
+
+    return alert;
+}
