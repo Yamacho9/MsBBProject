@@ -27,6 +27,7 @@
 #include "CalcDistanceAndDirection.h"
 #include "StepStage.h"
 #include "GarageIn.h"
+#include "lookup.h"
 
 using namespace ev3api;
 
@@ -106,7 +107,7 @@ void main_task(intptr_t unused)
 	bool ret = false;
 	int section=1; //現在の区間
 
-	Mode mode = eLineTrace;	// 最初の走行モードは、ライントレースにセット
+	Mode mode = eLineTrace;	// 走行モード：ライントレース（初期値）
 	
 	int32_t motor_ang_l, motor_ang_r;	// 左右車輪の回転量（deg.）
 	int32_t gyro, volt;	// 振子倒立制御に使用
@@ -283,17 +284,17 @@ void main_task(intptr_t unused)
     		mode = StepStage(min, max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
     		break;
     	case eLookUpGate:
-    		fprintf(bt, "case eLookUpGate:\n");
-    		mode = eGarageIn;
+			fprintf(bt, "case eLookUpGate:\n");
+			mode = lookup(gyroSensor, colorSensor, leftMotor, rightMotor, tailMotor, clock, touchSensor, sonarSensor);
     		break;
-    	case eGarageIn:
-    		fprintf(bt, "case eGarageIn:\n");
-    		mode = GarageIn(min, max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
-    		break;
-    	case eEnd:
-    		fprintf(bt, "case eEnd:\n");
-    		break;
-    	}
+		case eGarageIn:
+			fprintf(bt, "case eGarageIn:\n");
+			mode = GarageIn(min, max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
+			break;
+		case eEnd:
+			fprintf(bt, "case eEnd:\n");
+			break;
+		}
 
     	if (mode == eEnd) {
     		Message("mode = eEnd");

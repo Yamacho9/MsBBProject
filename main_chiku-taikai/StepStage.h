@@ -4,6 +4,9 @@
 // 
 //******
 
+#ifndef _STEPSTAGE_H_INCLUDED
+#define _STEPSTAGE_H_INCLUDED
+
 #include "ev3api.h"
 #include "app.h"
 #include "balancer.h"
@@ -17,3 +20,5 @@
 using namespace ev3api;
 
 extern Mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor* leftMotor, ev3api::Motor* rightMotor, ev3api::GyroSensor* gyroSensor, ev3api::Motor* tailMotor, ev3api::TouchSensor* touchSensor, ev3api::Clock* clock);
+
+#endif //_STEPSTAGE_H_INCLUDED
