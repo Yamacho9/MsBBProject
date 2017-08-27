@@ -26,6 +26,7 @@
 #include "judgeSection.h"
 #include "CalcDistanceAndDirection.h"
 #include "StepStage.h"
+#include "GarageIn.h"
 
 using namespace ev3api;
 
@@ -145,7 +146,7 @@ void main_task(intptr_t unused)
 	Message("push back button : don't calibration");
 	Calibration(&min, &max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
 	target = (max + min)/2;		// 目標値決定
-	fprintf(bt,"Calibration result\nmax:%d min:%d",max,min);
+	fprintf(bt,"Calibration result\nmax:%d min:%d\n",max,min);
 	
     ev3_led_set_color(LED_GREEN); /* スタート通知 */
 	
@@ -287,7 +288,7 @@ void main_task(intptr_t unused)
     		break;
     	case eGarageIn:
     		fprintf(bt, "case eGarageIn:\n");
-    		mode = eEnd;
+    		mode = GarageIn(min, max, colorSensor, leftMotor, rightMotor, gyroSensor, tailMotor, touchSensor, clock);
     		break;
     	case eEnd:
     		fprintf(bt, "case eEnd:\n");

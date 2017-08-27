@@ -1,6 +1,6 @@
 APPL_COBJS += balancer.o balancer_param.o LineTrace.o CalcDistanceAndDirection.o
 
-APPL_CXXOBJS += Calibration.o judgeSection.o StepStage.o
+APPL_CXXOBJS += Calibration.o judgeSection.o StepStage.o eGarageIn.o
 
 SRCLANG := c++
 
