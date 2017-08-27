@@ -65,6 +65,11 @@ extern "C" {
 #define BUF_COLUMN_SIZE 5
 #define BUF_LINE_SIZE 10
 
+//距離情報
+#define Distance2GoalR 10037
+#define Distance2GoalL 9809
+#define Distance2GoalMargine 150
+
 extern int buf[BUF_LINE_SIZE][BUF_COLUMN_SIZE];
 extern int param[BUF_COLUMN_SIZE];
 	

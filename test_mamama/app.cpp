@@ -110,7 +110,7 @@ void main_task(intptr_t unused)
 	float diff;	//偏差微分
 	
 	// ここから階段通過用
-	mode CurMode = eLineTrace;
+	mode CurMode = eGarageIn;
 
 	/*グローバル変数の初期化*/
 	count = 1;
@@ -239,7 +239,14 @@ void main_task(intptr_t unused)
 			gyro = gyroSensor->getAnglerVelocity();
 			volt = ev3_battery_voltage_mV();
 		
-			forward = 20;
+			/* 距離・角度計測 */
+			distance = 0;
+			direction = 0;
+			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
+			if (Distance2GoalR + Distance2GoalMargine <= distance)
+			{
+				forward = 20;
+			}
 
 			/* 倒立振子制御APIを呼び出し、倒立走行するための */
 			/* 左右モータ出力値を得る */
@@ -257,10 +264,6 @@ void main_task(intptr_t unused)
 			leftMotor->setPWM(pwm_L);
 			rightMotor->setPWM(pwm_R);
 
-			/* 距離・角度計測 */
-			distance = 0;
-			direction = 0;
-			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
 			if(distance > 100){
 				CurMode = eStepStage;
 				fprintf(bt, "Step Stage Start....\n");
