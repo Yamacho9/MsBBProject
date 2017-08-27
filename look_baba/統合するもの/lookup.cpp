@@ -33,6 +33,8 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	static float forward = 30;
 	static float turn = 0;
 	Mode Main_mode;
+	int err;	//偏差
+	float diff;	//偏差微分
 
 	//必要なインスタンスをappから貰う(残念ながら引数)
 	//gyro,color,leftmotor,rightmotor,tail
@@ -53,6 +55,7 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	angle = TAIL_ANGLE_DRIVE;
 	stand = true;
 	time = true;
+	
 
 	while(1){
 
@@ -60,8 +63,8 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 		if(nowMode == INIT){//超音波センサから検出されるまでINIT
 			if(sonar_alert() == 1){//障害物検知
 				angle = TAIL_ANGLE_DRIVE;
-				forward = 0;
-				turn = 0;
+				forward = 20;
+				turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
 				time_count++;
 				if(time_count > 300){//一定時間経ったら次のモードへ
 					nowMode = TAIL_STANDUP;
