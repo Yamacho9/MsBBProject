@@ -16,7 +16,7 @@
 
 #define ENDGarageL 1070
 #define ENDGarageR 3060
-#define DistMargineGarage 10
+#define DistMargineGarage 100
 
 using namespace ev3api;
 
