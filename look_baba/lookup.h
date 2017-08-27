@@ -32,6 +32,7 @@ using namespace ev3api;
 #define TAIL_ANGLE_MIDLE2 65
 #define TAIL_ANGLE_MIDLE 70
 #define PWM_ABS_MAX_SLOW_LOOK	3
+#define PWM_ABS_MAX_FAST_LOOK 100
 
 extern bool lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock);
 
