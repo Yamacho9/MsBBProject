@@ -266,10 +266,10 @@ void main_task(intptr_t unused)
 	    	/* 走行距離・旋回角度計測 */
 			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
 #ifndef DEBUG
-    		if(distance >= GOAL_DISTANCE) mode = eStepStage;
+    		if(distance >= GOAL_DISTANCE_R) mode = eLookUpGate;
 #else
     		distance = distance + START_DEBUG;
-    		if(distance >= GOAL_DEBUG) mode = eStepStage;
+    		if(distance >= GOAL_DEBUG) mode = eLookUpGate;
 #endif
 	    	//現在の区間を取得する
 	    	//section = judgeSection(distance,direction);
