@@ -138,39 +138,36 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			m_rightmotor->setPWM(10);
 			
 			time_count++;
-			if(ret && time_count > 1800){//一定時間経った
+			if(ret && time_count > 1000){//一定時間経った1200
 				init_lookup();
 				//モードを変更
 				nowMode = BACK;
 			}
 		}
 		else if(nowMode == BACK){//バックする
-			angle = TAIL_ANGLE_LOOKUPGATE;
-			//m_leftmotor->setPWM(-10);
-			//m_rightmotor->setPWM(-10);
-			/*
-			motor_ang_l = m_leftmotor->getCount();
-			motor_ang_r = m_rightmotor->getCount();
-			if(motor_ang_l > motor_ang_r){
-				m_leftmotor->setPWM(m_leftmotor->getPWM()-2);
-			}
-			else{
-				m_rightmotor->setPWM(m_rightmotor->getPWM()-2);
-			}
-			*/
+			angle = TAIL_ANGLE_LOOKUPGATE-2;
 			time_count++;
-			//if(ret && time_count > 2000){//一定時間経った
-				init_lookup();
+			if(/*ret && */time_count > 2000){//一定時間経った
+				m_leftmotor->setPWM(10);
+				m_rightmotor->setPWM(10);
+				angle = TAIL_ANGLE_LOOKUPGATE;
+				if(time_count > 3000){
 				//モードを変更
 				nowMode = ADVANCE2;
-			//}
+				init_lookup();
+				}
+			}
+			else{
+				m_leftmotor->setPWM(-10);
+				m_rightmotor->setPWM(-10);
+			}
 		}
 		else if(nowMode == ADVANCE2){//前進する
 			angle = TAIL_ANGLE_LOOKUPGATE;
 			//m_leftmotor->setPWM(10);
 			//m_rightmotor->setPWM(10);
-			time_count++;
-			//if(ret && time_count > 2000){//一定時間経った
+			//time_count++;
+			//if(/*ret &&*/ time_count > 2500){//一定時間経った
 				init_lookup();
 				//モードを変更
 				nowMode = TAIL_MIDDLE2_2;
@@ -182,7 +179,7 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			m_rightmotor->setPWM(1);
 			time_count++;
 			time = false;
-			if(ret && time_count > 250){
+			if(ret && time_count > 100){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
 				//モードを変更
@@ -195,7 +192,7 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			m_rightmotor->setPWM(1);
 			time_count++;
 			time = false;
-			if(ret && time_count > 250){
+			if(ret && time_count > 100){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
 				//モードを変更
@@ -208,7 +205,7 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			m_rightmotor->setPWM(1);
 			time_count++;
 			time = false;
-			if(ret && time_count > 250){
+			if(ret && time_count > 100){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
 				//倒立走行を初期化する
