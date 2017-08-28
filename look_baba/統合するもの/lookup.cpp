@@ -20,7 +20,7 @@ bool time;//ture : 最初　false:最後
  * ルックアップゲート用関数
  * 返り値：true成功，false失敗
  */
-Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock,TouchSensor* touch, SonarSensor* sonar){
+Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock,TouchSensor* touch, SonarSensor* sonar){
 
 	//モードの初期化
 	nowMode = INIT;
@@ -35,6 +35,9 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	Mode Main_mode;
 	int err;	//偏差
 	float diff;	//偏差微分
+	int8_t cur_brightness=0;	/* 検出した光センサ値 */
+	int lastErr=0; //前回偏差
+	int8_t hoge;
 
 	//必要なインスタンスをappから貰う(残念ながら引数)
 	//gyro,color,leftmotor,rightmotor,tail
@@ -61,14 +64,15 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 
 		//モードごとの制御
 		if(nowMode == INIT){//超音波センサから検出されるまでINIT
-			if(sonar_alert() == 1){//障害物検知
+			if(sonar_alert_2() == 1){//障害物検知
 				angle = TAIL_ANGLE_DRIVE;
 				forward = 20;
-				turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
+				cur_brightness = m_color->getBrightness();
+				turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &hoge, &err, &diff);
 				time_count++;
 				if(time_count > 300){//一定時間経ったら次のモードへ
 					nowMode = TAIL_STANDUP;
-					init_lookup;
+					init_lookup();
 				}
 			}
 		}
@@ -338,7 +342,7 @@ void init_lookup(){
 // 返り値 : 1(障害物あり)/0(障害物無し)
 // 概要 : 超音波センサによる障害物検知
 //*****************************************************************************
-static int32_t sonar_alert(void)
+int32_t sonar_alert_2(void)
 {
     static uint32_t counter = 0;
     static int32_t alert = 0;

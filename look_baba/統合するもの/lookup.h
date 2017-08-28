@@ -34,11 +34,11 @@ using namespace ev3api;
 #define PWM_ABS_MAX_SLOW_LOOK	3
 #define PWM_ABS_MAX_FAST_LOOK 100
 
-extern Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock,TouchSensor* touch, SonarSensor* sonar);
+extern Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock,TouchSensor* touch, SonarSensor* sonar);
 
 bool tail_ctr(int32_t angle, tailSpeed sp);
 void init_lookup();
-static int32_t sonar_alert(void);
+int32_t sonar_alert_2(void);
 
 enum mode_lookup{
 	INIT,
