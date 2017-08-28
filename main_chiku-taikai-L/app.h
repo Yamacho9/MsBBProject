@@ -47,7 +47,7 @@ extern "C" {
 #define INT_NUM				250	//積分する偏差数(1s分)
 #define GYRO_OFFSET_PID 3  //PID制御時のジャイロセンサのオフセット値
 #define FALL_DOWN	400	//転倒検知の閾値
-#define GOAL_DISTANCE	10000	// ゴール距離
+#define GOAL_DISTANCE_L	10000	// ゴール距離
 
 #define TAIL_ANGLE_STAND_UP  80  /* 完全停止時の角度[度] */
 #define TAIL_ANGLE_START	90  /* 完全停止時の角度[度] */
