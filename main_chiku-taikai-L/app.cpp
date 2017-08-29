@@ -107,7 +107,11 @@ void main_task(intptr_t unused)
 	bool ret = false;
 	int section=1; //現在の区間
 
+#ifndef DEBUG
 	Mode mode = eLineTrace;	// 走行モード：ライントレース（初期値）
+#else
+	Mode mode = eLineTrace;	// 走行モード：初期値	
+#endif
 	
 	int32_t motor_ang_l, motor_ang_r;	// 左右車輪の回転量（deg.）
 	int32_t gyro, volt;	// 振子倒立制御に使用
