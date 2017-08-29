@@ -74,17 +74,18 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 				if(time_count > 300){//一定時間経ったら次のモードへ
 					nowMode = TAIL_STANDUP;
 					init_lookup();
+					ret = false;
 				}
 			}
 		}
 		else if(nowMode == TAIL_STANDUP){//しっぽを途中(STANDUP)まで動かす
 			angle = TAIL_ANGLE_STAND_UP;
-			//しっぽを動かしている途中はLinetraceする
+			//しっぽを動かしている途中は倒立する
 			forward = 0;
 			turn = 0;
 			stand = true;
 			if(ret){//しっぽを動かし終わった
-				if(time_count < 250){
+				if(time_count < 500){//250
 					forward = -10;
 					turn = 0;
 					time_count++;
