@@ -64,11 +64,12 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 
 		//モードごとの制御
 		if(nowMode == INIT){//超音波センサから検出されるまでINIT
+			angle = TAIL_ANGLE_DRIVE;
+			forward = 20;
+			cur_brightness = m_color->getBrightness();
+			turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &hoge, &err, &diff);
+			
 			if(sonar_alert_2() == 1){//障害物検知
-				angle = TAIL_ANGLE_DRIVE;
-				forward = 20;
-				cur_brightness = m_color->getBrightness();
-				turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &hoge, &err, &diff);
 				time_count++;
 				if(time_count > 300){//一定時間経ったら次のモードへ
 					nowMode = TAIL_STANDUP;
@@ -175,8 +176,8 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 				init_lookup();
 				//モードを変更
 				nowMode = TAIL_MIDDLE2_2;
-			//}
-		}
+			//
+			}
 		else if(nowMode == TAIL_MIDDLE2_2){//しっぽを途中(MIDDLE2)まで動かす
 			angle = TAIL_ANGLE_MIDLE2;
 			m_leftmotor->setPWM(1);
