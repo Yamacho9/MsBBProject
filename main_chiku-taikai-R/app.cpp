@@ -268,7 +268,7 @@ void main_task(intptr_t unused)
 	    	/* 走行距離・旋回角度計測 */
 			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
 #ifndef DEBUG
-    		if(distance >= GOAL_DISTANCE_R) mode = eLookUpGate;
+    		if(distance >= GOAL_DISTANCE_R + Distance2GoalMargine) mode = eLookUpGate;
 #else
     		distance = distance + START_DEBUG;
     		if(distance >= GOAL_DEBUG) mode = eLookUpGate;

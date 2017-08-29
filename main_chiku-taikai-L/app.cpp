@@ -270,7 +270,7 @@ void main_task(intptr_t unused)
 	    	/* 走行距離・旋回角度計測 */
 			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
 #ifndef DEBUG
-    		if(distance >= GOAL_DISTANCE_L) mode = eStepStage;
+    		if(distance >= GOAL_DISTANCE_L + Distance2GoalMargine) mode = eStepStage;
 #else
     		distance = distance + START_DEBUG;
     		if(distance >= GOAL_DEBUG) mode = eStepStage;
