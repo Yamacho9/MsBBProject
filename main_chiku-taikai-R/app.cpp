@@ -106,9 +106,11 @@ void main_task(intptr_t unused)
 	int min=255;//キャリブレーションの最小値
 	bool ret = false;
 	int section=1; //現在の区間
-
+#ifndef DEBUG
 	Mode mode = eLineTrace;	// 走行モード：ライントレース（初期値）
-	
+#else
+	Mode mode = eLookUpGate;	// 走行モード：初期値
+#endif
 	int32_t motor_ang_l, motor_ang_r;	// 左右車輪の回転量（deg.）
 	int32_t gyro, volt;	// 振子倒立制御に使用
    	int target;	// ライントレースの光センサ目標値
@@ -285,7 +287,7 @@ void main_task(intptr_t unused)
     		break;
     	case eLookUpGate:
 			fprintf(bt, "case eLookUpGate:\n");
-			mode = lookup(gyroSensor, colorSensor, leftMotor, rightMotor, tailMotor, clock, touchSensor, sonarSensor);
+			mode = lookup(target, gyroSensor, colorSensor, leftMotor, rightMotor, tailMotor, clock, touchSensor, sonarSensor);
     		break;
 		case eGarageIn:
 			fprintf(bt, "case eGarageIn:\n");
