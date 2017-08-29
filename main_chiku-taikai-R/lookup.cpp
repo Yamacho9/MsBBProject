@@ -75,6 +75,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 					nowMode = TAIL_STANDUP;
 					init_lookup();
 					ret = false;
+					angle = TAIL_ANGLE_STAND_UP;
 				}
 			}
 		}
@@ -85,7 +86,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 			turn = 0;
 			stand = true;
 			if(ret){//しっぽを動かし終わった
-				if(time_count < 500){//250
+				if(time_count < 250){//250
 					forward = -10;
 					turn = 0;
 					time_count++;
@@ -97,6 +98,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 					m_rightmotor->setPWM(0);
 					clock->sleep(1300);
 					init_lookup();
+					angle = TAIL_ANGLE_MIDLE;
 					//モードを変更
 					nowMode = TAIL_MIDDLE;
 				}
@@ -110,6 +112,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 			if(ret && time_count > 250){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
+				angle = TAIL_ANGLE_MIDLE2;
 				//モードを変更
 				nowMode = TAIL_MIDDLE2;
 			}
@@ -122,6 +125,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 			if(ret && time_count > 250){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
+				angle = TAIL_ANGLE_LOOKUPGATE;
 				//モードを変更
 				nowMode = TAIL_LOOKUP;
 			}
@@ -134,6 +138,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 			if(ret && time_count > 250){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
+				angle = TAIL_ANGLE_LOOKUPGATE;
 				//モードを変更
 				nowMode = ADVANCE;
 			}
@@ -161,6 +166,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 				//モードを変更
 				nowMode = ADVANCE2;
 				init_lookup();
+				angle = TAIL_ANGLE_LOOKUPGATE;
 				}
 			}
 			else{
@@ -175,6 +181,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 			//time_count++;
 			//if(/*ret &&*/ time_count > 2500){//一定時間経った
 				init_lookup();
+				angle = TAIL_ANGLE_MIDLE2;
 				//モードを変更
 				nowMode = TAIL_MIDDLE2_2;
 			//
@@ -188,6 +195,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 			if(ret && time_count > 100){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
+				angle = TAIL_ANGLE_MIDLE;
 				//モードを変更
 				nowMode = TAIL_MIDDLE_2;
 			}
@@ -201,6 +209,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 			if(ret && time_count > 100){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
+				angle = TAIL_ANGLE_STAND_UP;
 				//モードを変更
 				nowMode = TAIL_STANDUP_2;
 			}
@@ -231,6 +240,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 			time_count++;
 			if(time_count > 300){//一定時間経ったら，次のモードへ
 				init_lookup();
+				angle = TAIL_ANGLE_DRIVE;
 				nowMode = END;
 			}
 		}
