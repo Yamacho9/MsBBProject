@@ -18,7 +18,7 @@
 #include "Clock.h"
 
 #define ENDGarageL 1070
-#define ENDGarageR 3060
+#define ENDGarageR 794
 #define DistMargineGarage 10
 
 using namespace ev3api;
