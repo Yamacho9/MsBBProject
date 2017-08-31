@@ -304,12 +304,16 @@ Mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor*
 		}
 		else if(step_mode == 11){	//ステップ１１：段差を下りるまで
 			turn = 0;
-			forward = 20;
+			forward = 30;
 			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
 			if(fallStep(distance, gyro)){
-				balance_init(); /* 倒立振子API初期化(これをやらないと暴走する？) */
+				/*
+				balance_init(); // 倒立振子API初期化(これをやらないと暴走する？)
 				leftMotor->reset();
 				rightMotor->reset();
+				*/
+				leftMotor->setCount(0); //Countだけ0に戻せばいける？
+				rightMotor->setCount(0);
 				step_mode = 12;
 				err = 0;
 				diff = 0;
@@ -318,10 +322,15 @@ Mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor*
 		else if(step_mode == 12){	//ステップ１２：安定するまで待とう
 			if( count_stable < 250){
 				turn = 0;
-				forward = 20;
-			}else if( count_stable < 750 ){
+				forward = 30;
+			}else if( count_stable < 1250 ){
 				turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
-				forward = 20;	
+				if(turn < -65){
+					turn = -100;
+				}else if(turn < 0){
+					turn = turn * 1.5;
+				} 
+				forward = 10;	
 			}else{
 				count_stable = 0;
 				Ret = eGarageIn;
