@@ -32,9 +32,9 @@ bool tail_control_step(int32_t angle, Motor* tail, tailSpeed sp);
 
 using namespace ev3api;
 
-mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor* leftMotor, ev3api::Motor* rightMotor, ev3api::GyroSensor* gyroSensor, ev3api::Motor* tailMotor, ev3api::TouchSensor* touchSensor, ev3api::Clock* clock)
+Mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor* leftMotor, ev3api::Motor* rightMotor, ev3api::GyroSensor* gyroSensor, ev3api::Motor* tailMotor, ev3api::TouchSensor* touchSensor, ev3api::Clock* clock)
 {
-	mode Ret = eLineTrace;
+	Mode Ret = eLineTrace;
 	
 	int8_t forward= 0;	  /* 前後進命令 */
 	float turn = 0;		 /* 旋回命令 */
@@ -74,14 +74,7 @@ mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor*
 			Ret = eEnd;
 			break;
 		}
-
-		/*if (gyroSensor->getAnglerVelocity() > FALL_DOWN || -(gyroSensor->getAnglerVelocity()) > FALL_DOWN)
-		{
-			// 転倒を検知すると終了
-			Ret = eEnd;
-			break;
-		}*/
-		
+	
 		if(!ret){
 			/* バランス走行用角度に制御 */
 			ret = tail_control_step(TAIL_ANGLE_DRIVE, tailMotor, eFast);
@@ -302,6 +295,7 @@ mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor*
 			{
 				tailMotor->setPWM(-20);
 				step_mode = 11;
+				//step_mode = 12;
 				lastErr = 0;
 				forward = 0;
 				turn = 0;
@@ -309,27 +303,50 @@ mode StepStage(int min, int max, ev3api::ColorSensor* colorSensor,ev3api::Motor*
 			}
 
 		}
+		#if 1
 		else if(step_mode == 11){	//ステップ１１：段差を下りるまで
 			turn = 0;
-			forward = 20;
+			forward = 30;
 			CalcDistanceAndDirection(motor_ang_l, motor_ang_r, &distance, &direction);
 			if(fallStep(distance, gyro)){
-				balance_init(); /* 倒立振子API初期化(これをやらないと暴走する？) */
+				/*
 				leftMotor->reset();
 				rightMotor->reset();
+				*/
+				/*
+				leftMotor->setCount(0); //Countだけ0に戻せばいける？
+				rightMotor->setCount(0);
+				*/
+				motor_ang_l_bak = motor_ang_l;
+				motor_ang_r_bak = motor_ang_r;
 				step_mode = 12;
 				err = 0;
 				diff = 0;
 			}
 		}
+		#endif
 		else if(step_mode == 12){	//ステップ１２：安定するまで待とう
+			if( count_stable == 0 ){				
+				balance_init(); // 倒立振子API初期化(これをやらないと暴走する？)
+			}
+			
 			if( count_stable < 250){
+			//if( count_stable < 500){
 				turn = 0;
-				forward = 20;
-			}else if( count_stable < 750 ){
+				forward = 30;
+			}else if( count_stable < 1250 ){
 				turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
+				if(turn < -65){
+					turn = -100;
+				}else if(turn < 0){
+					turn = turn * 1.5;
+				} 
 				forward = 20;	
 			}else{
+				//motor_ang_l = motor_ang_l - motor_ang_l_bak;
+				//motor_ang_r = motor_ang_r - motor_ang_r_bak;
+				//leftMotor->setCount(motor_ang_l); //Countだけ0に戻せばいける？
+				//rightMotor->setCount(motor_ang_r);			
 				count_stable = 0;
 				Ret = eGarageIn;
 				break;

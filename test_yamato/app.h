@@ -41,20 +41,39 @@ extern "C" {
 #define SONAR_ALERT_DISTANCE 30  //超音波センサによる障害物検知距離[cm]
 #define P_GAIN             2.5F  //完全停止用モータ制御比例係数
 #define CMD_START         '1'    //リモートスタートコマンド
+/* 追加部分 */
 #define TARGET				35	 //ライントレース制御 光量ターゲット値
 #define DELTA_T				0.004 //処理周期（s）
 #define INT_NUM				250	//積分する偏差数(1s分)
-
-
-#define TAIL_ANGLE_STAND_UP  80  /* 完全停止時の角度[度] */
-#define TAIL_ANGLE_START	90  /* スタート時の角度[度] */
-#define TAIL_ANGLE_DRIVE      3  /* バランス走行時の角度[度] */
-#define TAIL_ANGLE_INIT       0  /* 0度 */
-#define PWM_ABS_MAX_FAST	60  /* 完全停止用モータ制御PWM絶対最大値 */
-#define PWM_ABS_MAX_SLOW	30  /* 完全停止用モータ制御PWM絶対最大値 */
 #define GYRO_OFFSET_PID 3  //PID制御時のジャイロセンサのオフセット値
 #define FALL_DOWN	400	//転倒検知の閾値
-	
+#define GOAL_DISTANCE_L	9809	// ゴール距離
+#define Distance2GoalMargine 150	// ゴール距離のマージン
+
+#define TAIL_ANGLE_STAND_UP  80  /* 完全停止時の角度[度] */
+#define TAIL_ANGLE_START	90  /* 完全停止時の角度[度] */
+#define TAIL_ANGLE_DRIVE      3  /* バランス走行時の角度[度] */
+#define TAIL_ANGLE_INIT       0  /* 0度 */
+//#define PWM_ABS_MAX          60  /* 完全停止用モータ制御PWM絶対最大値 */
+#define PWM_ABS_MAX_FAST	60  /* 完全停止用モータ制御PWM絶対最大値 */
+#define PWM_ABS_MAX_SLOW	30  /* 完全停止用モータ制御PWM絶対最大値 */
+
+// 尻尾角度
+enum tailSpeed {eFast, eSlow};
+
+/* 走行モード */
+typedef enum Mode {
+	eLineTrace,		// ライントレース
+	eStepStage,		// 階段
+	eLookUpGate,	// ルックアップゲート
+	eGarageIn,		// ガレージ
+	eEnd			// 終了
+} Mode;
+
+/* デバッグ用 */
+#define START_DEBUG	9900	// スタート時の距離を加算（オフセット）
+#define GOAL_DEBUG	10000	// ゴール距離
+
 /* LCDフォントサイズ */
 #define CALIB_FONT (EV3_FONT_SMALL)
 #define CALIB_FONT_WIDTH (6/*TODO: magic number*/)
@@ -72,9 +91,6 @@ extern int param[BUF_COLUMN_SIZE];
 extern int *arr0, *arr1;
 extern int linenum; // データの行数を数える
 
-
-enum mode {eLineTrace, eStepStage, eLookUpGate, eGarageIn, eEnd};
-enum tailSpeed {eFast, eSlow};
 /*
  *  関数のプロトタイプ宣言
  */

@@ -6,7 +6,8 @@
  */
 #include "LineTrace.h"
 
-#define DEBUG 0
+#define DEBUG
+#define FORWARD_DEBUG 30
 
 /**
  * @brief ライントレース制御
@@ -26,14 +27,13 @@ float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int*
 	int integral=0;	//偏差積分
 	float diff=0.0;	//偏差微分
 	float turn;	//旋回角度
-	//float kp,ki,kd;
 	
-#if DEBUG
-	LineTrace_param(status,forward,&kp,&ki,&kd);
+#ifndef DEBUG
+	*forward = FORWARD;	// 試走会2では"100"をセット
 #else
-	*forward = 100;
+	*forward = FORWARD_DEBUG;	// サンプルコース用
 #endif
-
+	
 	// P制御
 	err = currentVal - targetVal;	// 黒線の左側をトレース
 
@@ -41,11 +41,8 @@ float LineTrace(int status, int targetVal, int currentVal, float opePeriod, int*
 	diff = (err - *lastErr) / opePeriod;
 	*lastErr = err;
 
-#if DEBUG
-	turn = kp * (float)err + ki * (float)integral + kd * diff;
-#else
 	turn = KP * (float)err + KI * (float)integral + KD * diff;
-#endif
+
 	// 旋回角度が範囲内に収まっているか確認
 	if (turn > MAX_TURN_RIGHT) {
 		turn = MAX_TURN_RIGHT;

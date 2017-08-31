@@ -13,6 +13,9 @@
  ******************************************************************************
  **/
 
+#ifndef _BALANCER_PRIVATE_H_INCLUDED
+#define _BALANCER_PRIVATE_H_INCLUDED
+
 /* Imported (extern) block parameters */
 extern float A_D;                   /* Variable: A_D
                                         * Referenced by blocks:
@@ -62,3 +65,5 @@ extern const float BATTERY_OFFSET;  /* PWM出力算出用バッテリ電圧補正オフセット *
  * simulink                                                                   *
  *============================================================================*/
 /******************************** END OF FILE ********************************/
+
+#endif //_BALANCER_PRIVATE_H_INCLUDED
