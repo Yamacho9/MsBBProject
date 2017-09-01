@@ -20,7 +20,7 @@ bool time;//ture : 最初　false:最後
  * ルックアップゲート用関数
  * 返り値：true成功，false失敗
  */
-Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock,TouchSensor* touch, SonarSensor* sonar){
+Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightmotor,Motor* tail,Clock* clock,TouchSensor* touch, SonarSensor* sonar){
 
 	//モードの初期化
 	nowMode = INIT;
@@ -33,6 +33,11 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	static float forward = 30;
 	static float turn = 0;
 	Mode Main_mode;
+	int err;	//偏差
+	float diff;	//偏差微分
+	int8_t cur_brightness=0;	/* 検出した光センサ値 */
+	int lastErr=0; //前回偏差
+	int8_t hoge;
 
 	//必要なインスタンスをappから貰う(残念ながら引数)
 	//gyro,color,leftmotor,rightmotor,tail
@@ -53,30 +58,35 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 	angle = TAIL_ANGLE_DRIVE;
 	stand = true;
 	time = true;
+	
 
 	while(1){
 
 		//モードごとの制御
 		if(nowMode == INIT){//超音波センサから検出されるまでINIT
-			if(sonar_alert() == 1){//障害物検知
-				angle = TAIL_ANGLE_DRIVE;
-				forward = 0;
-				turn = 0;
+			angle = TAIL_ANGLE_DRIVE;
+			forward = 20;
+			cur_brightness = m_color->getBrightness();
+			turn = LineTrace(1, target, cur_brightness, DELTA_T, &lastErr, &hoge, &err, &diff);
+			
+			if(sonar_alert_2() == 1){//障害物検知
 				time_count++;
 				if(time_count > 300){//一定時間経ったら次のモードへ
 					nowMode = TAIL_STANDUP;
-					init_lookup;
+					init_lookup();
+					ret = false;
+					angle = TAIL_ANGLE_STAND_UP;
 				}
 			}
 		}
 		else if(nowMode == TAIL_STANDUP){//しっぽを途中(STANDUP)まで動かす
 			angle = TAIL_ANGLE_STAND_UP;
-			//しっぽを動かしている途中はLinetraceする
+			//しっぽを動かしている途中は倒立する
 			forward = 0;
 			turn = 0;
 			stand = true;
 			if(ret){//しっぽを動かし終わった
-				if(time_count < 250){
+				if(time_count < 250){//250
 					forward = -10;
 					turn = 0;
 					time_count++;
@@ -88,6 +98,7 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 					m_rightmotor->setPWM(0);
 					clock->sleep(1300);
 					init_lookup();
+					angle = TAIL_ANGLE_MIDLE;
 					//モードを変更
 					nowMode = TAIL_MIDDLE;
 				}
@@ -101,6 +112,7 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			if(ret && time_count > 250){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
+				angle = TAIL_ANGLE_MIDLE2;
 				//モードを変更
 				nowMode = TAIL_MIDDLE2;
 			}
@@ -113,6 +125,7 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			if(ret && time_count > 250){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
+				angle = TAIL_ANGLE_LOOKUPGATE;
 				//モードを変更
 				nowMode = TAIL_LOOKUP;
 			}
@@ -125,6 +138,7 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			if(ret && time_count > 250){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
+				angle = TAIL_ANGLE_LOOKUPGATE;
 				//モードを変更
 				nowMode = ADVANCE;
 			}
@@ -135,53 +149,53 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			m_rightmotor->setPWM(10);
 			
 			time_count++;
-			if(ret && time_count > 1800){//一定時間経った
+			if(ret && time_count > 1000){//一定時間経った1200
 				init_lookup();
 				//モードを変更
 				nowMode = BACK;
 			}
 		}
 		else if(nowMode == BACK){//バックする
-			angle = TAIL_ANGLE_LOOKUPGATE;
-			//m_leftmotor->setPWM(-10);
-			//m_rightmotor->setPWM(-10);
-			/*
-			motor_ang_l = m_leftmotor->getCount();
-			motor_ang_r = m_rightmotor->getCount();
-			if(motor_ang_l > motor_ang_r){
-				m_leftmotor->setPWM(m_leftmotor->getPWM()-2);
-			}
-			else{
-				m_rightmotor->setPWM(m_rightmotor->getPWM()-2);
-			}
-			*/
+			angle = TAIL_ANGLE_LOOKUPGATE-2;
 			time_count++;
-			//if(ret && time_count > 2000){//一定時間経った
-				init_lookup();
+			if(/*ret && */time_count > 2000){//一定時間経った
+				m_leftmotor->setPWM(10);
+				m_rightmotor->setPWM(10);
+				angle = TAIL_ANGLE_LOOKUPGATE;
+				if(time_count > 3000){
 				//モードを変更
 				nowMode = ADVANCE2;
-			//}
+				init_lookup();
+				angle = TAIL_ANGLE_LOOKUPGATE;
+				}
+			}
+			else{
+				m_leftmotor->setPWM(-10);
+				m_rightmotor->setPWM(-10);
+			}
 		}
 		else if(nowMode == ADVANCE2){//前進する
 			angle = TAIL_ANGLE_LOOKUPGATE;
 			//m_leftmotor->setPWM(10);
 			//m_rightmotor->setPWM(10);
-			time_count++;
-			//if(ret && time_count > 2000){//一定時間経った
+			//time_count++;
+			//if(/*ret &&*/ time_count > 2500){//一定時間経った
 				init_lookup();
+				angle = TAIL_ANGLE_MIDLE2;
 				//モードを変更
 				nowMode = TAIL_MIDDLE2_2;
-			//}
-		}
+			//
+			}
 		else if(nowMode == TAIL_MIDDLE2_2){//しっぽを途中(MIDDLE2)まで動かす
 			angle = TAIL_ANGLE_MIDLE2;
 			m_leftmotor->setPWM(1);
 			m_rightmotor->setPWM(1);
 			time_count++;
 			time = false;
-			if(ret && time_count > 250){
+			if(ret && time_count > 100){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
+				angle = TAIL_ANGLE_MIDLE;
 				//モードを変更
 				nowMode = TAIL_MIDDLE_2;
 			}
@@ -192,9 +206,10 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			m_rightmotor->setPWM(1);
 			time_count++;
 			time = false;
-			if(ret && time_count > 250){
+			if(ret && time_count > 100){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
+				angle = TAIL_ANGLE_STAND_UP;
 				//モードを変更
 				nowMode = TAIL_STANDUP_2;
 			}
@@ -205,7 +220,7 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			m_rightmotor->setPWM(1);
 			time_count++;
 			time = false;
-			if(ret && time_count > 250){
+			if(ret && time_count > 100){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
 				//倒立走行を初期化する
@@ -225,6 +240,7 @@ Mode lookup(GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Motor* rightm
 			time_count++;
 			if(time_count > 300){//一定時間経ったら，次のモードへ
 				init_lookup();
+				angle = TAIL_ANGLE_DRIVE;
 				nowMode = END;
 			}
 		}
@@ -338,7 +354,7 @@ void init_lookup(){
 // 返り値 : 1(障害物あり)/0(障害物無し)
 // 概要 : 超音波センサによる障害物検知
 //*****************************************************************************
-static int32_t sonar_alert(void)
+int32_t sonar_alert_2(void)
 {
     static uint32_t counter = 0;
     static int32_t alert = 0;
