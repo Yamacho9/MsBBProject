@@ -80,17 +80,6 @@ typedef enum Mode {
 #define CALIB_FONT_HEIGHT (8/*TODO: magic number*/)
 #define MESSAGE_LEN 8
 	
-/* パラメータファイル情報 */
-#define BUF_COLUMN_SIZE 5
-#define BUF_LINE_SIZE 10
-
-extern int buf[BUF_LINE_SIZE][BUF_COLUMN_SIZE];
-extern int param[BUF_COLUMN_SIZE];
-	
-/* map data */
-extern int *arr0, *arr1;
-extern int linenum; // データの行数を数える
-
 /*
  *  関数のプロトタイプ宣言
  */

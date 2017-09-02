@@ -45,7 +45,6 @@ Mode GarageIn(int min, int max, ev3api::ColorSensor* colorSensor, ev3api::Motor*
 	int target = 0;
 	int distance, direction; //走行距離、向き
 	int GarageMode = 0;	//0:まだまだだよ～ 1:ガレージに入った！ 2:3点倒立！ 3:
-	int count = 0;
 
 	while (1)
 	{
