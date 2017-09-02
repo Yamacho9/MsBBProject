@@ -424,7 +424,7 @@ void Init(){
 	/* 各オブジェクトを生成・初期化する */
     touchSensor = new TouchSensor(PORT_1);
     colorSensor = new ColorSensor(PORT_3);
-    sonarSensor = new SonarSensor(PORT_2);
+    //sonarSensor = new SonarSensor(PORT_2);
     gyroSensor  = new GyroSensor(PORT_4);
     leftMotor   = new Motor(PORT_C);
     rightMotor  = new Motor(PORT_B);
