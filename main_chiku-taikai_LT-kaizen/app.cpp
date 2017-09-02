@@ -39,6 +39,28 @@ using namespace ev3api;
 #define _debug(x)
 #endif
 
+#define MOTOR_PD
+#define SPEED_PD
+#define LOW_PASS
+#define SPEED_CHANGE
+
+#ifdef MOTOR_PD
+#define KP_M 0.74
+#define KD_M 0.03
+#endif
+
+#ifdef SPEED_PD
+#define KP_S 0.74
+#define KD_S 0.03
+#endif
+
+#ifdef LOW_PASS
+#define MOVING_AVERAGE 10
+#endif
+
+#ifdef SPEED_CHANGE
+#define SHARP_TURN 45
+#endif
 
 /*グローバル変数*/
 /*ロボットに文字を表示するためのグローバル変数*/
@@ -99,7 +121,8 @@ void main_task(intptr_t unused)
 {
     int8_t forward;      /* 前後進命令 */
 	float turn;         /* 旋回命令 */
-	int8_t pwm_L, pwm_R; /* 左右モータPWM出力 */
+	int8_t pwm_L = 0; /* 左モータPWM出力 */
+	int8_t pwm_R = 0; /* 右モータPWM出力 */
 	int8_t cur_brightness=0;	/* 検出した光センサ値 */
 
 	int max=-255;//キャリブレーションの最大値
@@ -116,6 +139,31 @@ void main_task(intptr_t unused)
    	int direction; //	旋回角度
    	int err;	// ライントレース用PD制御の偏差
    	float diff;	// ライントレース用PD制御の微分
+	
+#ifdef MOTOR_PD
+	int32_t last_motor_ang_l = 0;	// 前回の左車輪の回転量
+	int32_t last_motor_ang_r = 0;	// 前回の右車輪の回転量
+	int32_t cur_motor_ang_l = 0;	// 今回の左車輪の回転量
+	int32_t cur_motor_ang_r = 0;	// 今回の右車輪の回転量
+	int32_t target_motor_ang_l = 0;	// 左車輪の回転量の目標量
+	int32_t err_motor = 0;	// 回転量の偏差
+	int32_t last_err_motor = 0;	// 前回の回転量の偏差
+	float diff_motor = 0.0;	// 回転量の偏差微分
+#endif
+#ifdef SPEED_PD
+	int32_t err_speed = 0;	// 速度の偏差
+	int8_t last_forward = 0;	// 前回の速度
+	int32_t diff_speed = 0;	// 速度の偏差微分
+	int32_t last_err_speed = 0;	// 前回の速度の偏差
+#endif
+#ifdef LOW_PASS
+	int i = 0;
+	int flag_init = 1;
+	int sum = 0;
+	int adjusted_brightness = 0;
+	int brightness[MOVING_AVERAGE];
+	for (i = 0; i < MOVING_AVERAGE; i++){brightness[MOVING_AVERAGE] = 0;}
+#endif
 	
 	/*グローバル変数の初期化*/
 	count = 1;
@@ -237,7 +285,23 @@ void main_task(intptr_t unused)
     	case eLineTrace:
 			// 現在の光センサ値取得
     		cur_brightness = colorSensor->getBrightness();
-    		
+#ifdef LOW_PASS	// 光センサ値の移動平均
+    		if (flag_init) { // 初回のみ、全部の平均移動テーブルに最初の光センサ値をセットする
+	    		for (i = MOVING_AVERAGE; i > 0; i--) {
+		    		brightness[i] = cur_brightness;
+		    	}
+    		} else {
+	    		for (i = MOVING_AVERAGE; i > 0; i--) {
+		    		brightness[i] = brightness[i-1];
+		    	}
+    		}
+	    	brightness[0] = cur_brightness;
+    		for (i = 0; i < MOVING_AVERAGE; i++) {
+    			sum += brightness[i];
+    		}
+    		adjusted_brightness = sum / MOVING_AVERAGE;
+    		cur_brightness = adjusted_brightness;
+#endif
     		//turn値とforwardが返り値
 			turn = LineTrace(section, target, cur_brightness, DELTA_T, &lastErr, &forward, &err, &diff);
     		
@@ -246,7 +310,31 @@ void main_task(intptr_t unused)
         	motor_ang_r = rightMotor->getCount();
         	gyro = gyroSensor->getAnglerVelocity();
         	volt = ev3_battery_voltage_mV();
-
+#ifdef MOTOR_PD	/* 旋回角度補正 */
+    		cur_motor_ang_l = motor_ang_l - last_motor_ang_l;
+    		cur_motor_ang_r = motor_ang_r - last_motor_ang_r;
+    		if (pwm_L != 0 && pwm_R != 0) {
+    			target_motor_ang_l = cur_motor_ang_r * ( pwm_L / pwm_R );
+    		} else {
+    			target_motor_ang_l = cur_motor_ang_r * pwm_L;
+    		}
+    		err_motor = cur_motor_ang_l - target_motor_ang_l;
+    		diff_motor = (err_motor - last_err_motor) / DELTA_T;
+    		turn += KP_M * err_motor + KD_M * diff_motor;
+    		last_err_motor = err_motor;
+#endif
+#ifdef SPEED_CHANGE	// 急カーブの速度切替
+    		if (turn > SHARP_TURN) {
+    			forward = 30;
+    		}
+#endif    		
+#ifdef SPEED_PD	// 速度のPD制御
+    		err_speed = forward - last_forward;	// 偏差 = 目標速度 - 前回の速度
+    		diff_speed = (err_speed - last_err_speed) / DELTA_T;	// 偏差微分 ＝ （偏差 － 前回の偏差）/ プログラム周期
+    		last_forward += KP_S * err_speed + KD_S * diff_speed;	// 前回の速度 ＋＝ 偏差係数 ＊ 偏差 ＋ 偏差微分係数 ＊ 偏差微分
+    		last_err_speed = err_speed;	// 前回の偏差 ＝ 今回の偏差
+    		forward = last_forward;	// 速度 ＝ 前回の速度（PD制御値反映済み）
+#endif
         	/* 倒立振子制御APIを呼び出し、倒立走行するための */
         	/* 左右モータ出力値を得る */
         	balance_control(
@@ -260,7 +348,7 @@ void main_task(intptr_t unused)
         	    (int8_t *)&pwm_L,
         	    (int8_t *)&pwm_R);
 
-        	leftMotor->setPWM(pwm_L);
+    		leftMotor->setPWM(pwm_L);
         	rightMotor->setPWM(pwm_R);
     		
 	    	/* 走行距離・旋回角度計測 */

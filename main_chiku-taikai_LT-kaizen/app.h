@@ -70,7 +70,7 @@ typedef enum Mode {
 } Mode;
 
 /* デバッグ用 */
-#define START_DEBUG	9900	// スタート時の距離を加算（オフセット）
+#define START_DEBUG	0	// スタート時の距離を加算（オフセット）
 #define GOAL_DEBUG	10000	// ゴール距離
 
 /* LCDフォントサイズ */
