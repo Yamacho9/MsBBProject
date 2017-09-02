@@ -16,6 +16,8 @@ int time_count;//カウント関数
 bool stand;//ture :倒立走行ON | false :倒立走行OFF
 bool time;//ture : 最初　false:最後
 
+bool tail_ctr2(int32_t angle, tailSpeed sp);
+
 /*
  * ルックアップゲート用関数
  * 返り値：true成功，false失敗
@@ -27,7 +29,8 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 	//必要な変数
 	ret = false;
 	int32_t motor_ang_l=0, motor_ang_r=0;
-	int32_t gyro_angle, volt=0;
+	int32_t gyro_angle=0;
+	int32_t volt=0;
 	int8_t pwm_L, pwm_R;
 	int time_count = 0;
 	static float forward = 30;
@@ -71,7 +74,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 			
 			if(sonar_alert_2() == 1){//障害物検知
 				time_count++;
-				if(time_count > 300){//一定時間経ったら次のモードへ
+				if(time_count > 200){//一定時間経ったら次のモードへ
 					nowMode = TAIL_STANDUP;
 					init_lookup();
 					ret = false;
@@ -86,17 +89,17 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 			turn = 0;
 			stand = true;
 			if(ret){//しっぽを動かし終わった
-				if(time_count < 250){//250
-					forward = -10;
-					turn = 0;
-					time_count++;
-				}
-				else if(pwm_L < 0 && pwm_R < 0 && gyro_angle < 0){
+				time_count++;
+				//if(time_count < 250){//250
+				forward = -20;
+				turn = 0;
+				
+				if(time_count >= 250 && pwm_L < 0 && pwm_R < 0 && gyro_angle < 0){
 					//一定時間たつと倒立走行をやめる
 					stand = false;
 					m_leftmotor->setPWM(0);
 					m_rightmotor->setPWM(0);
-					clock->sleep(1300);
+					clock->sleep(2400);
 					init_lookup();
 					angle = TAIL_ANGLE_MIDLE;
 					//モードを変更
@@ -149,7 +152,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 			m_rightmotor->setPWM(10);
 			
 			time_count++;
-			if(ret && time_count > 1000){//一定時間経った1200
+			if(ret && time_count > 1200){//一定時間経った1200
 				init_lookup();
 				//モードを変更
 				nowMode = BACK;
@@ -158,16 +161,16 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 		else if(nowMode == BACK){//バックする
 			angle = TAIL_ANGLE_LOOKUPGATE-2;
 			time_count++;
-			if(/*ret && */time_count > 2000){//一定時間経った
-				m_leftmotor->setPWM(10);
-				m_rightmotor->setPWM(10);
+			if(time_count > 1900){//一定時間経った
+				m_leftmotor->setPWM(0);
+				m_rightmotor->setPWM(0);
 				angle = TAIL_ANGLE_LOOKUPGATE;
-				if(time_count > 3000){
+				clock->sleep(2400);
+
 				//モードを変更
 				nowMode = ADVANCE2;
 				init_lookup();
 				angle = TAIL_ANGLE_LOOKUPGATE;
-				}
 			}
 			else{
 				m_leftmotor->setPWM(-10);
@@ -176,23 +179,24 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 		}
 		else if(nowMode == ADVANCE2){//前進する
 			angle = TAIL_ANGLE_LOOKUPGATE;
-			//m_leftmotor->setPWM(10);
-			//m_rightmotor->setPWM(10);
-			//time_count++;
-			//if(/*ret &&*/ time_count > 2500){//一定時間経った
+			m_leftmotor->setPWM(10);
+			m_rightmotor->setPWM(10);
+			time_count++;
+			if(time_count > 2400){//一定時間経った
 				init_lookup();
 				angle = TAIL_ANGLE_MIDLE2;
 				//モードを変更
 				nowMode = TAIL_MIDDLE2_2;
-			//
+			
 			}
+		}
 		else if(nowMode == TAIL_MIDDLE2_2){//しっぽを途中(MIDDLE2)まで動かす
 			angle = TAIL_ANGLE_MIDLE2;
-			m_leftmotor->setPWM(1);
-			m_rightmotor->setPWM(1);
+			m_leftmotor->setPWM(-10);
+			m_rightmotor->setPWM(-10);
 			time_count++;
 			time = false;
-			if(ret && time_count > 100){
+			if(ret){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
 				angle = TAIL_ANGLE_MIDLE;
@@ -202,11 +206,11 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 		}
 		else if(nowMode == TAIL_MIDDLE_2){//しっぽを途中(MIDDLE)まで動かす
 			angle = TAIL_ANGLE_MIDLE;
-			m_leftmotor->setPWM(1);
-			m_rightmotor->setPWM(1);
+			m_leftmotor->setPWM(-10);
+			m_rightmotor->setPWM(-10);
 			time_count++;
 			time = false;
-			if(ret && time_count > 100){
+			if(ret){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
 				angle = TAIL_ANGLE_STAND_UP;
@@ -216,11 +220,11 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 		}
 		else if(nowMode == TAIL_STANDUP_2){//しっぽをSTANDまで動かす
 			angle = TAIL_ANGLE_STAND_UP;
-			m_leftmotor->setPWM(1);
-			m_rightmotor->setPWM(1);
+			m_leftmotor->setPWM(-10);
+			m_rightmotor->setPWM(-10);
 			time_count++;
 			time = false;
-			if(ret && time_count > 100){
+			if(ret){
 				//一定時間経った，かつしっぽを動かし終わった
 				init_lookup();
 				//倒立走行を初期化する
@@ -264,7 +268,7 @@ Mode lookup(int target,GyroSensor* gyro, ColorSensor* color, Motor* leftmotor,Mo
 		//しっぽの操作
 		if(!ret){
 			if(!time){//最後のしっぽを下げる動作は早く
-				ret = tail_ctr(angle, eFast);
+				ret = tail_ctr2(angle, eFast);
 			}
 			else{//最初の上げる動作は遅く
 				ret = tail_ctr(angle, eSlow);
@@ -340,6 +344,29 @@ bool tail_ctr(int32_t angle, tailSpeed sp){
 	
 	}
 }
+
+
+bool tail_ctr2(int32_t angle, tailSpeed sp){
+	
+	static int countt = 0;
+	bool b_start = true;
+	countt++;
+
+	if(b_start){
+		if(countt > 50){
+			m_tail->setPWM(80);
+		}
+		else{
+			b_start = false;
+		}
+
+	}
+	else{
+		return tail_ctr(angle,sp);
+	}
+
+}
+
 
 //グローバル変数を初期化する関数
 void init_lookup(){
