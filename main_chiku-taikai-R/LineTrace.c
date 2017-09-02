@@ -6,7 +6,7 @@
  */
 #include "LineTrace.h"
 
-#define DEBUG
+//#define DEBUG
 #define FORWARD_DEBUG 30
 
 /**

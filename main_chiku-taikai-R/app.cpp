@@ -23,7 +23,6 @@
 #include "Clock.h"
 #include "LineTrace.h"
 #include "Calibration.h"
-#include "judgeSection.h"
 #include "CalcDistanceAndDirection.h"
 #include "StepStage.h"
 #include "GarageIn.h"
@@ -31,7 +30,7 @@
 
 using namespace ev3api;
 
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
 #define _debug(x) (x)
@@ -53,31 +52,13 @@ int lastErr=0; //前回偏差
 static int32_t   bt_cmd = 0;      /* Bluetoothコマンド 1:リモートスタート */
 static FILE     *bt = NULL;      /* Bluetoothファイルハンドル */
 
-/* パラメータファイル情報 extern */
-int buf[BUF_LINE_SIZE][BUF_COLUMN_SIZE];
-int param[BUF_COLUMN_SIZE];
-int linenum;
-int *arr0, *arr1;
-
-
-
 /*関数のプロトタイプ宣言*/
 //メッセージを書く関数
 static void Message(const char* str);
 //各センサの初期化、パラメータファイルの読み込みをする関数
 static void Init();
-//終了処理
-void Finalize();
-//超音波センサ
-static int32_t sonar_alert(void);
 //しっぽコントロール
 static bool tail_control(int32_t angle, tailSpeed sp);
-//マップ情報読み込み関数
-void readMapdata();
-//PIDパラメータ読み込み関数
-void readPIDdata();
-//
-void split(char* s, const std::string& delim,int i);
 // タッチセンサ押下検知関数
 int bPressTouchSensor(void);
 
@@ -109,7 +90,7 @@ void main_task(intptr_t unused)
 #ifndef DEBUG
 	Mode mode = eLineTrace;	// 走行モード：ライントレース（初期値）
 #else
-	Mode mode = eLookUpGate;	// 走行モード：初期値
+	Mode mode = eLineTrace;	// 走行モード：初期値
 #endif
 	int32_t motor_ang_l, motor_ang_r;	// 左右車輪の回転量（deg.）
 	int32_t gyro, volt;	// 振子倒立制御に使用
@@ -273,10 +254,6 @@ void main_task(intptr_t unused)
     		distance = distance + START_DEBUG;
     		if(distance >= GOAL_DEBUG) mode = eLookUpGate;
 #endif
-	    	//現在の区間を取得する
-	    	//section = judgeSection(distance,direction);
-	    	//fprintf(bt, "distance = %d, direction = %d\n", distance, direction);
-	    	//fprintf(bt, "cur_brightness = %d, turn = %f, forward = %d\n", cur_brightness, turn, forward);
 	    	//現在の走行状況を記録
 	    	fprintf(bt, "distance = %d | direction = %d | section%d \nbrightness = %d | turn = %f | forward = %d | err = %d | diff = %f\n",distance,direction,section,cur_brightness,turn,forward,err,diff);
 
@@ -311,46 +288,10 @@ void main_task(intptr_t unused)
 	tailMotor->reset();
 
 	/*終了処理*/
-	Finalize();
     ter_tsk(BT_TASK);
     fclose(bt);
 
     ext_tsk();
-}
-
-//*****************************************************************************
-// 関数名 : sonar_alert
-// 引数 : 無し
-// 返り値 : 1(障害物あり)/0(障害物無し)
-// 概要 : 超音波センサによる障害物検知
-//*****************************************************************************
-static int32_t sonar_alert(void)
-{
-    static uint32_t counter = 0;
-    static int32_t alert = 0;
-
-    int32_t distance;
-
-    if (++counter == 40/4) /* 約40msec周期毎に障害物検知  */
-    {
-        /*
-         * 超音波センサによる距離測定周期は、超音波の減衰特性に依存します。
-         * NXTの場合は、40msec周期程度が経験上の最短測定周期です。
-         * EV3の場合は、要確認
-         */
-        distance = sonarSensor->getDistance();
-        if ((distance <= SONAR_ALERT_DISTANCE) && (distance >= 0))
-        {
-            alert = 1; /* 障害物を検知 */
-        }
-        else
-        {
-            alert = 0; /* 障害物無し */
-        }
-        counter = 0;
-    }
-
-    return alert;
 }
 
 //*****************************************************************************
@@ -447,123 +388,6 @@ void Message(const char* str){
 	ev3_lcd_draw_string(str, 0, CALIB_FONT_HEIGHT*count);
 	count++;
 }
-//*******************************************************************
-// 関数名 : readMapdata()
-// 引数 : 
-// 返り値 : 
-// 概要 : 
-//*******************************************************************
-void readMapdata() {
-	
-	int i;
-	
-	std::cerr << "reading" << std::endl;
-
-	std::ifstream ifs;  // ファイル読み取り用ストリーム
-	ifs.open("/ev3rt/apps/sumL.txt");	// ファイルオープン
-
-	if (ifs.fail()) {	// ファイルオープンに失敗したらそこで終了
-		std::cerr << "ファイルを開けません\n";
-		return;
-	}
-
-	char buf[256];	// データ一時保管用配列
-
-	while (ifs.getline(buf, sizeof(buf))) {	// ファイルから1行ずつ読み込む
-		linenum++;	// 行数をカウントしている
-	}
-
-	std::cerr << "読み込んだ行数 = " << linenum << "\n";
-
-	ifs.clear(); // ファイル末尾に到達というフラグをクリア
-	ifs.seekg(0, std::ios::beg);	// ファイル先頭に戻る
-
-	arr0 = (int *)malloc(linenum * sizeof(int));
-	arr1 = (int *)malloc(linenum * sizeof(int));
-
-	for (i = 0; i<linenum; i++) {
-		ifs.getline(buf, sizeof(buf));	// 一行読込
-		split(buf, ",",i);
-		std::cout << i << " = " << arr0[i] << ", " << arr1[i] << std::endl;
-	}
-	
-	ifs.close();
-
-	return;
-}
-
-//*******************************************************************
-// 関数名 : readMapdata()
-// 引数 : 
-// 返り値 : なし
-// 概要 : 
-//*******************************************************************
-
-void readPIDdata(){
-	/* 配列の要素数計算 */
-	
-	/* パラメータファイル情報 */
-	FILE *fp;
-	int buf_size_c = sizeof(buf[0])/sizeof(buf[0][0]);/*4*/
-	int buf_size_l = sizeof(buf)/sizeof(buf[0]);/*9*/
-	
-	/* パラメータファイルを読み込み用として開く */
-	int i=0,j=0;
-	fp = fopen("/ev3rt/apps/param.txt","r");
-	if(fp == NULL){
-		printf("%sが開けませんでした\n","/ev3rt/apps/param.txt");
-		/* default値を代入して戻る */
-		for (j=0; j<buf_size_c; j++){
-			for(i=0; i<buf_size_l; i++){
-				buf[0][j] = 0;
-				buf[1][j] = 50;
-				buf[2][j] = 74;
-				buf[3][j] = 1;
-				buf[4][j] = 3;
-			}
-		}
-		return;
-	}
-	
-	/* ファイルを読み込んで配列bufに格納 */
-	for (j=0; j<buf_size_c; j++){
-		for(i=0; i<buf_size_l; i++){
-			if(fscanf(fp,"%d,",&buf[i][j])!='\0'){
-				;
-			}
-		}
-	}
-	
-	fclose(fp);
-	
-}
-//*******************************************************************
-// 関数名 : split
-// 引数 : 
-// 返り値 : 
-// 概要 : 
-//*******************************************************************
-void split(char* s, const std::string& delim,int i)
-{
-	using namespace std;
-	int count = 0;
-	char *tok;
-
-	//std::cerr << "split" << std::endl;
-
-	tok = strtok(s, delim.c_str());
-	while (tok != NULL) {
-		if ((count % 2) == 0) {
-			arr0[i] = atoi(tok);
-		}
-		else {
-			arr1[i] = atoi(tok);
-		}
-		tok = strtok(NULL, delim.c_str());  /* 2回目以降 */
-		count++;
-	}
-	//printf("i=%d, count=%d, arr0=%d, arr1=%d\n", i, count, arr0[i], arr1[i]);
-}
 
 //*****************************************************************************
 // 関数名 : bPressTouchSensor()
@@ -606,38 +430,4 @@ void Init(){
     rightMotor  = new Motor(PORT_B);
     tailMotor   = new Motor(PORT_A);
     clock       = new Clock();
-	
-	//マップデータ読み込み
-	readMapdata();
-	//PIDパラメータデータ読み込み
-	readPIDdata();
-	
-}
-
-//*******************************************************************
-// 関数名 : Finalize()
-// 引数 : なし
-// 返り値 : なし
-// 概要 : 終了処理たち
-//*******************************************************************
-void Finalize(){
-
-	free(arr0);
-	free(arr1);
-}
-
-
-
-/*getset関数たち*/
-int getBufLineSize(){
-	return BUF_LINE_SIZE;
-}
-int getBufColumnSize(){
-	return BUF_COLUMN_SIZE;
-}
-int getlinenum(){
-	return linenum;
-}
-void setlinenum(int num){
-	linenum = num;
 }
