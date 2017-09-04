@@ -1,0 +1,2699 @@
+Calibration result
+max:70 min:2
+111bluetooth startdistance = 0 | direction = 0 | section1 
+brightness = 19 | turn = -100.000000 | forward = 60 | err = -17 | diff = -4250.000000
+distance = 0 | direction = 0 | section1 
+brightness = 19 | turn = -12.580000 | forward = 60 | err = -17 | diff = 0.000000
+distance = 0 | direction = 0 | section1 
+brightness = 21 | turn = 3.899999 | forward = 60 | err = -15 | diff = 499.999969
+distance = 0 | direction = 0 | section1 
+brightness = 22 | turn = -2.860000 | forward = 60 | err = -14 | diff = 249.999985
+distance = 0 | direction = 0 | section1 
+brightness = 22 | turn = -10.360000 | forward = 60 | err = -14 | diff = 0.000000
+distance = 0 | direction = 0 | section1 
+brightness = 23 | turn = -2.120000 | forward = 60 | err = -13 | diff = 249.999985
+distance = 0 | direction = 0 | section1 
+brightness = 23 | turn = -9.620000 | forward = 60 | err = -13 | diff = 0.000000
+distance = 1 | direction = 0 | section1 
+brightness = 23 | turn = -9.620000 | forward = 60 | err = -13 | diff = 0.000000
+distance = 2 | direction = 0 | section1 
+brightness = 24 | turn = -1.380000 | forward = 60 | err = -12 | diff = 249.999985
+distance = 2 | direction = 0 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 3 | direction = 0 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 4 | direction = 359 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 5 | direction = 0 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 6 | direction = 359 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 7 | direction = 359 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 9 | direction = 359 | section1 
+brightness = 25 | turn = -0.640000 | forward = 60 | err = -11 | diff = 249.999985
+distance = 10 | direction = 359 | section1 
+brightness = 28 | turn = 16.579998 | forward = 60 | err = -8 | diff = 749.999939
+distance = 12 | direction = 359 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 13 | direction = 359 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 14 | direction = 359 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 16 | direction = 359 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 18 | direction = 359 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 20 | direction = 358 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 21 | direction = 358 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 23 | direction = 358 | section1 
+brightness = 29 | turn = 2.319999 | forward = 60 | err = -7 | diff = 249.999985
+distance = 25 | direction = 358 | section1 
+brightness = 28 | turn = -13.419999 | forward = 60 | err = -8 | diff = -249.999985
+distance = 27 | direction = 358 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 28 | direction = 358 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 30 | direction = 358 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 32 | direction = 358 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 34 | direction = 358 | section1 
+brightness = 27 | turn = -14.160000 | forward = 60 | err = -9 | diff = -249.999985
+distance = 35 | direction = 358 | section1 
+brightness = 27 | turn = -6.660000 | forward = 60 | err = -9 | diff = 0.000000
+distance = 37 | direction = 358 | section1 
+brightness = 26 | turn = -14.900000 | forward = 60 | err = -10 | diff = -249.999985
+distance = 38 | direction = 358 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 40 | direction = 358 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 41 | direction = 357 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 43 | direction = 357 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 44 | direction = 357 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 46 | direction = 357 | section1 
+brightness = 25 | turn = -15.639999 | forward = 60 | err = -11 | diff = -249.999985
+distance = 46 | direction = 357 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 48 | direction = 357 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 49 | direction = 357 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 50 | direction = 357 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 51 | direction = 357 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 52 | direction = 357 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 53 | direction = 357 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 53 | direction = 356 | section1 
+brightness = 24 | turn = -16.379999 | forward = 60 | err = -12 | diff = -249.999985
+distance = 53 | direction = 356 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 54 | direction = 356 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 54 | direction = 356 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 54 | direction = 356 | section1 
+brightness = 25 | turn = -0.640000 | forward = 60 | err = -11 | diff = 249.999985
+distance = 54 | direction = 356 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 54 | direction = 356 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 54 | direction = 356 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 54 | direction = 356 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 53 | direction = 356 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 53 | direction = 356 | section1 
+brightness = 25 | turn = -8.140000 | forward = 60 | err = -11 | diff = 0.000000
+distance = 53 | direction = 356 | section1 
+brightness = 26 | turn = 0.100000 | forward = 60 | err = -10 | diff = 249.999985
+distance = 52 | direction = 355 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 51 | direction = 356 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 50 | direction = 355 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 50 | direction = 355 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 48 | direction = 356 | section1 
+brightness = 27 | turn = 0.840000 | forward = 60 | err = -9 | diff = 249.999985
+distance = 48 | direction = 356 | section1 
+brightness = 29 | turn = 9.819999 | forward = 60 | err = -7 | diff = 499.999969
+distance = 47 | direction = 356 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 46 | direction = 356 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 46 | direction = 356 | section1 
+brightness = 31 | turn = 11.299999 | forward = 60 | err = -5 | diff = 499.999969
+distance = 45 | direction = 356 | section1 
+brightness = 32 | turn = 4.539999 | forward = 60 | err = -4 | diff = 249.999985
+distance = 44 | direction = 356 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 44 | direction = 355 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 43 | direction = 355 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 43 | direction = 355 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 43 | direction = 355 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 43 | direction = 355 | section1 
+brightness = 35 | turn = 21.759998 | forward = 60 | err = -1 | diff = 749.999939
+distance = 43 | direction = 355 | section1 
+brightness = 37 | turn = 15.739999 | forward = 60 | err = 1 | diff = 499.999969
+distance = 43 | direction = 355 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 44 | direction = 355 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 45 | direction = 355 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 45 | direction = 355 | section1 
+brightness = 38 | turn = 8.980000 | forward = 60 | err = 2 | diff = 249.999985
+distance = 45 | direction = 355 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 45 | direction = 355 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 46 | direction = 355 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 46 | direction = 355 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 46 | direction = 355 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 46 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 46 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 46 | direction = 356 | section1 
+brightness = 39 | turn = 9.719999 | forward = 60 | err = 3 | diff = 249.999985
+distance = 46 | direction = 356 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 46 | direction = 356 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 48 | direction = 356 | section1 
+brightness = 38 | turn = -6.020000 | forward = 60 | err = 2 | diff = -249.999985
+distance = 48 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 48 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 47 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 46 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 46 | direction = 356 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 46 | direction = 356 | section1 
+brightness = 39 | turn = 9.719999 | forward = 60 | err = 3 | diff = 249.999985
+distance = 46 | direction = 356 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 46 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 46 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 45 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 45 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 44 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 44 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 44 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 43 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 43 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 42 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 41 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 41 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 41 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 40 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 39 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 39 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 38 | direction = 357 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 37 | direction = 357 | section1 
+brightness = 40 | turn = 10.459999 | forward = 60 | err = 4 | diff = 249.999985
+distance = 36 | direction = 357 | section1 
+brightness = 39 | turn = -5.280000 | forward = 60 | err = 3 | diff = -249.999985
+distance = 36 | direction = 357 | section1 
+brightness = 40 | turn = 10.459999 | forward = 60 | err = 4 | diff = 249.999985
+distance = 36 | direction = 357 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 36 | direction = 357 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 41 | turn = 11.200000 | forward = 60 | err = 5 | diff = 249.999985
+distance = 36 | direction = 358 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 20.179998 | forward = 60 | err = 7 | diff = 499.999969
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 44 | turn = 13.419999 | forward = 60 | err = 8 | diff = 249.999985
+distance = 36 | direction = 358 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 36 | direction = 358 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 37 | direction = 358 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 37 | direction = 358 | section1 
+brightness = 45 | turn = 14.160000 | forward = 60 | err = 9 | diff = 249.999985
+distance = 37 | direction = 359 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 37 | direction = 359 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 38 | direction = 359 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 38 | direction = 359 | section1 
+brightness = 46 | turn = 14.900000 | forward = 60 | err = 10 | diff = 249.999985
+distance = 38 | direction = 359 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 39 | direction = 359 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 39 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 39 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 40 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 40 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 41 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 41 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 41 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 42 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 42 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 43 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 43 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 43 | direction = 0 | section1 
+brightness = 43 | turn = -17.319998 | forward = 60 | err = 7 | diff = -749.999939
+distance = 44 | direction = 0 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 45 | direction = 1 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 46 | direction = 1 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 46 | direction = 1 | section1 
+brightness = 42 | turn = -3.059999 | forward = 60 | err = 6 | diff = -249.999985
+distance = 47 | direction = 1 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 47 | direction = 1 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 48 | direction = 1 | section1 
+brightness = 41 | turn = -3.799999 | forward = 60 | err = 5 | diff = -249.999985
+distance = 48 | direction = 1 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 49 | direction = 2 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 49 | direction = 2 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 50 | direction = 2 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 50 | direction = 2 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 51 | direction = 2 | section1 
+brightness = 39 | turn = -12.779999 | forward = 60 | err = 3 | diff = -499.999969
+distance = 52 | direction = 3 | section1 
+brightness = 38 | turn = -6.020000 | forward = 60 | err = 2 | diff = -249.999985
+distance = 52 | direction = 2 | section1 
+brightness = 37 | turn = -6.760000 | forward = 60 | err = 1 | diff = -249.999985
+distance = 53 | direction = 3 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 53 | direction = 3 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 53 | direction = 3 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 54 | direction = 3 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 55 | direction = 3 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 55 | direction = 3 | section1 
+brightness = 36 | turn = -7.500000 | forward = 60 | err = 0 | diff = -249.999985
+distance = 55 | direction = 3 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 56 | direction = 3 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 56 | direction = 3 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 57 | direction = 3 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 57 | direction = 3 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 58 | direction = 3 | section1 
+brightness = 37 | turn = 8.240000 | forward = 60 | err = 1 | diff = 249.999985
+distance = 59 | direction = 3 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 59 | direction = 2 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 60 | direction = 2 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 60 | direction = 2 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 61 | direction = 2 | section1 
+brightness = 38 | turn = 8.980000 | forward = 60 | err = 2 | diff = 249.999985
+distance = 62 | direction = 2 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 62 | direction = 2 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 63 | direction = 2 | section1 
+brightness = 39 | turn = 9.719999 | forward = 60 | err = 3 | diff = 249.999985
+distance = 64 | direction = 2 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 65 | direction = 2 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 66 | direction = 2 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 67 | direction = 2 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 67 | direction = 1 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 69 | direction = 1 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 69 | direction = 1 | section1 
+brightness = 38 | turn = -6.020000 | forward = 60 | err = 2 | diff = -249.999985
+distance = 71 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 71 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 73 | direction = 1 | section1 
+brightness = 39 | turn = 9.719999 | forward = 60 | err = 3 | diff = 249.999985
+distance = 73 | direction = 1 | section1 
+brightness = 38 | turn = -6.020000 | forward = 60 | err = 2 | diff = -249.999985
+distance = 75 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 76 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 77 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 78 | direction = 1 | section1 
+brightness = 37 | turn = -6.760000 | forward = 60 | err = 1 | diff = -249.999985
+distance = 80 | direction = 1 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 80 | direction = 1 | section1 
+brightness = 38 | turn = 8.980000 | forward = 60 | err = 2 | diff = 249.999985
+distance = 82 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 83 | direction = 1 | section1 
+brightness = 37 | turn = -6.760000 | forward = 60 | err = 1 | diff = -249.999985
+distance = 84 | direction = 1 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 85 | direction = 1 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 87 | direction = 1 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 87 | direction = 1 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 90 | direction = 1 | section1 
+brightness = 36 | turn = -7.500000 | forward = 60 | err = 0 | diff = -249.999985
+distance = 90 | direction = 1 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 92 | direction = 1 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 93 | direction = 1 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 94 | direction = 1 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 96 | direction = 1 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 97 | direction = 1 | section1 
+brightness = 35 | turn = -8.240000 | forward = 60 | err = -1 | diff = -249.999985
+distance = 99 | direction = 1 | section1 
+brightness = 36 | turn = 7.500000 | forward = 60 | err = 0 | diff = 249.999985
+distance = 100 | direction = 1 | section1 
+brightness = 35 | turn = -8.240000 | forward = 60 | err = -1 | diff = -249.999985
+distance = 101 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 103 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 104 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 106 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 107 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 108 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 110 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 112 | direction = 1 | section1 
+brightness = 34 | turn = -8.980000 | forward = 60 | err = -2 | diff = -249.999985
+distance = 113 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 115 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 116 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 117 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 119 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 120 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 122 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 123 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 124 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 126 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 127 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 129 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 131 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 133 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 133 | direction = 0 | section1 
+brightness = 33 | turn = -9.719999 | forward = 60 | err = -3 | diff = -249.999985
+distance = 136 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 137 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 139 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 140 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 142 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 143 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 145 | direction = 0 | section1 
+brightness = 34 | turn = 6.020000 | forward = 60 | err = -2 | diff = 249.999985
+distance = 146 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 148 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 150 | direction = 0 | section1 
+brightness = 35 | turn = 6.760000 | forward = 60 | err = -1 | diff = 249.999985
+distance = 152 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 153 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 155 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 156 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 159 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 160 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 162 | direction = 0 | section1 
+brightness = 36 | turn = 7.500000 | forward = 60 | err = 0 | diff = 249.999985
+distance = 163 | direction = 0 | section1 
+brightness = 35 | turn = -8.240000 | forward = 60 | err = -1 | diff = -249.999985
+distance = 166 | direction = 0 | section1 
+brightness = 34 | turn = -8.980000 | forward = 60 | err = -2 | diff = -249.999985
+distance = 167 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 169 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 170 | direction = 0 | section1 
+brightness = 35 | turn = 6.760000 | forward = 60 | err = -1 | diff = 249.999985
+distance = 173 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 175 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 177 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 179 | direction = 0 | section1 
+brightness = 36 | turn = 7.500000 | forward = 60 | err = 0 | diff = 249.999985
+distance = 180 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 183 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 184 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 187 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 188 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 191 | direction = 0 | section1 
+brightness = 35 | turn = -8.240000 | forward = 60 | err = -1 | diff = -249.999985
+distance = 192 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 194 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 196 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 198 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 200 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 203 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 204 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 207 | direction = 0 | section1 
+brightness = 34 | turn = -8.980000 | forward = 60 | err = -2 | diff = -249.999985
+distance = 208 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 210 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 212 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 214 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 217 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 219 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 220 | direction = 0 | section1 
+brightness = 33 | turn = -9.719999 | forward = 60 | err = -3 | diff = -249.999985
+distance = 223 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 224 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 227 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 228 | direction = 0 | section1 
+brightness = 32 | turn = -10.459999 | forward = 60 | err = -4 | diff = -249.999985
+distance = 231 | direction = 0 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 233 | direction = 0 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 235 | direction = 0 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 237 | direction = 0 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 240 | direction = 0 | section1 
+brightness = 33 | turn = 5.280000 | forward = 60 | err = -3 | diff = 249.999985
+distance = 241 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 244 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 245 | direction = 0 | section1 
+brightness = 34 | turn = 6.020000 | forward = 60 | err = -2 | diff = 249.999985
+distance = 248 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 249 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 252 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 253 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 256 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 258 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 260 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 262 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 265 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 266 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 269 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 270 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 273 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 275 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 277 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 279 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 282 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 283 | direction = 0 | section1 
+brightness = 35 | turn = 6.760000 | forward = 60 | err = -1 | diff = 249.999985
+distance = 286 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 288 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 290 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 293 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 295 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 297 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 300 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 301 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 304 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 305 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 308 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 309 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 312 | direction = 0 | section1 
+brightness = 36 | turn = 7.500000 | forward = 60 | err = 0 | diff = 249.999985
+distance = 314 | direction = 0 | section1 
+brightness = 35 | turn = -8.240000 | forward = 60 | err = -1 | diff = -249.999985
+distance = 316 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 318 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 320 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 323 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 325 | direction = 0 | section1 
+brightness = 34 | turn = -8.980000 | forward = 60 | err = -2 | diff = -249.999985
+distance = 327 | direction = 0 | section1 
+brightness = 35 | turn = 6.760000 | forward = 60 | err = -1 | diff = 249.999985
+distance = 329 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 331 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 334 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 335 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 338 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 340 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 342 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 344 | direction = 0 | section1 
+brightness = 36 | turn = 7.500000 | forward = 60 | err = 0 | diff = 249.999985
+distance = 347 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 348 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 351 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 353 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 355 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 357 | direction = 0 | section1 
+brightness = 35 | turn = -8.240000 | forward = 60 | err = -1 | diff = -249.999985
+distance = 360 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 361 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 364 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 365 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 368 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 369 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 372 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 374 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 376 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 378 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 380 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 382 | direction = 0 | section1 
+brightness = 36 | turn = 7.500000 | forward = 60 | err = 0 | diff = 249.999985
+distance = 385 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 386 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 389 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 390 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 393 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 394 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 397 | direction = 359 | section1 
+brightness = 37 | turn = 8.240000 | forward = 60 | err = 1 | diff = 249.999985
+distance = 399 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 401 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 403 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 405 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 406 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 409 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 410 | direction = 359 | section1 
+brightness = 38 | turn = 8.980000 | forward = 60 | err = 2 | diff = 249.999985
+distance = 413 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 415 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 417 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 419 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 421 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 422 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 425 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 427 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 429 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 431 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 433 | direction = 359 | section1 
+brightness = 39 | turn = 9.719999 | forward = 60 | err = 3 | diff = 249.999985
+distance = 434 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 436 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 438 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 440 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 442 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 444 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 445 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 447 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 450 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 452 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 453 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 456 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 457 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 459 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 461 | direction = 0 | section1 
+brightness = 38 | turn = -6.020000 | forward = 60 | err = 2 | diff = -249.999985
+distance = 463 | direction = 0 | section1 
+brightness = 39 | turn = 9.719999 | forward = 60 | err = 3 | diff = 249.999985
+distance = 464 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 466 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 468 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 471 | direction = 0 | section1 
+brightness = 38 | turn = -6.020000 | forward = 60 | err = 2 | diff = -249.999985
+distance = 472 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 474 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 475 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 478 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 480 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 482 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 483 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 485 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 487 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 488 | direction = 0 | section1 
+brightness = 37 | turn = -6.760000 | forward = 60 | err = 1 | diff = -249.999985
+distance = 490 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 492 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 494 | direction = 0 | section1 
+brightness = 38 | turn = 8.980000 | forward = 60 | err = 2 | diff = 249.999985
+distance = 496 | direction = 0 | section1 
+brightness = 37 | turn = -6.760000 | forward = 60 | err = 1 | diff = -249.999985
+distance = 497 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 499 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 501 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 503 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 504 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 506 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 507 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 510 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 511 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 513 | direction = 0 | section1 
+brightness = 36 | turn = -7.500000 | forward = 60 | err = 0 | diff = -249.999985
+distance = 514 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 517 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 518 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 520 | direction = 0 | section1 
+brightness = 35 | turn = -8.240000 | forward = 60 | err = -1 | diff = -249.999985
+distance = 521 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 524 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 525 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 527 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 528 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 531 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 532 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 533 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 535 | direction = 0 | section1 
+brightness = 36 | turn = 7.500000 | forward = 60 | err = 0 | diff = 249.999985
+distance = 537 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 538 | direction = 0 | section1 
+brightness = 37 | turn = 8.240000 | forward = 60 | err = 1 | diff = 249.999985
+distance = 540 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 541 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 543 | direction = 0 | section1 
+brightness = 38 | turn = 8.980000 | forward = 60 | err = 2 | diff = 249.999985
+distance = 544 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 546 | direction = 0 | section1 
+brightness = 37 | turn = -6.760000 | forward = 60 | err = 1 | diff = -249.999985
+distance = 547 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 549 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 551 | direction = 1 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 553 | direction = 1 | section1 
+brightness = 36 | turn = -7.500000 | forward = 60 | err = 0 | diff = -249.999985
+distance = 554 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 556 | direction = 1 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 557 | direction = 1 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 558 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 560 | direction = 1 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 561 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 563 | direction = 1 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 564 | direction = 0 | section1 
+brightness = 35 | turn = -8.240000 | forward = 60 | err = -1 | diff = -249.999985
+distance = 565 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 567 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 568 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 570 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 571 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 572 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 574 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 575 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 576 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 578 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 579 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 580 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 581 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 583 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 584 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 585 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 586 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 588 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 588 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 591 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 591 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 593 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 593 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 595 | direction = 0 | section1 
+brightness = 34 | turn = -8.980000 | forward = 60 | err = -2 | diff = -249.999985
+distance = 596 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 597 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 598 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 599 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 600 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 602 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 602 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 604 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 604 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 606 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 607 | direction = 0 | section1 
+brightness = 35 | turn = 6.760000 | forward = 60 | err = -1 | diff = 249.999985
+distance = 608 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 609 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 610 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 611 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 612 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 613 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 614 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 615 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 616 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 616 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 618 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 618 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 620 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 621 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 622 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 623 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 624 | direction = 0 | section1 
+brightness = 36 | turn = 7.500000 | forward = 60 | err = 0 | diff = 249.999985
+distance = 625 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 625 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 627 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 628 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 628 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 630 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 630 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 631 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 632 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 632 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 633 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 634 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 635 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 636 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 637 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 637 | direction = 0 | section1 
+brightness = 37 | turn = 8.240000 | forward = 60 | err = 1 | diff = 249.999985
+distance = 638 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 639 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 640 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 641 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 641 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 642 | direction = 0 | section1 
+brightness = 38 | turn = 8.980000 | forward = 60 | err = 2 | diff = 249.999985
+distance = 643 | direction = 0 | section1 
+brightness = 37 | turn = -6.760000 | forward = 60 | err = 1 | diff = -249.999985
+distance = 644 | direction = 0 | section1 
+brightness = 38 | turn = 8.980000 | forward = 60 | err = 2 | diff = 249.999985
+distance = 644 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 646 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 646 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 647 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 648 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 661 | direction = 0 | section1 
+brightness = 39 | turn = 9.719999 | forward = 60 | err = 3 | diff = 249.999985
+distance = 662 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 662 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 664 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 665 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 667 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 668 | direction = 0 | section1 
+brightness = 38 | turn = -6.020000 | forward = 60 | err = 2 | diff = -249.999985
+distance = 669 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 671 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 672 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 674 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 675 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 676 | direction = 0 | section1 
+brightness = 34 | turn = -31.479998 | forward = 60 | err = -2 | diff = -999.999939
+distance = 677 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 678 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 679 | direction = 0 | section1 
+brightness = 33 | turn = -9.719999 | forward = 60 | err = -3 | diff = -249.999985
+distance = 679 | direction = 0 | section1 
+brightness = 32 | turn = -10.459999 | forward = 60 | err = -4 | diff = -249.999985
+distance = 671 | direction = 0 | section1 
+brightness = 40 | turn = 62.959995 | forward = 60 | err = 4 | diff = 1999.999878
+distance = 669 | direction = 359 | section1 
+brightness = 41 | turn = 11.200000 | forward = 60 | err = 5 | diff = 249.999985
+distance = 669 | direction = 359 | section1 
+brightness = 45 | turn = 36.660000 | forward = 60 | err = 9 | diff = 999.999939
+distance = 667 | direction = 0 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 666 | direction = 359 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 664 | direction = 359 | section1 
+brightness = 47 | turn = 23.139999 | forward = 60 | err = 11 | diff = 499.999969
+distance = 664 | direction = 0 | section1 
+brightness = 50 | turn = 32.859997 | forward = 60 | err = 14 | diff = 749.999939
+distance = 662 | direction = 0 | section1 
+brightness = 50 | turn = 10.360000 | forward = 60 | err = 14 | diff = 0.000000
+distance = 662 | direction = 0 | section1 
+brightness = 51 | turn = 18.600000 | forward = 60 | err = 15 | diff = 249.999985
+distance = 661 | direction = 0 | section1 
+brightness = 55 | turn = 44.059998 | forward = 60 | err = 19 | diff = 999.999939
+distance = 661 | direction = 0 | section1 
+brightness = 55 | turn = 14.060000 | forward = 60 | err = 19 | diff = 0.000000
+distance = 660 | direction = 0 | section1 
+brightness = 55 | turn = 14.060000 | forward = 60 | err = 19 | diff = 0.000000
+distance = 660 | direction = 0 | section1 
+brightness = 58 | turn = 38.779999 | forward = 60 | err = 22 | diff = 749.999939
+distance = 661 | direction = 0 | section1 
+brightness = 61 | turn = 41.000000 | forward = 60 | err = 25 | diff = 749.999939
+distance = 661 | direction = 0 | section1 
+brightness = 61 | turn = 18.500000 | forward = 60 | err = 25 | diff = 0.000000
+distance = 661 | direction = 0 | section1 
+brightness = 61 | turn = 18.500000 | forward = 60 | err = 25 | diff = 0.000000
+distance = 692 | direction = 2 | section1 
+brightness = 55 | turn = -30.939997 | forward = 60 | err = 19 | diff = -1499.999878
+distance = 694 | direction = 2 | section1 
+brightness = 52 | turn = -10.659998 | forward = 60 | err = 16 | diff = -749.999939
+distance = 696 | direction = 2 | section1 
+brightness = 50 | turn = -4.639999 | forward = 60 | err = 14 | diff = -499.999969
+distance = 699 | direction = 2 | section1 
+brightness = 50 | turn = 10.360000 | forward = 60 | err = 14 | diff = 0.000000
+distance = 701 | direction = 2 | section1 
+brightness = 50 | turn = 10.360000 | forward = 60 | err = 14 | diff = 0.000000
+distance = 704 | direction = 2 | section1 
+brightness = 47 | turn = -14.359998 | forward = 60 | err = 11 | diff = -749.999939
+distance = 705 | direction = 2 | section1 
+brightness = 44 | turn = -16.579998 | forward = 60 | err = 8 | diff = -749.999939
+distance = 708 | direction = 2 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 710 | direction = 2 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 713 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 715 | direction = 2 | section1 
+brightness = 41 | turn = -18.799997 | forward = 60 | err = 5 | diff = -749.999939
+distance = 718 | direction = 2 | section1 
+brightness = 39 | turn = -12.779999 | forward = 60 | err = 3 | diff = -499.999969
+distance = 720 | direction = 2 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 722 | direction = 2 | section1 
+brightness = 37 | turn = -14.259999 | forward = 60 | err = 1 | diff = -499.999969
+distance = 724 | direction = 2 | section1 
+brightness = 34 | turn = -23.979998 | forward = 60 | err = -2 | diff = -749.999939
+distance = 727 | direction = 2 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 729 | direction = 2 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 736 | direction = 2 | section1 
+brightness = 29 | turn = -42.680000 | forward = 60 | err = -7 | diff = -1250.000000
+distance = 738 | direction = 2 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 739 | direction = 2 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 741 | direction = 1 | section1 
+brightness = 28 | turn = -13.419999 | forward = 60 | err = -8 | diff = -249.999985
+distance = 742 | direction = 1 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 744 | direction = 1 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 745 | direction = 1 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 748 | direction = 1 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 749 | direction = 1 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 750 | direction = 0 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 752 | direction = 0 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 754 | direction = 0 | section1 
+brightness = 29 | turn = 2.319999 | forward = 60 | err = -7 | diff = 249.999985
+distance = 755 | direction = 0 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 757 | direction = 0 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 758 | direction = 0 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 760 | direction = 0 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 761 | direction = 0 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 772 | direction = 355 | section1 
+brightness = 40 | turn = 85.459991 | forward = 60 | err = 4 | diff = 2749.999756
+distance = 772 | direction = 355 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 772 | direction = 355 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 772 | direction = 355 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 773 | direction = 354 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 773 | direction = 354 | section1 
+brightness = 41 | turn = 11.200000 | forward = 60 | err = 5 | diff = 249.999985
+distance = 773 | direction = 354 | section1 
+brightness = 45 | turn = 36.660000 | forward = 60 | err = 9 | diff = 999.999939
+distance = 775 | direction = 354 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 775 | direction = 354 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 776 | direction = 354 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 778 | direction = 354 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 779 | direction = 354 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 780 | direction = 354 | section1 
+brightness = 48 | turn = 31.379997 | forward = 60 | err = 12 | diff = 749.999939
+distance = 781 | direction = 354 | section1 
+brightness = 47 | turn = 0.640000 | forward = 60 | err = 11 | diff = -249.999985
+distance = 782 | direction = 354 | section1 
+brightness = 47 | turn = 8.140000 | forward = 60 | err = 11 | diff = 0.000000
+distance = 784 | direction = 354 | section1 
+brightness = 46 | turn = -0.100000 | forward = 60 | err = 10 | diff = -249.999985
+distance = 788 | direction = 354 | section1 
+brightness = 45 | turn = -0.840000 | forward = 60 | err = 9 | diff = -249.999985
+distance = 789 | direction = 354 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 789 | direction = 354 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 790 | direction = 354 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 791 | direction = 354 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 791 | direction = 354 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 792 | direction = 354 | section1 
+brightness = 47 | turn = 23.139999 | forward = 60 | err = 11 | diff = 499.999969
+distance = 794 | direction = 354 | section1 
+brightness = 49 | turn = 24.619999 | forward = 60 | err = 13 | diff = 499.999969
+distance = 794 | direction = 354 | section1 
+brightness = 49 | turn = 9.620000 | forward = 60 | err = 13 | diff = 0.000000
+distance = 796 | direction = 354 | section1 
+brightness = 49 | turn = 9.620000 | forward = 60 | err = 13 | diff = 0.000000
+distance = 796 | direction = 354 | section1 
+brightness = 48 | turn = 1.380000 | forward = 60 | err = 12 | diff = -249.999985
+distance = 798 | direction = 354 | section1 
+brightness = 48 | turn = 8.880000 | forward = 60 | err = 12 | diff = 0.000000
+distance = 798 | direction = 354 | section1 
+brightness = 48 | turn = 8.880000 | forward = 60 | err = 12 | diff = 0.000000
+distance = 800 | direction = 354 | section1 
+brightness = 47 | turn = 0.640000 | forward = 60 | err = 11 | diff = -249.999985
+distance = 801 | direction = 354 | section1 
+brightness = 47 | turn = 8.140000 | forward = 60 | err = 11 | diff = 0.000000
+distance = 801 | direction = 354 | section1 
+brightness = 46 | turn = -0.100000 | forward = 60 | err = 10 | diff = -249.999985
+distance = 802 | direction = 354 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 804 | direction = 355 | section1 
+brightness = 49 | turn = 32.119999 | forward = 60 | err = 13 | diff = 749.999939
+distance = 805 | direction = 355 | section1 
+brightness = 49 | turn = 9.620000 | forward = 60 | err = 13 | diff = 0.000000
+distance = 805 | direction = 355 | section1 
+brightness = 49 | turn = 9.620000 | forward = 60 | err = 13 | diff = 0.000000
+distance = 806 | direction = 355 | section1 
+brightness = 49 | turn = 9.620000 | forward = 60 | err = 13 | diff = 0.000000
+distance = 806 | direction = 355 | section1 
+brightness = 49 | turn = 9.620000 | forward = 60 | err = 13 | diff = 0.000000
+distance = 807 | direction = 355 | section1 
+brightness = 50 | turn = 17.859999 | forward = 60 | err = 14 | diff = 249.999985
+distance = 808 | direction = 355 | section1 
+brightness = 50 | turn = 10.360000 | forward = 60 | err = 14 | diff = 0.000000
+distance = 809 | direction = 355 | section1 
+brightness = 50 | turn = 10.360000 | forward = 60 | err = 14 | diff = 0.000000
+distance = 809 | direction = 356 | section1 
+brightness = 50 | turn = 10.360000 | forward = 60 | err = 14 | diff = 0.000000
+distance = 810 | direction = 356 | section1 
+brightness = 51 | turn = 18.600000 | forward = 60 | err = 15 | diff = 249.999985
+distance = 810 | direction = 356 | section1 
+brightness = 51 | turn = 11.100000 | forward = 60 | err = 15 | diff = 0.000000
+distance = 812 | direction = 356 | section1 
+brightness = 51 | turn = 11.100000 | forward = 60 | err = 15 | diff = 0.000000
+distance = 812 | direction = 356 | section1 
+brightness = 51 | turn = 11.100000 | forward = 60 | err = 15 | diff = 0.000000
+distance = 813 | direction = 356 | section1 
+brightness = 51 | turn = 11.100000 | forward = 60 | err = 15 | diff = 0.000000
+distance = 814 | direction = 356 | section1 
+brightness = 51 | turn = 11.100000 | forward = 60 | err = 15 | diff = 0.000000
+distance = 815 | direction = 356 | section1 
+brightness = 51 | turn = 11.100000 | forward = 60 | err = 15 | diff = 0.000000
+distance = 818 | direction = 357 | section1 
+brightness = 52 | turn = 19.340000 | forward = 60 | err = 16 | diff = 249.999985
+distance = 819 | direction = 357 | section1 
+brightness = 52 | turn = 11.840000 | forward = 60 | err = 16 | diff = 0.000000
+distance = 820 | direction = 358 | section1 
+brightness = 52 | turn = 11.840000 | forward = 60 | err = 16 | diff = 0.000000
+distance = 821 | direction = 358 | section1 
+brightness = 52 | turn = 11.840000 | forward = 60 | err = 16 | diff = 0.000000
+distance = 823 | direction = 358 | section1 
+brightness = 51 | turn = 3.600000 | forward = 60 | err = 15 | diff = -249.999985
+distance = 824 | direction = 358 | section1 
+brightness = 51 | turn = 11.100000 | forward = 60 | err = 15 | diff = 0.000000
+distance = 825 | direction = 358 | section1 
+brightness = 51 | turn = 11.100000 | forward = 60 | err = 15 | diff = 0.000000
+distance = 827 | direction = 358 | section1 
+brightness = 51 | turn = 11.100000 | forward = 60 | err = 15 | diff = 0.000000
+distance = 828 | direction = 359 | section1 
+brightness = 50 | turn = 2.860000 | forward = 60 | err = 14 | diff = -249.999985
+distance = 830 | direction = 359 | section1 
+brightness = 50 | turn = 10.360000 | forward = 60 | err = 14 | diff = 0.000000
+distance = 831 | direction = 359 | section1 
+brightness = 50 | turn = 10.360000 | forward = 60 | err = 14 | diff = 0.000000
+distance = 833 | direction = 359 | section1 
+brightness = 50 | turn = 10.360000 | forward = 60 | err = 14 | diff = 0.000000
+distance = 833 | direction = 0 | section1 
+brightness = 50 | turn = 10.360000 | forward = 60 | err = 14 | diff = 0.000000
+distance = 835 | direction = 0 | section1 
+brightness = 49 | turn = 2.120000 | forward = 60 | err = 13 | diff = -249.999985
+distance = 836 | direction = 0 | section1 
+brightness = 48 | turn = 1.380000 | forward = 60 | err = 12 | diff = -249.999985
+distance = 838 | direction = 0 | section1 
+brightness = 48 | turn = 8.880000 | forward = 60 | err = 12 | diff = 0.000000
+distance = 839 | direction = 0 | section1 
+brightness = 48 | turn = 8.880000 | forward = 60 | err = 12 | diff = 0.000000
+distance = 840 | direction = 0 | section1 
+brightness = 48 | turn = 8.880000 | forward = 60 | err = 12 | diff = 0.000000
+distance = 842 | direction = 0 | section1 
+brightness = 47 | turn = 0.640000 | forward = 60 | err = 11 | diff = -249.999985
+distance = 843 | direction = 0 | section1 
+brightness = 47 | turn = 8.140000 | forward = 60 | err = 11 | diff = 0.000000
+distance = 845 | direction = 1 | section1 
+brightness = 47 | turn = 8.140000 | forward = 60 | err = 11 | diff = 0.000000
+distance = 846 | direction = 1 | section1 
+brightness = 47 | turn = 8.140000 | forward = 60 | err = 11 | diff = 0.000000
+distance = 847 | direction = 1 | section1 
+brightness = 46 | turn = -0.100000 | forward = 60 | err = 10 | diff = -249.999985
+distance = 848 | direction = 1 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 849 | direction = 1 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 851 | direction = 1 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 851 | direction = 1 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 854 | direction = 2 | section1 
+brightness = 45 | turn = -0.840000 | forward = 60 | err = 9 | diff = -249.999985
+distance = 854 | direction = 2 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 856 | direction = 2 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 856 | direction = 2 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 858 | direction = 2 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 859 | direction = 2 | section1 
+brightness = 44 | turn = -1.580000 | forward = 60 | err = 8 | diff = -249.999985
+distance = 860 | direction = 2 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 861 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 863 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 863 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 864 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 865 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 866 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 868 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 869 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 870 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 870 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 871 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 872 | direction = 3 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 874 | direction = 4 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 875 | direction = 4 | section1 
+brightness = 43 | turn = -2.319999 | forward = 60 | err = 7 | diff = -249.999985
+distance = 876 | direction = 4 | section1 
+brightness = 44 | turn = 13.419999 | forward = 60 | err = 8 | diff = 249.999985
+distance = 877 | direction = 4 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 877 | direction = 4 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 890 | direction = 5 | section1 
+brightness = 42 | turn = -10.559999 | forward = 60 | err = 6 | diff = -499.999969
+distance = 891 | direction = 5 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 893 | direction = 5 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 894 | direction = 5 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 895 | direction = 5 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 897 | direction = 5 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 898 | direction = 5 | section1 
+brightness = 41 | turn = -3.799999 | forward = 60 | err = 5 | diff = -249.999985
+distance = 900 | direction = 6 | section1 
+brightness = 40 | turn = -4.539999 | forward = 60 | err = 4 | diff = -249.999985
+distance = 902 | direction = 6 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 903 | direction = 5 | section1 
+brightness = 38 | turn = -13.520000 | forward = 60 | err = 2 | diff = -499.999969
+distance = 905 | direction = 6 | section1 
+brightness = 37 | turn = -6.760000 | forward = 60 | err = 1 | diff = -249.999985
+distance = 907 | direction = 6 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 908 | direction = 6 | section1 
+brightness = 34 | turn = -23.979998 | forward = 60 | err = -2 | diff = -749.999939
+distance = 909 | direction = 6 | section1 
+brightness = 33 | turn = -9.719999 | forward = 60 | err = -3 | diff = -249.999985
+distance = 911 | direction = 6 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 912 | direction = 6 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 918 | direction = 5 | section1 
+brightness = 30 | turn = -26.939999 | forward = 60 | err = -6 | diff = -749.999939
+distance = 919 | direction = 5 | section1 
+brightness = 30 | turn = -4.440000 | forward = 60 | err = -6 | diff = 0.000000
+distance = 919 | direction = 5 | section1 
+brightness = 30 | turn = -4.440000 | forward = 60 | err = -6 | diff = 0.000000
+distance = 921 | direction = 5 | section1 
+brightness = 32 | turn = 12.039999 | forward = 60 | err = -4 | diff = 499.999969
+distance = 921 | direction = 5 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 922 | direction = 5 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 923 | direction = 5 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 924 | direction = 5 | section1 
+brightness = 34 | turn = 13.520000 | forward = 60 | err = -2 | diff = 499.999969
+distance = 925 | direction = 5 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 927 | direction = 5 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 928 | direction = 5 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 930 | direction = 5 | section1 
+brightness = 33 | turn = -9.719999 | forward = 60 | err = -3 | diff = -249.999985
+distance = 930 | direction = 5 | section1 
+brightness = 31 | turn = -18.699999 | forward = 60 | err = -5 | diff = -499.999969
+distance = 932 | direction = 5 | section1 
+brightness = 31 | turn = -3.700000 | forward = 60 | err = -5 | diff = 0.000000
+distance = 932 | direction = 5 | section1 
+brightness = 31 | turn = -3.700000 | forward = 60 | err = -5 | diff = 0.000000
+distance = 933 | direction = 5 | section1 
+brightness = 31 | turn = -3.700000 | forward = 60 | err = -5 | diff = 0.000000
+distance = 934 | direction = 5 | section1 
+brightness = 31 | turn = -3.700000 | forward = 60 | err = -5 | diff = 0.000000
+distance = 935 | direction = 5 | section1 
+brightness = 26 | turn = -44.900002 | forward = 60 | err = -10 | diff = -1250.000000
+distance = 935 | direction = 5 | section1 
+brightness = 27 | turn = 0.840000 | forward = 60 | err = -9 | diff = 249.999985
+distance = 935 | direction = 5 | section1 
+brightness = 27 | turn = -6.660000 | forward = 60 | err = -9 | diff = 0.000000
+distance = 935 | direction = 5 | section1 
+brightness = 27 | turn = -6.660000 | forward = 60 | err = -9 | diff = 0.000000
+distance = 936 | direction = 5 | section1 
+brightness = 28 | turn = 1.580000 | forward = 60 | err = -8 | diff = 249.999985
+distance = 936 | direction = 4 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 936 | direction = 4 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 937 | direction = 4 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 937 | direction = 4 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 937 | direction = 4 | section1 
+brightness = 28 | turn = -5.920000 | forward = 60 | err = -8 | diff = 0.000000
+distance = 938 | direction = 4 | section1 
+brightness = 30 | turn = 10.559999 | forward = 60 | err = -6 | diff = 499.999969
+distance = 939 | direction = 4 | section1 
+brightness = 31 | turn = 3.799999 | forward = 60 | err = -5 | diff = 249.999985
+distance = 940 | direction = 4 | section1 
+brightness = 31 | turn = -3.700000 | forward = 60 | err = -5 | diff = 0.000000
+distance = 941 | direction = 3 | section1 
+brightness = 33 | turn = 12.779999 | forward = 60 | err = -3 | diff = 499.999969
+distance = 942 | direction = 4 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 943 | direction = 3 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 944 | direction = 3 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 961 | direction = 2 | section1 
+brightness = 29 | turn = -35.179996 | forward = 60 | err = -7 | diff = -999.999939
+distance = 963 | direction = 2 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 965 | direction = 2 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 967 | direction = 2 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 968 | direction = 2 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 971 | direction = 2 | section1 
+brightness = 26 | turn = -29.899998 | forward = 60 | err = -10 | diff = -749.999939
+distance = 972 | direction = 2 | section1 
+brightness = 24 | turn = -23.879999 | forward = 60 | err = -12 | diff = -499.999969
+distance = 974 | direction = 2 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 976 | direction = 2 | section1 
+brightness = 23 | turn = -17.119999 | forward = 60 | err = -13 | diff = -249.999985
+distance = 978 | direction = 2 | section1 
+brightness = 23 | turn = -9.620000 | forward = 60 | err = -13 | diff = 0.000000
+distance = 979 | direction = 2 | section1 
+brightness = 23 | turn = -9.620000 | forward = 60 | err = -13 | diff = 0.000000
+distance = 981 | direction = 2 | section1 
+brightness = 23 | turn = -9.620000 | forward = 60 | err = -13 | diff = 0.000000
+distance = 983 | direction = 2 | section1 
+brightness = 23 | turn = -9.620000 | forward = 60 | err = -13 | diff = 0.000000
+distance = 984 | direction = 1 | section1 
+brightness = 23 | turn = -9.620000 | forward = 60 | err = -13 | diff = 0.000000
+distance = 985 | direction = 1 | section1 
+brightness = 23 | turn = -9.620000 | forward = 60 | err = -13 | diff = 0.000000
+distance = 987 | direction = 1 | section1 
+brightness = 22 | turn = -17.859999 | forward = 60 | err = -14 | diff = -249.999985
+distance = 995 | direction = 358 | section1 
+brightness = 22 | turn = -10.360000 | forward = 60 | err = -14 | diff = 0.000000
+distance = 995 | direction = 357 | section1 
+brightness = 23 | turn = -2.120000 | forward = 60 | err = -13 | diff = 249.999985
+distance = 996 | direction = 357 | section1 
+brightness = 24 | turn = -1.380000 | forward = 60 | err = -12 | diff = 249.999985
+distance = 996 | direction = 357 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 997 | direction = 356 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 997 | direction = 356 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 998 | direction = 355 | section1 
+brightness = 24 | turn = -8.880000 | forward = 60 | err = -12 | diff = 0.000000
+distance = 999 | direction = 354 | section1 
+brightness = 25 | turn = -0.640000 | forward = 60 | err = -11 | diff = 249.999985
+distance = 999 | direction = 354 | section1 
+brightness = 26 | turn = 0.100000 | forward = 60 | err = -10 | diff = 249.999985
+distance = 999 | direction = 353 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 1000 | direction = 353 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 1000 | direction = 353 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 1001 | direction = 353 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 1001 | direction = 352 | section1 
+brightness = 26 | turn = -7.400000 | forward = 60 | err = -10 | diff = 0.000000
+distance = 1002 | direction = 352 | section1 
+brightness = 29 | turn = 17.319998 | forward = 60 | err = -7 | diff = 749.999939
+distance = 1002 | direction = 352 | section1 
+brightness = 29 | turn = -5.180000 | forward = 60 | err = -7 | diff = 0.000000
+distance = 1002 | direction = 352 | section1 
+brightness = 30 | turn = 3.059999 | forward = 60 | err = -6 | diff = 249.999985
+distance = 1002 | direction = 351 | section1 
+brightness = 30 | turn = -4.440000 | forward = 60 | err = -6 | diff = 0.000000
+distance = 1002 | direction = 351 | section1 
+brightness = 30 | turn = -4.440000 | forward = 60 | err = -6 | diff = 0.000000
+distance = 1002 | direction = 351 | section1 
+brightness = 30 | turn = -4.440000 | forward = 60 | err = -6 | diff = 0.000000
+distance = 1002 | direction = 351 | section1 
+brightness = 31 | turn = 3.799999 | forward = 60 | err = -5 | diff = 249.999985
+distance = 1001 | direction = 351 | section1 
+brightness = 31 | turn = -3.700000 | forward = 60 | err = -5 | diff = 0.000000
+distance = 1000 | direction = 351 | section1 
+brightness = 31 | turn = -3.700000 | forward = 60 | err = -5 | diff = 0.000000
+distance = 1000 | direction = 351 | section1 
+brightness = 31 | turn = -3.700000 | forward = 60 | err = -5 | diff = 0.000000
+distance = 999 | direction = 351 | section1 
+brightness = 31 | turn = -3.700000 | forward = 60 | err = -5 | diff = 0.000000
+distance = 999 | direction = 351 | section1 
+brightness = 31 | turn = -3.700000 | forward = 60 | err = -5 | diff = 0.000000
+distance = 999 | direction = 351 | section1 
+brightness = 32 | turn = 4.539999 | forward = 60 | err = -4 | diff = 249.999985
+distance = 998 | direction = 351 | section1 
+brightness = 33 | turn = 5.280000 | forward = 60 | err = -3 | diff = 249.999985
+distance = 997 | direction = 351 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 997 | direction = 351 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 996 | direction = 351 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 995 | direction = 351 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 995 | direction = 351 | section1 
+brightness = 36 | turn = 22.499998 | forward = 60 | err = 0 | diff = 749.999939
+distance = 992 | direction = 352 | section1 
+brightness = 37 | turn = 8.240000 | forward = 60 | err = 1 | diff = 249.999985
+distance = 991 | direction = 352 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 991 | direction = 352 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 990 | direction = 353 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 990 | direction = 353 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 990 | direction = 353 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 989 | direction = 353 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 989 | direction = 353 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 988 | direction = 353 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 988 | direction = 353 | section1 
+brightness = 38 | turn = 8.980000 | forward = 60 | err = 2 | diff = 249.999985
+distance = 987 | direction = 353 | section1 
+brightness = 39 | turn = 9.719999 | forward = 60 | err = 3 | diff = 249.999985
+distance = 986 | direction = 353 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 985 | direction = 353 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 985 | direction = 353 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 985 | direction = 353 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 985 | direction = 353 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 985 | direction = 353 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 985 | direction = 353 | section1 
+brightness = 40 | turn = 10.459999 | forward = 60 | err = 4 | diff = 249.999985
+distance = 984 | direction = 353 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 984 | direction = 353 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 984 | direction = 353 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 983 | direction = 354 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 983 | direction = 353 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 983 | direction = 353 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 983 | direction = 353 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 983 | direction = 353 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 982 | direction = 353 | section1 
+brightness = 41 | turn = 11.200000 | forward = 60 | err = 5 | diff = 249.999985
+distance = 982 | direction = 353 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 982 | direction = 353 | section1 
+brightness = 42 | turn = 11.940000 | forward = 60 | err = 6 | diff = 249.999985
+distance = 982 | direction = 353 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 982 | direction = 353 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 982 | direction = 353 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 982 | direction = 353 | section1 
+brightness = 43 | turn = 12.679999 | forward = 60 | err = 7 | diff = 249.999985
+distance = 983 | direction = 353 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 983 | direction = 353 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 983 | direction = 353 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 983 | direction = 353 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 983 | direction = 353 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 983 | direction = 353 | section1 
+brightness = 44 | turn = 13.419999 | forward = 60 | err = 8 | diff = 249.999985
+distance = 984 | direction = 353 | section1 
+brightness = 43 | turn = -2.319999 | forward = 60 | err = 7 | diff = -249.999985
+distance = 984 | direction = 353 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 984 | direction = 354 | section1 
+brightness = 44 | turn = 13.419999 | forward = 60 | err = 8 | diff = 249.999985
+distance = 985 | direction = 354 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 985 | direction = 354 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 985 | direction = 354 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 986 | direction = 354 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 986 | direction = 355 | section1 
+brightness = 45 | turn = 14.160000 | forward = 60 | err = 9 | diff = 249.999985
+distance = 987 | direction = 355 | section1 
+brightness = 45 | turn = 6.660000 | forward = 60 | err = 9 | diff = 0.000000
+distance = 988 | direction = 355 | section1 
+brightness = 44 | turn = -1.580000 | forward = 60 | err = 8 | diff = -249.999985
+distance = 988 | direction = 355 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 988 | direction = 355 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 989 | direction = 355 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 990 | direction = 355 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 990 | direction = 355 | section1 
+brightness = 42 | turn = -10.559999 | forward = 60 | err = 6 | diff = -499.999969
+distance = 990 | direction = 355 | section1 
+brightness = 41 | turn = -3.799999 | forward = 60 | err = 5 | diff = -249.999985
+distance = 990 | direction = 356 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 990 | direction = 356 | section1 
+brightness = 40 | turn = -4.539999 | forward = 60 | err = 4 | diff = -249.999985
+distance = 991 | direction = 355 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 991 | direction = 356 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 992 | direction = 356 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 992 | direction = 356 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 992 | direction = 356 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 992 | direction = 356 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 992 | direction = 356 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 992 | direction = 356 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 992 | direction = 356 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 992 | direction = 356 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 993 | direction = 356 | section1 
+brightness = 43 | turn = 27.679998 | forward = 60 | err = 7 | diff = 749.999939
+distance = 993 | direction = 356 | section1 
+brightness = 44 | turn = 13.419999 | forward = 60 | err = 8 | diff = 249.999985
+distance = 994 | direction = 356 | section1 
+brightness = 43 | turn = -2.319999 | forward = 60 | err = 7 | diff = -249.999985
+distance = 994 | direction = 356 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 995 | direction = 356 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 995 | direction = 357 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 995 | direction = 357 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 995 | direction = 357 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 996 | direction = 357 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 996 | direction = 357 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 997 | direction = 357 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 997 | direction = 357 | section1 
+brightness = 44 | turn = 13.419999 | forward = 60 | err = 8 | diff = 249.999985
+distance = 997 | direction = 357 | section1 
+brightness = 43 | turn = -2.319999 | forward = 60 | err = 7 | diff = -249.999985
+distance = 997 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 998 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 999 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 999 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 999 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 1001 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 1002 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 1002 | direction = 358 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 1002 | direction = 358 | section1 
+brightness = 41 | turn = -11.299999 | forward = 60 | err = 5 | diff = -499.999969
+distance = 1003 | direction = 358 | section1 
+brightness = 42 | turn = 11.940000 | forward = 60 | err = 6 | diff = 249.999985
+distance = 1004 | direction = 358 | section1 
+brightness = 41 | turn = -3.799999 | forward = 60 | err = 5 | diff = -249.999985
+distance = 1004 | direction = 358 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1005 | direction = 358 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1006 | direction = 0 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1006 | direction = 359 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1007 | direction = 0 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1008 | direction = 0 | section1 
+brightness = 40 | turn = -4.539999 | forward = 60 | err = 4 | diff = -249.999985
+distance = 1009 | direction = 0 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 1010 | direction = 0 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 1011 | direction = 0 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 1011 | direction = 0 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 1012 | direction = 0 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 1013 | direction = 0 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 1014 | direction = 0 | section1 
+brightness = 39 | turn = -5.280000 | forward = 60 | err = 3 | diff = -249.999985
+distance = 1015 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1015 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1016 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1018 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1018 | direction = 0 | section1 
+brightness = 38 | turn = -6.020000 | forward = 60 | err = 2 | diff = -249.999985
+distance = 1019 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1020 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1021 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1021 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1022 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1023 | direction = 0 | section1 
+brightness = 37 | turn = -6.760000 | forward = 60 | err = 1 | diff = -249.999985
+distance = 1024 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1025 | direction = 0 | section1 
+brightness = 38 | turn = 8.980000 | forward = 60 | err = 2 | diff = 249.999985
+distance = 1026 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1027 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1028 | direction = 0 | section1 
+brightness = 37 | turn = -6.760000 | forward = 60 | err = 1 | diff = -249.999985
+distance = 1029 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1029 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1030 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1032 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1032 | direction = 0 | section1 
+brightness = 36 | turn = -7.500000 | forward = 60 | err = 0 | diff = -249.999985
+distance = 1033 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1034 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1034 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1036 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1036 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1037 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1038 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1038 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1040 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1041 | direction = 0 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1041 | direction = 0 | section1 
+brightness = 35 | turn = -8.240000 | forward = 60 | err = -1 | diff = -249.999985
+distance = 1043 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1043 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1044 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1045 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1046 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1047 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1048 | direction = 0 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1049 | direction = 1 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1050 | direction = 1 | section1 
+brightness = 34 | turn = -8.980000 | forward = 60 | err = -2 | diff = -249.999985
+distance = 1051 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1051 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1052 | direction = 0 | section1 
+brightness = 35 | turn = 6.760000 | forward = 60 | err = -1 | diff = 249.999985
+distance = 1053 | direction = 0 | section1 
+brightness = 34 | turn = -8.980000 | forward = 60 | err = -2 | diff = -249.999985
+distance = 1055 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1055 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1056 | direction = 0 | section1 
+brightness = 33 | turn = -9.719999 | forward = 60 | err = -3 | diff = -249.999985
+distance = 1057 | direction = 0 | section1 
+brightness = 34 | turn = 6.020000 | forward = 60 | err = -2 | diff = 249.999985
+distance = 1058 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1059 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1060 | direction = 1 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1061 | direction = 1 | section1 
+brightness = 33 | turn = -9.719999 | forward = 60 | err = -3 | diff = -249.999985
+distance = 1062 | direction = 1 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1062 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1064 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1064 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1066 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1066 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1068 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1068 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1070 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1071 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1071 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1072 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1073 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1074 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1075 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1076 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1078 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1078 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1080 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1080 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1082 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1082 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1084 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1085 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1085 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1087 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1087 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1088 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1089 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1090 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1092 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1093 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1094 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1095 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1096 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1097 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1099 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1099 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1100 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1101 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1102 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1103 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1104 | direction = 0 | section1 
+brightness = 33 | turn = -2.220000 | forward = 60 | err = -3 | diff = 0.000000
+distance = 1105 | direction = 0 | section1 
+brightness = 34 | turn = 6.020000 | forward = 60 | err = -2 | diff = 249.999985
+distance = 1107 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1108 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1109 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1109 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1110 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1112 | direction = 0 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1113 | direction = 359 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1114 | direction = 359 | section1 
+brightness = 34 | turn = -1.480000 | forward = 60 | err = -2 | diff = 0.000000
+distance = 1115 | direction = 359 | section1 
+brightness = 35 | turn = 6.760000 | forward = 60 | err = -1 | diff = 249.999985
+distance = 1116 | direction = 359 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1117 | direction = 359 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1118 | direction = 359 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1119 | direction = 359 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1120 | direction = 359 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1122 | direction = 359 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1122 | direction = 359 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1124 | direction = 359 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1124 | direction = 359 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1126 | direction = 359 | section1 
+brightness = 36 | turn = 7.500000 | forward = 60 | err = 0 | diff = 249.999985
+distance = 1126 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1128 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1129 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1130 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1131 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1132 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1133 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1134 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1135 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1136 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1137 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1138 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1139 | direction = 359 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1140 | direction = 359 | section1 
+brightness = 37 | turn = 8.240000 | forward = 60 | err = 1 | diff = 249.999985
+distance = 1141 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1142 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1143 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1145 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1145 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1147 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1147 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1149 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1149 | direction = 359 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1151 | direction = 359 | section1 
+brightness = 38 | turn = 8.980000 | forward = 60 | err = 2 | diff = 249.999985
+distance = 1152 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1153 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1154 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1155 | direction = 359 | section1 
+brightness = 39 | turn = 9.719999 | forward = 60 | err = 3 | diff = 249.999985
+distance = 1156 | direction = 359 | section1 
+brightness = 38 | turn = -6.020000 | forward = 60 | err = 2 | diff = -249.999985
+distance = 1158 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1159 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1160 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1161 | direction = 359 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1162 | direction = 359 | section1 
+brightness = 39 | turn = 9.719999 | forward = 60 | err = 3 | diff = 249.999985
+distance = 1163 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1164 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1165 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1167 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1168 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1169 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1170 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1171 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1172 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1173 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1174 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1175 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1177 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1178 | direction = 359 | section1 
+brightness = 40 | turn = 10.459999 | forward = 60 | err = 4 | diff = 249.999985
+distance = 1179 | direction = 359 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 1180 | direction = 359 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 1181 | direction = 359 | section1 
+brightness = 39 | turn = -5.280000 | forward = 60 | err = 3 | diff = -249.999985
+distance = 1182 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1183 | direction = 359 | section1 
+brightness = 40 | turn = 10.459999 | forward = 60 | err = 4 | diff = 249.999985
+distance = 1184 | direction = 359 | section1 
+brightness = 39 | turn = -5.280000 | forward = 60 | err = 3 | diff = -249.999985
+distance = 1185 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1186 | direction = 359 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1187 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1189 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1189 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1191 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1191 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1193 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1194 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1195 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1196 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1197 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1198 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1199 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1200 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1202 | direction = 0 | section1 
+brightness = 38 | turn = -6.020000 | forward = 60 | err = 2 | diff = -249.999985
+distance = 1202 | direction = 0 | section1 
+brightness = 39 | turn = 9.719999 | forward = 60 | err = 3 | diff = 249.999985
+distance = 1203 | direction = 0 | section1 
+brightness = 38 | turn = -6.020000 | forward = 60 | err = 2 | diff = -249.999985
+distance = 1205 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1206 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1207 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1208 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1209 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1210 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1211 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1212 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1213 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1214 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1215 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1216 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1217 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1218 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1219 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1221 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1221 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1222 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1223 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1224 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1225 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1226 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1227 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1228 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1229 | direction = 0 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1245 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1246 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1246 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1248 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1249 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1251 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1251 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1253 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1255 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1257 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1258 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1260 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1261 | direction = 1 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1262 | direction = 1 | section1 
+brightness = 36 | turn = -14.999999 | forward = 60 | err = 0 | diff = -499.999969
+distance = 1264 | direction = 1 | section1 
+brightness = 33 | turn = -24.719997 | forward = 60 | err = -3 | diff = -749.999939
+distance = 1265 | direction = 1 | section1 
+brightness = 32 | turn = -10.459999 | forward = 60 | err = -4 | diff = -249.999985
+distance = 1266 | direction = 1 | section1 
+brightness = 32 | turn = -2.960000 | forward = 60 | err = -4 | diff = 0.000000
+distance = 1276 | direction = 0 | section1 
+brightness = 39 | turn = 54.719997 | forward = 60 | err = 3 | diff = 1749.999878
+distance = 1277 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1277 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1277 | direction = 0 | section1 
+brightness = 44 | turn = 43.419998 | forward = 60 | err = 8 | diff = 1250.000000
+distance = 1278 | direction = 0 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 1279 | direction = 0 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 1280 | direction = 0 | section1 
+brightness = 44 | turn = 5.920000 | forward = 60 | err = 8 | diff = 0.000000
+distance = 1281 | direction = 0 | section1 
+brightness = 46 | turn = 22.400000 | forward = 60 | err = 10 | diff = 499.999969
+distance = 1282 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1283 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1285 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1286 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1287 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1288 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1289 | direction = 0 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1290 | direction = 0 | section1 
+brightness = 45 | turn = -0.840000 | forward = 60 | err = 9 | diff = -249.999985
+distance = 1318 | direction = 0 | section1 
+brightness = 41 | turn = -26.299997 | forward = 60 | err = 5 | diff = -999.999939
+distance = 1319 | direction = 0 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1320 | direction = 0 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1322 | direction = 0 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1323 | direction = 0 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1325 | direction = 0 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1327 | direction = 0 | section1 
+brightness = 40 | turn = -4.539999 | forward = 60 | err = 4 | diff = -249.999985
+distance = 1329 | direction = 0 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 1331 | direction = 0 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 1333 | direction = 0 | section1 
+brightness = 40 | turn = 2.960000 | forward = 60 | err = 4 | diff = 0.000000
+distance = 1334 | direction = 0 | section1 
+brightness = 39 | turn = -5.280000 | forward = 60 | err = 3 | diff = -249.999985
+distance = 1337 | direction = 0 | section1 
+brightness = 37 | turn = -14.259999 | forward = 60 | err = 1 | diff = -499.999969
+distance = 1339 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1341 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1342 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1344 | direction = 0 | section1 
+brightness = 37 | turn = 0.740000 | forward = 60 | err = 1 | diff = 0.000000
+distance = 1345 | direction = 0 | section1 
+brightness = 35 | turn = -15.739999 | forward = 60 | err = -1 | diff = -499.999969
+distance = 1360 | direction = 358 | section1 
+brightness = 38 | turn = 23.979998 | forward = 60 | err = 2 | diff = 749.999939
+distance = 1361 | direction = 358 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1361 | direction = 357 | section1 
+brightness = 38 | turn = 1.480000 | forward = 60 | err = 2 | diff = 0.000000
+distance = 1362 | direction = 357 | section1 
+brightness = 41 | turn = 26.199999 | forward = 60 | err = 5 | diff = 749.999939
+distance = 1362 | direction = 357 | section1 
+brightness = 42 | turn = 11.940000 | forward = 60 | err = 6 | diff = 249.999985
+distance = 1363 | direction = 357 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1364 | direction = 356 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1365 | direction = 356 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1366 | direction = 356 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1367 | direction = 356 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1369 | direction = 356 | section1 
+brightness = 47 | turn = 45.639999 | forward = 60 | err = 11 | diff = 1250.000000
+distance = 1370 | direction = 355 | section1 
+brightness = 48 | turn = 16.379999 | forward = 60 | err = 12 | diff = 249.999985
+distance = 1371 | direction = 355 | section1 
+brightness = 47 | turn = 0.640000 | forward = 60 | err = 11 | diff = -249.999985
+distance = 1373 | direction = 355 | section1 
+brightness = 47 | turn = 8.140000 | forward = 60 | err = 11 | diff = 0.000000
+distance = 1374 | direction = 355 | section1 
+brightness = 47 | turn = 8.140000 | forward = 60 | err = 11 | diff = 0.000000
+distance = 1376 | direction = 355 | section1 
+brightness = 47 | turn = 8.140000 | forward = 60 | err = 11 | diff = 0.000000
+distance = 1385 | direction = 354 | section1 
+brightness = 48 | turn = 16.379999 | forward = 60 | err = 12 | diff = 249.999985
+distance = 1387 | direction = 355 | section1 
+brightness = 48 | turn = 8.880000 | forward = 60 | err = 12 | diff = 0.000000
+distance = 1388 | direction = 355 | section1 
+brightness = 48 | turn = 8.880000 | forward = 60 | err = 12 | diff = 0.000000
+distance = 1389 | direction = 355 | section1 
+brightness = 48 | turn = 8.880000 | forward = 60 | err = 12 | diff = 0.000000
+distance = 1391 | direction = 355 | section1 
+brightness = 49 | turn = 17.119999 | forward = 60 | err = 13 | diff = 249.999985
+distance = 1393 | direction = 355 | section1 
+brightness = 48 | turn = 1.380000 | forward = 60 | err = 12 | diff = -249.999985
+distance = 1394 | direction = 355 | section1 
+brightness = 47 | turn = 0.640000 | forward = 60 | err = 11 | diff = -249.999985
+distance = 1396 | direction = 355 | section1 
+brightness = 47 | turn = 8.140000 | forward = 60 | err = 11 | diff = 0.000000
+distance = 1398 | direction = 355 | section1 
+brightness = 46 | turn = -0.100000 | forward = 60 | err = 10 | diff = -249.999985
+distance = 1400 | direction = 355 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1401 | direction = 355 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1403 | direction = 355 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1405 | direction = 355 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1406 | direction = 355 | section1 
+brightness = 46 | turn = 7.400000 | forward = 60 | err = 10 | diff = 0.000000
+distance = 1408 | direction = 355 | section1 
+brightness = 47 | turn = 15.639999 | forward = 60 | err = 11 | diff = 249.999985
+distance = 1409 | direction = 355 | section1 
+brightness = 49 | turn = 24.619999 | forward = 60 | err = 13 | diff = 499.999969
+distance = 1410 | direction = 355 | section1 
+brightness = 49 | turn = 9.620000 | forward = 60 | err = 13 | diff = 0.000000
+distance = 1427 | direction = 358 | section1 
+brightness = 52 | turn = 34.339996 | forward = 60 | err = 16 | diff = 749.999939
+distance = 1428 | direction = 359 | section1 
+brightness = 52 | turn = 11.840000 | forward = 60 | err = 16 | diff = 0.000000
+distance = 1429 | direction = 359 | section1 
+brightness = 52 | turn = 11.840000 | forward = 60 | err = 16 | diff = 0.000000
+distance = 1430 | direction = 359 | section1 
+brightness = 52 | turn = 11.840000 | forward = 60 | err = 16 | diff = 0.000000
+distance = 1431 | direction = 359 | section1 
+brightness = 52 | turn = 11.840000 | forward = 60 | err = 16 | diff = 0.000000
+distance = 1433 | direction = 0 | section1 
+brightness = 52 | turn = 11.840000 | forward = 60 | err = 16 | diff = 0.000000
+distance = 1434 | direction = 0 | section1 
+brightness = 51 | turn = 3.600000 | forward = 60 | err = 15 | diff = -249.999985
+distance = 1436 | direction = 0 | section1 
+brightness = 49 | turn = -5.379999 | forward = 60 | err = 13 | diff = -499.999969
+distance = 1437 | direction = 0 | section1 
+brightness = 50 | turn = 17.859999 | forward = 60 | err = 14 | diff = 249.999985
+distance = 1439 | direction = 0 | section1 
+brightness = 47 | turn = -14.359998 | forward = 60 | err = 11 | diff = -749.999939
+distance = 1440 | direction = 0 | section1 
+brightness = 47 | turn = 8.140000 | forward = 60 | err = 11 | diff = 0.000000
+distance = 1442 | direction = 0 | section1 
+brightness = 47 | turn = 8.140000 | forward = 60 | err = 11 | diff = 0.000000
+distance = 1443 | direction = 0 | section1 
+brightness = 45 | turn = -8.339999 | forward = 60 | err = 9 | diff = -499.999969
+distance = 1445 | direction = 0 | section1 
+brightness = 41 | turn = -26.299997 | forward = 60 | err = 5 | diff = -999.999939
+distance = 1446 | direction = 0 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1448 | direction = 0 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1451 | direction = 0 | section1 
+brightness = 39 | turn = -12.779999 | forward = 60 | err = 3 | diff = -499.999969
+distance = 1452 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1453 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1454 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1454 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1456 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1456 | direction = 0 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1458 | direction = 1 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1459 | direction = 1 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1460 | direction = 1 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1461 | direction = 1 | section1 
+brightness = 41 | turn = 18.699999 | forward = 60 | err = 5 | diff = 499.999969
+distance = 1461 | direction = 1 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1462 | direction = 1 | section1 
+brightness = 42 | turn = 11.940000 | forward = 60 | err = 6 | diff = 249.999985
+distance = 1463 | direction = 1 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1464 | direction = 1 | section1 
+brightness = 43 | turn = 12.679999 | forward = 60 | err = 7 | diff = 249.999985
+distance = 1466 | direction = 1 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 1466 | direction = 1 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 1468 | direction = 1 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 1468 | direction = 1 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 1470 | direction = 1 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 1470 | direction = 1 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 1472 | direction = 1 | section1 
+brightness = 43 | turn = 5.180000 | forward = 60 | err = 7 | diff = 0.000000
+distance = 1473 | direction = 1 | section1 
+brightness = 42 | turn = -3.059999 | forward = 60 | err = 6 | diff = -249.999985
+distance = 1474 | direction = 2 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1475 | direction = 2 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1476 | direction = 2 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1477 | direction = 2 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1478 | direction = 2 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1479 | direction = 2 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1480 | direction = 2 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1481 | direction = 2 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1482 | direction = 2 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1484 | direction = 2 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1484 | direction = 2 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1486 | direction = 3 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1487 | direction = 3 | section1 
+brightness = 42 | turn = 4.440000 | forward = 60 | err = 6 | diff = 0.000000
+distance = 1488 | direction = 3 | section1 
+brightness = 41 | turn = -3.799999 | forward = 60 | err = 5 | diff = -249.999985
+distance = 1489 | direction = 3 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1490 | direction = 3 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1491 | direction = 3 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1492 | direction = 3 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1493 | direction = 3 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1495 | direction = 3 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1496 | direction = 3 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1496 | direction = 3 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1498 | direction = 3 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1499 | direction = 3 | section1 
+brightness = 41 | turn = 3.700000 | forward = 60 | err = 5 | diff = 0.000000
+distance = 1500 | direction = 4 | section1 
+brightness = 39 | turn = -12.779999 | forward = 60 | err = 3 | diff = -499.999969
+distance = 1501 | direction = 3 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1503 | direction = 4 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1504 | direction = 4 | section1 
+brightness = 39 | turn = 2.220000 | forward = 60 | err = 3 | diff = 0.000000
+distance = 1512 | direction = 4 | section1 
+brightness = 36 | turn = -22.499998 | forward = 60 | err = 0 | diff = -749.999939
+distance = 1513 | direction = 4 | section1 
+brightness = 36 | turn = 0.000000 | forward = 60 | err = 0 | diff = 0.000000
+distance = 1514 | direction = 4 | section1 
+brightness = 35 | turn = -8.240000 | forward = 60 | err = -1 | diff = -249.999985
+distance = 1516 | direction = 4 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1516 | direction = 4 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1518 | direction = 4 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1519 | direction = 4 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1521 | direction = 4 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1522 | direction = 4 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1523 | direction = 4 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1525 | direction = 4 | section1 
+brightness = 35 | turn = -0.740000 | forward = 60 | err = -1 | diff = 0.000000
+distance = 1527 | direction = 4 | section1 
+brightness = 34 | turn = -8.980000 | forward = 60 | err = -2 | diff = -249.999985
+distance = 1528 | direction = 4 | section1 
+brightness = 30 | turn = -34.439999 | forward = 60 | err = -6 | diff = -999.999939
+distance = 1530 | direction = 4 | section1 
+brightness = 30 | turn = -4.440000 | forward = 60 | err = -6 | diff = 0.000000
+distance = 1530 | direction = 4 | section1 
+brightness = 30 | turn = -4.440000 | forward = 60 | err = -6 | diff = 0.000000
+distance = 1532 | direction = 4 | section1 
+brightness = 30 | turn = -4.440000 | forward = 60 | err = -6 | diff = 0.000000
+distance = 1554 | direction = 357 | section1 
+brightness = 51 | turn = 100.000000 | forward = 60 | err = 15 | diff = 5249.999512
+distance = 1554 | direction = 357 | section1 
+brightness = 51 | turn = 11.100000 | forward = 60 | err = 15 | diff = 0.000000
+distance = 1554 | direction = 357 | section1 
+brightness = 51 | turn = 11.100000 | forward = 60 | err = 15 | diff = 0.000000
+distance = 1555 | direction = 357 | section1 
+brightness = 56 | turn = 52.299999 | forward = 60 | err = 20 | diff = 1250.000000
+distance = 1556 | direction = 357 | section1 
+brightness = 57 | turn = 23.039999 | forward = 60 | err = 21 | diff = 249.999985
+distance = 1556 | direction = 357 | section1 
+brightness = 57 | turn = 15.540000 | forward = 60 | err = 21 | diff = 0.000000
+distance = 1557 | direction = 357 | section1 
+brightness = 57 | turn = 15.540000 | forward = 60 | err = 21 | diff = 0.000000
+distance = 1558 | direction = 357 | section1 
+brightness = 59 | turn = 32.020000 | forward = 60 | err = 23 | diff = 499.999969
+distance = 1559 | direction = 357 | section1 
+brightness = 59 | turn = 17.020000 | forward = 60 | err = 23 | diff = 0.000000
+distance = 1561 | direction = 356 | section1 
+brightness = 59 | turn = 17.020000 | forward = 60 | err = 23 | diff = 0.000000
+distance = 1562 | direction = 356 | section1 
+brightness = 60 | turn = 25.260000 | forward = 60 | err = 24 | diff = 249.999985
+distance = 1563 | direction = 356 | section1 
+brightness = 60 | turn = 17.760000 | forward = 60 | err = 24 | diff = 0.000000
+distance = 1565 | direction = 356 | section1 
+brightness = 60 | turn = 17.760000 | forward = 60 | err = 24 | diff = 0.000000
+distance = 1566 | direction = 356 | section1 
+brightness = 59 | turn = 9.520000 | forward = 60 | err = 23 | diff = -249.999985
+distance = 1567 | direction = 356 | section1 
+brightness = 59 | turn = 17.020000 | forward = 60 | err = 23 | diff = 0.000000
+distance = 1569 | direction = 356 | section1 
+brightness = 59 | turn = 17.020000 | forward = 60 | err = 23 | diff = 0.000000
+distance = 1570 | direction = 356 | section1 
+brightness = 59 | turn = 17.020000 | forward = 60 | err = 23 | diff = 0.000000
+distance = 1763 | direction = 28 | section1 
+brightness = 75 | turn = 100.000000 | forward = 60 | err = 39 | diff = 3999.999756
+distance = 1766 | direction = 28 | section1 
+brightness = 75 | turn = 28.860001 | forward = 60 | err = 39 | diff = 0.000000
+distance = 1767 | direction = 29 | section1 
+brightness = 76 | turn = 37.099998 | forward = 60 | err = 40 | diff = 249.999985
+distance = 1769 | direction = 29 | section1 
+brightness = 75 | turn = 21.360001 | forward = 60 | err = 39 | diff = -249.999985
+distance = 1770 | direction = 29 | section1 
+brightness = 75 | turn = 28.860001 | forward = 60 | err = 39 | diff = 0.000000
+distance = 1773 | direction = 29 | section1 
+brightness = 75 | turn = 28.860001 | forward = 60 | err = 39 | diff = 0.000000
+distance = 1775 | direction = 29 | section1 
+brightness = 75 | turn = 28.860001 | forward = 60 | err = 39 | diff = 0.000000
+distance = 1777 | direction = 30 | section1 
+brightness = 75 | turn = 28.860001 | forward = 60 | err = 39 | diff = 0.000000
+distance = 1779 | direction = 30 | section1 
+brightness = 75 | turn = 28.860001 | forward = 60 | err = 39 | diff = 0.000000
+distance = 1782 | direction = 30 | section1 
+brightness = 72 | turn = 4.140002 | forward = 60 | err = 36 | diff = -749.999939
+distance = 1783 | direction = 30 | section1 
+brightness = 72 | turn = 26.639999 | forward = 60 | err = 36 | diff = 0.000000
+distance = 1786 | direction = 30 | section1 
+brightness = 72 | turn = 26.639999 | forward = 60 | err = 36 | diff = 0.000000
+distance = 1788 | direction = 30 | section1 
+brightness = 72 | turn = 26.639999 | forward = 60 | err = 36 | diff = 0.000000
+distance = 1790 | direction = 30 | section1 
+brightness = 69 | turn = 1.920002 | forward = 60 | err = 33 | diff = -749.999939
+distance = 1792 | direction = 30 | section1 
+brightness = 69 | turn = 24.420000 | forward = 60 | err = 33 | diff = 0.000000
+distance = 1795 | direction = 31 | section1 
+brightness = 69 | turn = 24.420000 | forward = 60 | err = 33 | diff = 0.000000
+distance = 1843 | direction = 32 | section1 
+brightness = 28 | turn = -100.000000 | forward = 60 | err = -8 | diff = -10250.000000
+getAnglerVelocity = 449
