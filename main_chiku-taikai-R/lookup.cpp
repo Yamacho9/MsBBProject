@@ -353,13 +353,14 @@ bool tail_ctr2(int32_t angle, tailSpeed sp){
 	countt++;
 
 	if(b_start){
+		m_tail->setBrake(false);
 		if(countt > 50){
 			m_tail->setPWM(80);
 		}
 		else{
 			b_start = false;
 		}
-
+		return false;
 	}
 	else{
 		return tail_ctr(angle,sp);
