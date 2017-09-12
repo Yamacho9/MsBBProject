@@ -31,6 +31,7 @@
 using namespace ev3api;
 
 //#define DEBUG
+#define ANALIZE //地区大会の転倒再現
 
 #ifdef DEBUG
 #define _debug(x) (x)
@@ -99,7 +100,9 @@ void main_task(intptr_t unused)
    	int direction; //	旋回角度
    	int err;	// ライントレース用PD制御の偏差
    	float diff;	// ライントレース用PD制御の微分
-	
+#ifdef ANALIZE	
+	int t_count =0; //周期カウント
+#endif	
 	/*グローバル変数の初期化*/
 	count = 1;
 	
@@ -176,6 +179,8 @@ void main_task(intptr_t unused)
 		clock->sleep(4);
 	}
 	ret = false;
+	
+	//fprintf(bt, "RAND_MAX = %d\n",RAND_MAX);
 	
     /**
     * メインループ
@@ -284,8 +289,17 @@ void main_task(intptr_t unused)
 			Message("finished...");
     		break;
     	}
-    	
-        clock->sleep(4); /* 4msec周期起動 */
+#ifndef ANALIZE
+    	clock->sleep(4); /* 4msec周期起動 */
+#else
+    	t_count++; //周期カウントアップ
+    	if ( t_count%25 == 0 && t_count > 500 ) {	//走行開始後2秒以上経過後、100msごとに
+	    	clock->sleep(64); /* 64msec周期起動 */
+    		fprintf(bt, "clock->sleep(64)\n");
+    	} else {
+	    	clock->sleep(4); /* 4msec周期起動 */
+    	}
+#endif
     }
     leftMotor->reset();
     rightMotor->reset();
